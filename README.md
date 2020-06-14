@@ -31,9 +31,9 @@ First, add the `LivewireAlert` trait to your livewire component.
 use  Livewire\Component;
 use  Jantinnerezo\LivewireAlert\LivewireAlert;
 
-class YourAwesomeComponent extends  Component  
-{  
-	use  LivewireAlert;  
+class YourAwesomeComponent extends  Component
+{
+	use  LivewireAlert;
 }
 
 ```
@@ -45,10 +45,10 @@ Let say you want to display a success alert message when a user successfully sub
 public function submit()
 {
 	// Your code here
-	
+
 	// Successful alert message
-	$this->alert('success', ['title' => 'Submission successful!']);
-	
+	$this->alert('success', 'Submission successful!');
+
 	// That's it!
 }
 
@@ -58,16 +58,16 @@ Example available events:
 
 ``` php
 // Success event
-$this->alert('success', ['title' => 'Submission successful!']);
+$this->alert('success', 'Submission successful!');
 
 // Information event
-$this->alert('info', ['title' => 'Hello, Awesome Developer!']);
+$this->alert('info', 'Hello, Awesome Developer!');
 
 // Warning event
-$this->alert('warning', ['title' => 'You have been warned!']);
+$this->alert('warning', 'You have been warned!');
 
 // Error event
-$this->alert('error', ['title' => 'Whoops! you did it again!']);
+$this->alert('error', 'Whoops! you did it again!');
 
 ```
 ### Configuration
@@ -77,8 +77,7 @@ The default configurations:
 	'position'  =>  'top-end',
 	'timer'  =>  3000,
 	'toast'  =>  true,
-	'title'  =>  '',
-	'text'  =>  null,
+	'text' => null,
 	'showCancelButton'  =>  true,
 	'showConfirmButton'  =>  false
 ]
@@ -87,12 +86,11 @@ Here's an example of overriding the default configurations:
 
 ``` php
 // Success event
-$this->alert('success', [
+$this->alert('success', 'You are successful!', [
 	'position'  =>  'center',
 	'timer'  =>  15000,
 	'toast'  =>  false,
-	'title'  =>  'This is a custom config',
-	'text'  =>  'I am a sub title',
+	'text'  =>  'I am a subtext',
 	'showCancelButton'  =>  false,
 	'showConfirmButton'  =>  false
 ]);
@@ -101,7 +99,7 @@ For more details about the configuration, see:
 [https://sweetalert2.github.io/#configuration](https://sweetalert2.github.io/#configuration)
 ### Testing
 
-  
+
 
 ``` bash
 
@@ -109,46 +107,44 @@ composer test
 
 ```
 
-  
+
 
 ### Changelog
 
-  
+
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-  
+
 
 ## Contributing
 
-  
+
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-  
+
 
 ### Security
 
-  
+
 
 If you discover any security related issues, please email erezojantinn@gmail.com instead of using the issue tracker.
 
-  
+
 
 ## Credits
 
-  
+
 
 -  [Jantinn Erezo](https://github.com/jantinnerezo)
 
 -  [All Contributors](../../contributors)
 
-  
+
 
 ## License
 
-  
+
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
- 

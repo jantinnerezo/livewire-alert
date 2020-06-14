@@ -21,13 +21,6 @@ class LivewireAlertTest extends TestCase
     }
 
     /** @test */
-    public function title_is_required()
-    {
-        $this->assertArrayHasKey('title', $this->livewireAlertMock->alertOptions()->toArray());
-        $this->assertNotNull($this->livewireAlertMock->alertOptions()->get('title'));
-    }
-
-    /** @test */
     public function alert_options_is_array()
     {
         $this->assertIsArray($this->livewireAlertMock->alertOptions()->toArray());
