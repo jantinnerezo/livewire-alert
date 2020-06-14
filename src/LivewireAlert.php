@@ -20,7 +20,7 @@ trait LivewireAlert
             'toast' => true,
             'title' =>  '',
             'text' => null,
-            'showCancelButton' => true,
+            'showCancelButton' => false,
             'showConfirmButton' => false
         ]);
     }
@@ -30,15 +30,22 @@ trait LivewireAlert
      *
      *
      * @param  string  $event - success, info, warning, error
+     * @param  string  $message - alert message
      * @param  array  $options - SweetAlert2 options
      * @see https://sweetalert2.github.io/#configuration
      * @return void
      */
-    public function alert(string $event, $options)
-    {
+    public function alert(
+        string $event,
+        string $message,
+        array $options = []
+    ) {
         $this->emit(
             $event,
-            $this->alertOptions()->merge($options)->toArray()
+            $this->alertOptions()
+                ->merge($options)
+                ->put('title', $message)
+                ->toArray()
         );
     }
 
