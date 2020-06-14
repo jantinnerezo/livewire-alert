@@ -5,7 +5,7 @@ A very simple alerts utility for your existing livewire components. This package
 
 If you just want to show simple yet good-looking alert messages with nice animations this is for you!
 
-![preview](https://raw.githubusercontent.com/jantinnerezo/livewire-alert/master/preview.gif?token=AHC4OVKI6SNQ6DYWJ3AQQQK64WW6G)
+![preview](https://raw.githubusercontent.com/jantinnerezo/livewire-alert/master/toast-preview.gif?token=AHC4OVKI6SNQ6DYWJ3AQQQK64WW6G)
 
 
 ## Installation
