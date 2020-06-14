@@ -1,7 +1,7 @@
 
 # Livewire Alert
 
-A very simple alerts utility for your existing livewire components. This package uses SweetAlert2 out -of-the-box. [https://sweetalert2.github.io/](https://sweetalert2.github.io/).
+A very simple alerts utility for your existing livewire components. This package uses SweetAlert2 out-of-the-box. [https://sweetalert2.github.io/](https://sweetalert2.github.io/).
 
 If you just want to show simple yet good-looking alert messages with nice animations this is for you!
 
@@ -44,12 +44,7 @@ Let say you want to display a success alert message when a user successfully sub
 
 public function submit()
 {
-	// Your code here
-
-	// Successful alert message
 	$this->alert('success', 'Submission successful!');
-
-	// That's it!
 }
 
 ```
