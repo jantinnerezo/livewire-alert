@@ -13,14 +13,8 @@ class LivewireAlertServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-    }
-
-    /**
-     * Register the application services.
-     */
-    public function register()
-    {
-        Blade::directive('livewireAlertScripts', function () {
+        
+                Blade::directive('livewireAlertScripts', function () {
             return <<<'HTML'
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
                 <script>
@@ -54,6 +48,15 @@ class LivewireAlertServiceProvider extends ServiceProvider
                 </script>
             HTML;
         });
+        
+    }
+
+    /**
+     * Register the application services.
+     */
+    public function register()
+    {
+
 
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'livewire-alert');
