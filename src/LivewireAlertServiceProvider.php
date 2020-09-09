@@ -24,28 +24,28 @@ class LivewireAlertServiceProvider extends ServiceProvider
             return <<<'HTML'
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
                 <script>
-                    window.livewire.on('success', options => {
+                    Livewire.on('success', options => {
                         Swal.fire({
                             ...options,
                             icon: 'success'
                         });
                     });
 
-                    window.livewire.on('warning', options => {
+                    Livewire.on('warning', options => {
                         Swal.fire({
                             ...options,
                             icon: 'warning'
                         });
                     });
 
-                    window.livewire.on('info', options => {
+                    Livewire.on('info', options => {
                         Swal.fire({
                             ...options,
                             icon: 'info'
                         });
                     });
 
-                    window.livewire.on('error', options => {
+                    Livewire.on('error', options => {
                         Swal.fire({
                             ...options,
                             icon: 'error'

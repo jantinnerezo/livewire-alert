@@ -3,7 +3,6 @@
 namespace Jantinnerezo\LivewireAlert\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class LivewireAlertTest extends TestCase
