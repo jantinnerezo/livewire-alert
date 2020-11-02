@@ -26,19 +26,7 @@ Please make sure you include  it in your dependencies before using this package.
 
 ### Usage
 
-First, add the `LivewireAlert` trait to your livewire component.
-``` php
-
-use  Livewire\Component;
-use  Jantinnerezo\LivewireAlert\LivewireAlert;
-
-class YourAwesomeComponent extends  Component
-{
-	use  LivewireAlert;
-}
-
-```
-You should include `@livewireAlertScripts`  after `@livewireScripts`.
+First, add the `<x-livewire-alert::script />` component after `@livewireScripts`. That's it and you are good to go!
 
 Let say you want to display a success alert message when a user successfully submitted a form:
 ``` php
