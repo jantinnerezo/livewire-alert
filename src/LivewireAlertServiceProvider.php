@@ -4,15 +4,26 @@ namespace Jantinnerezo\LivewireAlert;
 
 use Illuminate\Support\ServiceProvider;
 
-use Illuminate\Support\Facades\Blade;
+use Livewire\Component;
 
 class LivewireAlertServiceProvider extends ServiceProvider
 {
+    protected $name = 'alert';
+
     /**
      * Bootstrap the application services.
      */
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'livewire-alert');
+
+        Component::macro($this->name, function ($type = 'success', $message = '', $options = []) {
+            $this->dispatchBrowserEvent('alert', [
+                'type' => $type,
+                'message' => $message,
+                'options' => $options
+            ]);
+        });
     }
 
     /**
@@ -20,41 +31,6 @@ class LivewireAlertServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Blade::directive('livewireAlertScripts', function () {
-            return <<<'HTML'
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-                <script>
-                    Livewire.on('success', options => {
-                        Swal.fire({
-                            ...options,
-                            icon: 'success'
-                        });
-                    });
-
-                    Livewire.on('warning', options => {
-                        Swal.fire({
-                            ...options,
-                            icon: 'warning'
-                        });
-                    });
-
-                    Livewire.on('info', options => {
-                        Swal.fire({
-                            ...options,
-                            icon: 'info'
-                        });
-                    });
-
-                    Livewire.on('error', options => {
-                        Swal.fire({
-                            ...options,
-                            icon: 'error'
-                        });
-                    });
-                </script>
-            HTML;
-        });
-
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'livewire-alert');
 
