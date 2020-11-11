@@ -24,6 +24,15 @@ class LivewireAlertServiceProvider extends ServiceProvider
                 'options' => $options
             ]);
         });
+ 
+        Component::macro('flash', function ($type = 'success', $message = '', $options = []) {
+            session()->flash('livewire-alert', [
+                'type' => $type,
+                'message' => $message,
+                'options' => $options
+            ]);
+        });
+       
     }
 
     /**
