@@ -54,6 +54,16 @@ $this->alert('warning', 'You have been warned!');
 $this->alert('error', 'Whoops! you did it again!');
 
 ```
+In cases you want to "flash" a success or failure message to the user
+``` php
+$this->flash('success', 'Submission successful!');
+
+$this->flash('error', 'Whoops! something went wrong!');
+
+return redirect()->to('/');
+
+```
+
 ### Configuration
 The default configurations:
 ``` php
