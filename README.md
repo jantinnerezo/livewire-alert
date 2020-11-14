@@ -55,9 +55,11 @@ $this->alert('error', 'Whoops! you did it again!');
 
 ```
 ### Alert Confirmation
-Livewire Alert also supports show confirmation alert on action.
+Livewire Alert also supports show confirmation alert on action 
+powered by alpinejs under the hood so make sure you also include alpinejs
+https://github.com/alpinejs/alpine. 
 
-First you need to include confirmation component to your livewire view.
+First you need to include confirmation component to your livewire views
 
 `<x-livewire-alert::confirm onConfirmed="onConfirmedAction" onCancelled="onCancelledCallBack" />`
 
