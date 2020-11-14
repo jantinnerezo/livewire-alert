@@ -61,6 +61,10 @@ First you need to include confirmation component to your livewire view.
 
 `<x-livewire-alert::confirm onConfirmed="onConfirmedAction" onCancelled="onCancelledCallBack" />`
 
+Make sure you add the livewire method names for `onConfirmed` and `onCancelled` props.
+
+Livewire Alert confirmation component will call the methods for you when user hits the confirm or cancel button.
+
 And then just add this to your livewire component class action method:
 
 ``` php
