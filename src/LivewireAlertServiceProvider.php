@@ -32,7 +32,13 @@ class LivewireAlertServiceProvider extends ServiceProvider
                 'options' => $options
             ]);
         });
-       
+
+        Component::macro('confirm', function ($title, $options = []) {
+            $this->dispatchBrowserEvent('confirming', [
+                'title' => $title,
+                'options' => $options
+            ]);
+        });
     }
 
     /**

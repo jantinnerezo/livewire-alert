@@ -54,6 +54,22 @@ $this->alert('warning', 'You have been warned!');
 $this->alert('error', 'Whoops! you did it again!');
 
 ```
+### Alert Confirmation
+Livewire Alert also supports show confirmation alert on action.
+
+First you need to include confirmation component to your livewire view.
+
+`<x-livewire-alert::confirm onConfirmed="onConfirmedAction" onCancelled="onCancelledCallBack" />`
+
+And then just add this to your livewire component class action method:
+
+``` php
+$this->confirm('Are you sure?', [
+    'text' => 'You are about to delete something'
+]);
+
+return;
+```
 ### Flash Messages
 In cases you want to "flash" a success or failure message to the user
 ``` php
