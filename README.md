@@ -1,6 +1,9 @@
 
 # Livewire Alert
-![preview](https://banners.beyondco.de/Livewire%20Alert.png?theme=dark&packageName=jantinnerezo%2Flivewire-alert&pattern=architect&style=style_2&description=A+very+simple+SweetAlert2+utility+for+your+livewire+components&md=1&showWatermark=1&fontSize=100px&images=exclamation-circle&widths=400&heights=400)
+[![Latest Stable Version](https://poser.pugx.org/jantinnerezo/livewire-alert/v)](//packagist.org/packages/jantinnerezo/livewire-alert)
+[![Total Downloads](https://poser.pugx.org/jantinnerezo/livewire-alert/downloads)](//packagist.org/packages/jantinnerezo/livewire-alert)
+[![License](https://poser.pugx.org/jantinnerezo/livewire-alert/license)](//packagist.org/packages/jantinnerezo/livewire-alert)
+
 A very simple alerts utility for your existing livewire components. This package uses SweetAlert2 out-of-the-box. [https://sweetalert2.github.io/](https://sweetalert2.github.io/).
 
 If you just want to show simple yet good-looking alert messages with nice animations this is for you!
