@@ -35,9 +35,13 @@ class LivewireAlertServiceProvider extends ServiceProvider
         Component::macro('confirm', function ($title, $options = []) {
             $identifier = (string) Str::uuid();
 
+            // Dispatch unique event identifier
             $this->dispatchBrowserEvent('confirming', $identifier);
 
-            $this->options['title'] = $title;
+            // Set the title separated from defining a config
+            $options['title'] = $title;
+
+            // Dispatch the unique event identifier
             $this->dispatchBrowserEvent($identifier, [
                 'options' => collect($options)->except([
                     'onConfirmed',
