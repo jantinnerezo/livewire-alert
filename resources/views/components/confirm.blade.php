@@ -1,13 +1,23 @@
-@props(['onConfirmed','onCancelled' => null])
-<div 
-    x-data="" 
+<div
+    x-data=""
     @confirming.window="
-        const options = {title:$event.detail.title,text:null,icon:'warning',showCancelButton:true,confirmButtonColor:'#3085d6',cancelButtonColor:'#d33',confirmButtonText:$event.detail.confirmButtonText ?? 'Yes',...$event.detail.options};
-        Swal.fire(options).then((result) => {
-            if (result.isConfirmed) { @this.call('{!! $onConfirmed !!}'); } 
-            else { const cancelCallback = '{!! $onCancelled !!}'; if (!cancelCallback) { return; } @this.call(cancelCallback) }
-        })
+        window.addEventListener($event.detail, event => {
+            const options = {
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: event.detail.options.confirmButtonText ?? 'Yes',
+                ...event.detail.options
+            };
+
+            Swal.fire(options).then((result) => {
+                if (result.isConfirmed) { @this.call(event.detail.onConfirmed); }
+                else { const cancelCallback = event.detail.onCancelled; if (!cancelCallback) { return; } @this.call(cancelCallback) }
+            })
+        });
     "
     wire:ignore
 >
+    {{ $slot }}
 </div>

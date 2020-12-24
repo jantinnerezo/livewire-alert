@@ -8,8 +8,6 @@ use Livewire\Component;
 
 class LivewireAlertServiceProvider extends ServiceProvider
 {
-    protected $name = 'alert';
-
     /**
      * Bootstrap the application services.
      */
@@ -17,14 +15,14 @@ class LivewireAlertServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'livewire-alert');
 
-        Component::macro($this->name, function ($type = 'success', $message = '', $options = []) {
+        Component::macro('alert', function ($type = 'success', $message = '', $options = []) {
             $this->dispatchBrowserEvent('alert', [
                 'type' => $type,
                 'message' => $message,
                 'options' => $options
             ]);
         });
- 
+
         Component::macro('flash', function ($type = 'success', $message = '', $options = []) {
             session()->flash('livewire-alert', [
                 'type' => $type,
@@ -33,10 +31,18 @@ class LivewireAlertServiceProvider extends ServiceProvider
             ]);
         });
 
-        Component::macro('confirm', function ($title, $options = []) {
-            $this->dispatchBrowserEvent('confirming', [
-                'title' => $title,
-                'options' => $options
+        Component::macro('confirming', function ($title, $options = []) {
+            $identifier = (string) Str::uuid();
+
+            $this->dispatchBrowserEvent('asking', $identifier);
+
+            $this->dispatchBrowserEvent($identifier, [
+                'options' => collect($options)->except([
+                    'onConfirmed',
+                    'onCancelled'
+                ])->toArray(),
+                'onConfirmed' => $options['onConfirmed'],
+                'onCancelled' => $options['onCancelled'],
             ]);
         });
     }
@@ -46,9 +52,6 @@ class LivewireAlertServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'livewire-alert');
-
         // Register the main class to use with the facade
         $this->app->singleton('livewire-alert', function () {
             return new LivewireAlert;
