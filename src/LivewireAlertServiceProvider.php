@@ -37,6 +37,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
 
             $this->dispatchBrowserEvent('confirming', $identifier);
 
+            $this->options['title'] = $title;
             $this->dispatchBrowserEvent($identifier, [
                 'options' => collect($options)->except([
                     'onConfirmed',
