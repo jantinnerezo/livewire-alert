@@ -5,6 +5,7 @@ namespace Jantinnerezo\LivewireAlert;
 use Illuminate\Support\ServiceProvider;
 
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class LivewireAlertServiceProvider extends ServiceProvider
 {
