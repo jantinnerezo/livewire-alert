@@ -31,10 +31,10 @@ class LivewireAlertServiceProvider extends ServiceProvider
             ]);
         });
 
-        Component::macro('confirming', function ($title, $options = []) {
+        Component::macro('confirm', function ($title, $options = []) {
             $identifier = (string) Str::uuid();
 
-            $this->dispatchBrowserEvent('asking', $identifier);
+            $this->dispatchBrowserEvent('confirming', $identifier);
 
             $this->dispatchBrowserEvent($identifier, [
                 'options' => collect($options)->except([
