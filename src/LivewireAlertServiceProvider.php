@@ -43,7 +43,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
                     'onCancelled'
                 ])->toArray(),
                 'onConfirmed' => $options['onConfirmed'],
-                'onCancelled' => $options['onCancelled'],
+                'onCancelled' => $options['onCancelled'] ?? null,
             ]);
         });
     }
