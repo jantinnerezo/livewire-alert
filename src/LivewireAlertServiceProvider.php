@@ -17,7 +17,13 @@ class LivewireAlertServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'livewire-alert');
 
+        $this->publishes([
+            __DIR__ . '/../config/config.php' => config_path('livewire-alert.php'),
+        ]);
+        
         Component::macro($this->name, function ($type = 'success', $message = '', $options = []) {
+            $options = array_merge(config('livewire-alert'), $options);
+            
             $this->dispatchBrowserEvent('alert', [
                 'type' => $type,
                 'message' => $message,
@@ -26,6 +32,8 @@ class LivewireAlertServiceProvider extends ServiceProvider
         });
  
         Component::macro('flash', function ($type = 'success', $message = '', $options = []) {
+            $options = array_merge(config('livewire-alert'), $options);
+            
             session()->flash('livewire-alert', [
                 'type' => $type,
                 'message' => $message,
@@ -34,6 +42,8 @@ class LivewireAlertServiceProvider extends ServiceProvider
         });
 
         Component::macro('confirm', function ($title, $options = []) {
+            $options = array_merge(config('livewire-alert'), $options);
+            
             $this->dispatchBrowserEvent('confirming', [
                 'title' => $title,
                 'options' => $options
