@@ -3,7 +3,6 @@
 namespace Jantinnerezo\LivewireAlert;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Blade;
 
 use Livewire\Component;
 use Illuminate\Support\Str;
