@@ -27,7 +27,9 @@ class LivewireAlertServiceProvider extends ServiceProvider
 
     protected function registerAlertMacro()
     {
-        Component::macro('alert', function ($type = 'success', $message = '', $options = []) {
+        Component::macro($this->name, function ($type = 'success', $message = '', $options = []) {
+            $options = array_merge(config('livewire-alert'), $options);
+
             $this->dispatchBrowserEvent('alert', [
                 'type' => $type,
                 'message' => $message,
@@ -39,6 +41,8 @@ class LivewireAlertServiceProvider extends ServiceProvider
     public function registerFlashMacro()
     {
         Component::macro('flash', function ($type = 'success', $message = '', $options = []) {
+            $options = array_merge(config('livewire-alert'), $options);
+
             session()->flash('livewire-alert', [
                 'type' => $type,
                 'message' => $message,
@@ -50,6 +54,8 @@ class LivewireAlertServiceProvider extends ServiceProvider
     public function registerConfirmMacro()
     {
         Component::macro('confirm', function ($title, $options = []) {
+            $options = array_merge(config('livewire-alert'), $options);
+
             $identifier = (string) Str::uuid();
 
             // Dispatch unique event identifier
@@ -65,7 +71,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
                     'onCancelled'
                 ])->toArray(),
                 'onConfirmed' => $options['onConfirmed'],
-                'onCancelled' => $options['onCancelled'] ?? null,
+                'onCancelled' => $options['onCancelled'] ?? null
             ]);
         });
     }
@@ -75,6 +81,9 @@ class LivewireAlertServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Automatically apply the package configuration
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'livewire-alert');
+
         // Register the main class to use with the facade
         $this->app->singleton('livewire-alert', function () {
             return new LivewireAlert;
