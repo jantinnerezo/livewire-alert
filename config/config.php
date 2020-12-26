@@ -11,5 +11,4 @@ return [
     'text' => null,
     'showCancelButton' => true,
     'showConfirmButton' => false,
-
 ];
