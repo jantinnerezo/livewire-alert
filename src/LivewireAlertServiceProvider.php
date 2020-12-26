@@ -19,7 +19,6 @@ class LivewireAlertServiceProvider extends ServiceProvider
         $this->registerAlertMacro();
         $this->registerFlashMacro();
         $this->registerConfirmMacro();
-        $this->registerBladeDirectives();
     }
 
     protected function registerViews()
@@ -69,13 +68,6 @@ class LivewireAlertServiceProvider extends ServiceProvider
                 'onConfirmed' => $options['onConfirmed'],
                 'onCancelled' => $options['onCancelled'] ?? null,
             ]);
-        });
-    }
-
-    protected function registerBladeDirectives()
-    {
-        Blade::directive('livewireAlertScripts', function () {
-            return "<x-livewire-alert::scripts />";
         });
     }
 
