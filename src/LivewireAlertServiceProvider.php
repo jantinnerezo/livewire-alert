@@ -3,6 +3,7 @@
 namespace Jantinnerezo\LivewireAlert;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -14,8 +15,20 @@ class LivewireAlertServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'livewire-alert');
+        $this->registerViews();
+        $this->registerAlertMacro();
+        $this->registerFlashMacro();
+        $this->registerConfirmMacro();
+        $this->registerBladeDirectives();
+    }
 
+    protected function registerViews()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'livewire-alert');
+    }
+
+    protected function registerAlertMacro()
+    {
         Component::macro('alert', function ($type = 'success', $message = '', $options = []) {
             $this->dispatchBrowserEvent('alert', [
                 'type' => $type,
@@ -23,7 +36,10 @@ class LivewireAlertServiceProvider extends ServiceProvider
                 'options' => $options
             ]);
         });
+    }
 
+    public function registerFlashMacro()
+    {
         Component::macro('flash', function ($type = 'success', $message = '', $options = []) {
             session()->flash('livewire-alert', [
                 'type' => $type,
@@ -31,7 +47,10 @@ class LivewireAlertServiceProvider extends ServiceProvider
                 'options' => $options
             ]);
         });
+    }
 
+    public function registerConfirmMacro()
+    {
         Component::macro('confirm', function ($title, $options = []) {
             $identifier = (string) Str::uuid();
 
@@ -50,6 +69,13 @@ class LivewireAlertServiceProvider extends ServiceProvider
                 'onConfirmed' => $options['onConfirmed'],
                 'onCancelled' => $options['onCancelled'] ?? null,
             ]);
+        });
+    }
+
+    protected function registerBladeDirectives()
+    {
+        Blade::directive('livewireAlertScripts', function () {
+            return "<x-livewire-alert::scripts />";
         });
     }
 
