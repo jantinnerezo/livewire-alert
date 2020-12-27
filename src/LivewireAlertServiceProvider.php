@@ -18,6 +18,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
         $this->registerAlertMacro();
         $this->registerFlashMacro();
         $this->registerConfirmMacro();
+        $this->registerPublishables();
     }
 
     protected function registerViews()
@@ -74,6 +75,15 @@ class LivewireAlertServiceProvider extends ServiceProvider
                 'onCancelled' => $options['onCancelled'] ?? null
             ]);
         });
+    }
+
+    public function registerPublishables()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../config/config.php' => config_path('livewire-alert.php'),
+            ], 'config');
+        }
     }
 
     /**
