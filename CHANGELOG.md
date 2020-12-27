@@ -32,3 +32,10 @@ All notable changes to `livewire-alert` will be documented in this file
 - Refactor alert javascript codes.
 - Added config.php file with default SweetAlert2 config.
 - Removed SweetAlert2 script tag, should no longer be included by default.
+
+## 2.1.1
+- Separate config array for alert and confirm
+
+## 2.1.2
+- Added publishable config
+
