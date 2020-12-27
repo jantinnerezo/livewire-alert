@@ -5,10 +5,19 @@
  * https://sweetalert2.github.io/#configuration
  */
 return [
-    'position' => 'top-end',
-    'timer' => 3000,
-    'toast' => true,
-    'text' => null,
-    'showCancelButton' => true,
-    'showConfirmButton' => false,
+    'alert' => [
+        'position' => 'top-end',
+        'timer' => 3000,
+        'toast' => true,
+        'text' => null,
+        'showCancelButton' => true,
+        'showConfirmButton' => false,
+    ],
+    'confirm' => [
+        'position' => 'center',
+        'toast' => false,
+        'timer' => null,
+        'showConfirmButton' => true,
+        'cancelButtonText' => 'No'
+    ]
 ];
