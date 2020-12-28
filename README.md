@@ -24,7 +24,7 @@ composer require jantinnerezo/livewire-alert
 Visit the new Livewire Alert documentation page https://livewire-alert.jantinnerezo.com for more details and playable demo.
 
 
-## Credits to Contributors
+## Contributors :computer:
 
 <a href="https://github.com/jantinnerezo/livewire-alert/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" />
