@@ -38,11 +38,11 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 If you discover any security related issues, please email erezojantinn@gmail.com instead of using the issue tracker.
 
-## Credits
+## Credits to Contributors
 
--  [Jantinn Erezo](https://github.com/jantinnerezo)
-
--  [All Contributors](../../contributors)
+<a href="https://github.com/jantinnerezo/livewire-alert/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" />
+</a>
 
 ## License
 
