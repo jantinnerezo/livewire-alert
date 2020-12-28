@@ -24,6 +24,13 @@ composer require jantinnerezo/livewire-alert
 Visit the new Livewire Alert documentation page https://livewire-alert.jantinnerezo.com for more details and playable demo.
 
 
+## Credits to Contributors
+
+<a href="https://github.com/jantinnerezo/livewire-alert/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" />
+</a>
+
+
 ### Changelog
 
 
@@ -37,12 +44,6 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 ### Security
 
 If you discover any security related issues, please email erezojantinn@gmail.com instead of using the issue tracker.
-
-## Credits to Contributors
-
-<a href="https://github.com/jantinnerezo/livewire-alert/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" />
-</a>
 
 ## License
 
