@@ -31,20 +31,20 @@ Visit the new Livewire Alert documentation page https://livewire-alert.jantinner
 </a>
 
 
-## Changelog
+## :recycle: Changelog
 
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 
-## Contributing
+## :hammer: Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## :lock: Security
 
 If you discover any security related issues, please email erezojantinn@gmail.com instead of using the issue tracker.
 
-## License
+## :label: License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
