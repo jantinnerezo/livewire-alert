@@ -10,7 +10,7 @@ return [
         'timer' => 3000,
         'toast' => true,
         'text' => null,
-        'showCancelButton' => true,
+        'showCancelButton' => false,
         'showConfirmButton' => false
     ],
     'confirm' => [
