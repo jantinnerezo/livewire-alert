@@ -93,10 +93,5 @@ class LivewireAlertServiceProvider extends ServiceProvider
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'livewire-alert');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('livewire-alert', function () {
-            return new LivewireAlert;
-        });
     }
 }
