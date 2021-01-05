@@ -39,3 +39,6 @@ All notable changes to `livewire-alert` will be documented in this file
 ## 2.1.2
 - Added publishable config
 
+## 2.1.3
+- Optimize blade component script code to utilize config
+- Added more default config to livewire-alert.php

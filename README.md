@@ -8,7 +8,7 @@ This package provides a simple alert utilities for your livewire components. Cur
 You can now use your favorite SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
 
 
-## Installation
+## :rocket: Installation
 
 You can install the package via composer:
 
@@ -19,32 +19,32 @@ composer require jantinnerezo/livewire-alert
 ```
 
 
-## Documentation
+## :page_facing_up: Documentation
 
 Visit the new Livewire Alert documentation page https://livewire-alert.jantinnerezo.com for more details and playable demo.
 
 
-## Contributors :computer:
+## :computer: Contributors
 
 <a href="https://github.com/jantinnerezo/livewire-alert/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" />
 </a>
 
 
-### Changelog
+## :recycle: Changelog
 
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 
-## Contributing
+## :hammer: Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## :lock: Security
 
 If you discover any security related issues, please email erezojantinn@gmail.com instead of using the issue tracker.
 
-## License
+## :label: License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
