@@ -30,7 +30,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
     protected function registerAlertMacro()
     {
         Component::macro('alert', function ($type = 'success', $message = '', $options = []) {
-            $options = array_merge(config('livewire-alert.alert'), $options);
+            $options = array_merge(config('livewire-alert.alert') ?? [], $options);
 
             $this->dispatchBrowserEvent('alert', [
                 'type' => $type,
@@ -43,7 +43,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
     public function registerFlashMacro()
     {
         Component::macro('flash', function ($type = 'success', $message = '', $options = []) {
-            $options = array_merge(config('livewire-alert.alert'), $options);
+            $options = array_merge(config('livewire-alert.alert') ?? [], $options);
 
             session()->flash('livewire-alert', [
                 'type' => $type,
@@ -56,7 +56,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
     public function registerConfirmMacro()
     {
         Component::macro('confirm', function ($title, $options = []) {
-            $options = array_merge(config('livewire-alert.confirm'), $options);
+            $options = array_merge(config('livewire-alert.confirm') ?? [], $options);
 
             $identifier = (string) Str::uuid();
 
