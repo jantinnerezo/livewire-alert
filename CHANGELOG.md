@@ -45,3 +45,8 @@ All notable changes to `livewire-alert` will be documented in this file
 
 ## 2.1.4
 - Fixed unable to install livewire alert in laravel 8.20.1
+
+## 2.1.5
+- Fixed flash null config issue #28
+
+
