@@ -14,7 +14,7 @@ window.addEventListener('confirming', confirming => {
             confirmButtonText: event.detail.options.confirmButtonText ?? 'Yes',
             ...event.detail.options
         }).then((result) => {
-            if (result.isConfirmed) { Livewire.emit(event.detail.onConfirmed); }
+            if (result.isConfirmed) { Livewire.emit(event.detail.onConfirmed,event.detail.options["inputAttributes"]); }
             else { const cancelCallback = event.detail.onCancelled; if (!cancelCallback) { return; } Livewire.emit(cancelCallback) }
         })
     });
