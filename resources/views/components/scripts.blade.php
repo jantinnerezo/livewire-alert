@@ -23,11 +23,13 @@ window.addEventListener('confirming', confirming => {
 
 @if (session()->has('livewire-alert'))
     <script>
-        const flash = @json(session('livewire-alert'));
-        Swal.fire({
-            title: flash.message ?? '',
-            icon: flash.type ?? null,
-            ...flash.options
-        })
+        window.onload = (event) => {
+            const flash = @json(session('livewire-alert'));
+            Swal.fire({
+                title: flash.message ?? '',
+                icon: flash.type ?? null,
+                ...flash.options
+            })
+       };
     </script>
 @endif
