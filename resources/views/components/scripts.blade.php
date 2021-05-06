@@ -6,6 +6,12 @@ window.addEventListener('alert', event => {
         icon: event.detail.type ?? null,
         ...event.detail.options
     })
+
+    if(event.detail.options.notificationTone) {
+        const defaultNotificationTone = '/notification-tones/Flick.ogg';
+        const notificationTone = new Audio(event.detail.options.notificationToneSrc ?? defaultNotificationTone);
+        notificationTone.play();
+    }
 });
 
 window.addEventListener('confirming', confirming => {
@@ -14,7 +20,7 @@ window.addEventListener('confirming', confirming => {
             confirmButtonText: event.detail.options.confirmButtonText ?? 'Yes',
             ...event.detail.options
         }).then((result) => {
-            if (result.isConfirmed) { Livewire.emit(event.detail.onConfirmed,event.detail.options["inputAttributes"]); }
+            if (result.isConfirmed) { Livewire.emit(event.detail.onConfirmed); }
             else { const cancelCallback = event.detail.onCancelled; if (!cancelCallback) { return; } Livewire.emit(cancelCallback) }
         })
     });

@@ -4,7 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/jantinnerezo/livewire-alert/downloads)](//packagist.org/packages/jantinnerezo/livewire-alert)
 [![License](https://poser.pugx.org/jantinnerezo/livewire-alert/license)](//packagist.org/packages/jantinnerezo/livewire-alert)
 
-This package provides a simple alert utilities for your livewire components. Currently using [SweetAlert2](https://sweetalert2.github.io/) under-the-hood.
+This package provides a simple alert utilities for your livewire components. Currently using [SweetAlert2](https://www.example.com) under-the-hood.
 You can now use your favorite SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
 
 

@@ -84,6 +84,10 @@ class LivewireAlertServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('livewire-alert.php'),
             ], 'config');
+
+            $this->publishes([
+                __DIR__ . '/../assets/notification-tones/Flick.ogg' => public_path('notification-tones/Flick.ogg'),
+            ], 'public');
         }
     }
 
