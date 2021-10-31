@@ -5,3 +5,5 @@ vendor
 coverage
 toast-preview.gif
 popup-preview.gif
+mix-manifest.json
+/node_modules

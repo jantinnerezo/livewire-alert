@@ -2,7 +2,11 @@
 
 namespace Jantinnerezo\LivewireAlert;
 
-class LivewireAlert
-{
-    // Silence is golden
+use Livewire\Component;
+class LivewireAlert extends Component
+{   
+    public function render()
+    {
+        return view('livewire-alert::livewire.playground');
+    }
 }
