@@ -1,0 +1,21 @@
+{
+  "name": "livewire-alert",
+  "version": "2.1.9",
+  "description": "This package provides a simple alert utilities for your livewire components",
+  "main": "resources/js/index.js",
+  "repository": "git@github.com:jantinnerezo/livewire-alert.git",
+  "author": "Jantinn Erezo <erezojantinn@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
+  },
+  "dependencies": {
+    "laravel-mix": "^6.0.37"
+  }
+}
