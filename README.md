@@ -8,7 +8,7 @@ This package provides a simple alert utilities for your livewire components. Cur
 You can now use your favorite SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
 
 
-## :rocket: Installation
+## Installation
 
 You can install the package via composer:
 
@@ -18,13 +18,41 @@ composer require jantinnerezo/livewire-alert
 
 ```
 
+Next, add the scripts component to your template after the `@livewireScripts`.
 
-## :page_facing_up: Documentation
+> SweetAlert2 script is not included by default so make sure you include it before `<x-livewire-alert::scripts />`
 
-Visit the new Livewire Alert documentation page https://livewire-alert.jantinnerezo.com for more details and playable demo.
+``` html
+<body> 
+
+  @livewireScripts
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <x-livewire-alert::scripts />
+  
+</body> 
+```
 
 
-## :computer: Contributors
+## Requirements
+This package uses Livewire under the hood. Please make sure you include it in your dependencies before using this package.
+
+- PHP 7.2 or higher
+
+- Laravel 7 or 8
+
+- Livewire
+
+- SweetAlert2
+
+
+## Demo
+
+Checkout the playable demo https://livewire-alert.jantinnerezo.com
+
+
+## Contributors
 
 <a href="https://github.com/jantinnerezo/livewire-alert/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" />
