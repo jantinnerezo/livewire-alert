@@ -5,7 +5,7 @@ namespace Jantinnerezo\LivewireAlert;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-
+use Livewire\Livewire;
 use Livewire\Component;
 
 class LivewireAlertServiceProvider extends ServiceProvider
@@ -23,6 +23,8 @@ class LivewireAlertServiceProvider extends ServiceProvider
         View::composer('livewire-alert::components.scripts', function ($view) {
             $view->jsPath = __DIR__.'/../public/livewire-alert.js';
         });
+
+        Livewire::component('livewire-alert-demo', LivewireAlert::class);
     }
 
     protected function registerViews()
@@ -92,6 +94,10 @@ class LivewireAlertServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('livewire-alert.php'),
             ], 'config');
+
+            $this->publishes([
+                __DIR__ . '/../public' => public_path('vendor/')
+            ], 'livewire-alert');
         }
     }
 
