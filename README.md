@@ -34,6 +34,19 @@ Next, add the scripts component to your template after the `@livewireScripts`.
 </body> 
 ```
 
+You can also manually include the script by publishing `livewire-alert.js`
+
+``` bash
+php artisan vendor:publish --tag=livewire-alert:assets
+```
+
+And then in your view you can do the following:
+
+``` html
+<script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script> 
+```
+
+Instead of `<x-livewire-alert::scripts />`.
 
 ## Requirements
 This package uses Livewire under the hood. Please make sure you include it in your dependencies before using this package.
@@ -50,6 +63,31 @@ This package uses Livewire under the hood. Please make sure you include it in yo
 ## Demo
 
 Checkout the playable demo https://livewire-alert.jantinnerezo.com
+
+## Usage
+
+You can use livewire alert by using the `WithAlert` trait.
+
+The first parameter would be the icon of the alert. `success`, `info`, `warning`, `question` and `error`.
+
+``` php
+use Jantinnerezo\LivewireAlert\WithAlert;
+ 
+class Index extends Component
+{
+    use WithPagination;
+    
+    public function submit()
+    {
+        $this->alert('success', 'Basic Alert');
+    }
+}
+```
+
+## Configuration
+
+Passing additional configuration.
+
 
 
 ## Contributors
