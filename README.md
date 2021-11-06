@@ -68,6 +68,8 @@ Checkout the playable demo https://livewire-alert.jantinnerezo.com
 
 You can use livewire alert by using the `WithAlert` trait.
 
+The first parameter would be the icon of the alert. `success`, `info`, `warning`, `question` and `error`.
+
 ``` php
 use Jantinnerezo\LivewireAlert\WithAlert;
  
@@ -83,6 +85,9 @@ class Index extends Component
 ```
 
 ## Configuration
+
+Passing additional configuration.
+
 
 
 ## Contributors
