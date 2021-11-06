@@ -2,6 +2,7 @@
 
 namespace Jantinnerezo\LivewireAlert\Tests;
 
+use Jantinnerezo\LivewireAlert\Exceptions\AlertException;
 use Livewire\Livewire;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -62,5 +63,29 @@ class LivewireAlertTest extends TestCase
             ->call('showAlert')
             ->emit('progressFinished')
             ->assertDispatchedBrowserEvent('alert');
+    }
+
+    public function testIfExceptionIsThrownWhenIconIsInvalid()
+    {
+        $invalidIcon = 'failed';
+        
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Invalid '{$invalidIcon}' alert icon.");
+        
+        Livewire::test(LivewireAlert::class)
+            ->set('status', $invalidIcon)
+            ->call('showAlert');
+    }
+
+    public function testIfExceptionIsThrownWhenConfigurationKeyIsUnknown()
+    {
+        $invalidIcon = 'failed';
+        
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Invalid '{$invalidIcon}' alert icon.");
+        
+        Livewire::test(LivewireAlert::class)
+            ->set('status', $invalidIcon)
+            ->call('showAlert');
     }
 }

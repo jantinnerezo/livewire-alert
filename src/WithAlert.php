@@ -3,6 +3,7 @@
 namespace Jantinnerezo\LivewireAlert;
 
 use Illuminate\Support\Arr;
+use Jantinnerezo\LivewireAlert\Exceptions\AlertException;
 
 trait WithAlert
 {
@@ -43,7 +44,10 @@ trait WithAlert
     {
         $type = Arr::get($configuration, 'type');
         $message = Arr::get($configuration, 'message');
-        $options = Arr::get($configuration, 'options');
+        $options = Arr::only(
+            Arr::get($configuration, 'options'),
+            $this->configurationKeys()
+        );
         $isFlash = Arr::has($configuration, 'flash') && Arr::get($configuration, 'flash') === true;
 
         $options = array_merge(
@@ -51,6 +55,12 @@ trait WithAlert
             config('livewire-alert.' . $type) ?? [],
             $options
         );
+
+        if (! in_array($type,$this->livewireAlertIcons())) {
+            throw new AlertException(
+                "Invalid '{$type}' alert icon."
+            );
+        }
 
         $payload = [
             'type' => $type,
@@ -68,6 +78,17 @@ trait WithAlert
         session()->flash('livewire-alert', $payload);
     }
 
+    protected function livewireAlertIcons(): array
+    {
+        return [
+            'success',
+            'info',
+            'warning',
+            'error',
+            'question'
+        ];
+    }
+
     protected function livewireAlertEvents(): array
     {
         return [
@@ -75,6 +96,77 @@ trait WithAlert
             'onDismissed', 
             'onDenied',
             'onProgressFinished'
+        ];
+    }
+
+    protected function configurationKeys(): array
+    {
+        return [
+            'title',
+            'titleText',
+            'html',
+            'text',
+            'icon',
+            'iconColor',
+            'iconHtml',
+            'showClass',
+            'hideClass',
+            'footer',
+            'backdrop',
+            'toast',
+            'target',
+            'input',
+            'width',
+            'padding',
+            'background',
+            'position',
+            'grow',
+            'customClass',
+            'timer',
+            'timerProgressBar',
+            'heightAuto',
+            'allowOutsideClick',
+            'allowEscapeKey',
+            'allowEnterKey',
+            'stopKeydownPropagation',
+            'keydownListenerCapture',
+            'showConfirmButton',
+            'showDenyButton',
+            'showCancelButton',
+            'confirmButtonText',
+            'denyButtonText',
+            'cancelButtonText',
+            'confirmButtonText',
+            'confirmButtonColor',
+            'denyButtonColor',
+            'cancelButtonColor',
+            'confirmButtonAriaLabel',
+            'denyButtonAriaLabel',
+            'cancelButtonAriaLabel',
+            'buttonsStyling',
+            'reverseButtons',
+            'focusConfirm',
+            'returnFocus',
+            'focusDeny',
+            'focusCancel',
+            'showCloseButton',
+            'closeButtonHtml',
+            'closeButtonAriaLabel',
+            'loaderHtml',
+            'showLoaderOnConfirm',
+            'showLoaderOnDeny',
+            'scrollbarPadding',
+            'imageUrl',
+            'imageWidth',
+            'imageHeight',
+            'imageAlt',
+            'inputLabel',
+            'inputPlaceholder',
+            'inputValue',
+            'inputOptions',
+            'inputAutoTrim',
+            'inputAttributes',
+            'events'
         ];
     }
 }
