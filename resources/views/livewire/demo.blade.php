@@ -1,5 +1,5 @@
 <div>
-    <div>
+    <div wire:loading.class="opacity-50">
         <div class="grid grid-cols-4 gap-4">
             @foreach ($this->statuses as $statusValue => $class)
                 <label 
@@ -23,11 +23,12 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4">
             <div>
-                <label for="company-website" class="block text-sm font-medium text-gray-700">
+                <label for="title" class="block text-sm font-medium text-gray-700">
                   Title
                 </label>
                 <div class="mt-1 flex rounded-md shadow-sm">
-                  <input 
+                  <input
+                    id="title"
                     type="text" 
                     class="focus:ring-light-blue-500 focus:border-light-blue-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
                     wire:model.defer="title"
@@ -47,7 +48,7 @@
                 </div>
             </div>
             <div class="w-full" x-data="{ open: false }">
-                <label for="company-website" class="block text-sm font-medium text-gray-700">
+                <label for="position" class="block text-sm font-medium text-gray-700">
                     Position
                 </label>
                 <div class="relative inline-block text-left mt-1 w-full z-50">
@@ -243,6 +244,19 @@
                     </div>
                 </div>
             @endif
+            <div>
+                <label for="width" class="block text-sm font-medium text-gray-700">
+                  Width
+                </label>
+                <div class="mt-1 flex rounded-md shadow-sm">
+                  <input
+                    id="width"
+                    type="number" 
+                    class="focus:ring-light-blue-500 focus:border-light-blue-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
+                    wire:model.defer="configuration.width"
+                >
+                </div>
+            </div>
             <div class="col-span-2 flex items-center space-x-6">
                 <div class="flex items-center">
                     <div class="flex items-center h-5">

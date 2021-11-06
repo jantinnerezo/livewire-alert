@@ -53,7 +53,10 @@ function afterAlertInteraction(interaction) {
         return;
     }
 
-    if (interaction.dismiss === Swal.DismissReason.timer) {
+    if (
+        interaction.onProgressFinished &&
+        interaction.dismiss === Swal.DismissReason.timer
+    ) {
         Livewire.emit(interaction.onProgressFinished, interaction.result);
 
         return;

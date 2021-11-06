@@ -5,6 +5,8 @@ namespace Jantinnerezo\LivewireAlert;
 use Livewire\Component;
 class LivewireAlert extends Component
 {   
+    use WithAlert;
+
     public $status = 'success';
 
     public $flash = false;
@@ -102,7 +104,8 @@ class LivewireAlert extends Component
             'confirmed',
             'denied',
             'dismissed',
-            'progressFinished'
+            'progressFinished',
+            'testConfirmed'
         ];  
     }
 
@@ -113,7 +116,7 @@ class LivewireAlert extends Component
 
     public function showAlert()
     {
-        if (!$this->flash) {
+        if (! $this->flash) {
             $this->alert(
                 $this->status,
                 $this->title,
@@ -128,40 +131,61 @@ class LivewireAlert extends Component
             $this->title,
             $this->configuration
         );
-
-        return redirect()->to('/');
     }
 
-    public function confirmed($data)
+    public function showConfirmAlert()
     {
-        $this->alert('success', 'Confirmed', [
-            'text' => "You clicked the {$this->configuration['confirmButtonText']} button",
+        $this->confirm('Confirm Alert', [
+            'onConfirmed' => 'confirmed'
+        ]);
+    }
+
+    public function confirmed()
+    {
+        $this->alert('info', 'On Confirmed Event', [
+            'timer' => null,
+            'text' => "Fired from livewire onConfirmed event, do what you want here when the user clicks confirm.",
             'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Got it!',
             'toast' => false
         ]);
     }
 
-    public function denied($data)
+    public function denied()
     {
-        $this->alert('error', 'Denied', [
-            'text' => "You clicked the {$this->configuration['denyButtonText']} button",
+        $this->alert('info', 'On Denied Event', [
+            'timer' => null,
+            'text' => "Fired from livewire onDenied event, do what you want here when the user clicks deny.",
             'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Got it!',
             'toast' => false
         ]);
     }
 
-    public function dismissed($data)
+    public function dismissed()
     {
-        $this->alert('error', 'Dismissed', [
-            'text' => "You clicked the {$this->configuration['denyButtonText']} button",
+        $this->alert('info', 'On Dismissed Event', [
+            'timer' => null,
+            'text' => "Fired from livewire onDismissed event, do what you want here when the user dismissed the alert.",
             'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Got it!',
             'toast' => false
         ]);
     }
 
-    public function progressFinished($data)
+    public function progressFinished()
     {
-        $this->responses['progressFinished'] = $data;
+        $this->alert('info', 'On Progress Finished Event', [
+            'timer' => null,
+            'text' => "Fired from livewire onProgressFinished event. Do what you want here when alert finished loading.",
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Got it!',
+            'toast' => false
+        ]);
     }
 
     public function render()

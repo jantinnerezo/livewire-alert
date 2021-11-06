@@ -16,13 +16,22 @@
         }
     ],
     "require": {
-        "php": "^7.1|^7.2|^7.3|^7.4|^8.0",
+        "php": "^7.4|^8.0",
         "illuminate/support": "^5.5 || ^6.0 || ^7.0 || ^8.0",
         "livewire/livewire": "^2.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.15",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
             "Jantinnerezo\\LivewireAlert\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "Jantinnerezo\\LivewireAlert\\Tests\\": "tests"
         }
     },
     "scripts": {
