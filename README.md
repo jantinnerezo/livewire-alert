@@ -20,7 +20,7 @@ composer require jantinnerezo/livewire-alert
 
 Next, add the scripts component to your template after the `@livewireScripts`.
 
-> SweetAlert2 script is not included by default so make sure you include it before `<x-livewire-alert::scripts />`
+> SweetAlert2 script is not included by default so make sure you include it before livewire alert script.
 
 ``` html
 <body> 
@@ -40,16 +40,13 @@ You can also manually include the script by publishing `livewire-alert.js`
 php artisan vendor:publish --tag=livewire-alert:assets
 ```
 
-And then in your view you can do the following:
-
+And then in your view you can include the published script instead of including inline script with `<x-livewire-alert::scripts />` component.
 ``` html
 <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script> 
 ```
 
-Instead of `<x-livewire-alert::scripts />`.
-
 ## Requirements
-This package uses Livewire under the hood. Please make sure you include it in your dependencies before using this package.
+This package is meant to use with Livewire components. Make sure you are using it with Livewire projects only.
 
 - PHP 7.2 or higher
 
@@ -68,14 +65,14 @@ Checkout the playable demo https://livewire-alert.jantinnerezo.com
 
 You can use livewire alert by using the `WithAlert` trait.
 
-The first parameter would be the icon of the alert. `success`, `info`, `warning`, `question` and `error`.
+The first parameter is the icon of the alert: `success`, `info`, `warning`, `question` and `error`. The second parameter is the alert title and the third one is for extra configuration.
 
 ``` php
 use Jantinnerezo\LivewireAlert\WithAlert;
  
 class Index extends Component
 {
-    use WithPagination;
+    use WithAlert;
     
     public function submit()
     {
@@ -84,10 +81,56 @@ class Index extends Component
 }
 ```
 
+Displaying different alert icons. 
+> The default alert behaviour is a toast notification.
+
+``` php
+$this->alert('success', 'Success is approaching!');
+```
+
+``` php
+$this->alert('warning', 'The world has warned you.');
+```
+
+``` php
+$this->alert('info', 'The fact is you know your name :D');
+```
+
+``` php
+$this->alert('question', 'How are you today?');
+```
+
+Disabling toast notification alert treatment.
+
+
+``` php
+$this->alert('info', 'This is not as toast alert', [
+    'toast' => false
+]);
+```
+
+## Positioning Alert
+
+``` php
+$this->alert('info', 'Centering alert', [
+    'position' => 'center'
+]);
+```
+
+List of the following alert positions:
+- top
+- top-start
+- top-end
+- center
+- center-start
+- center-end
+- bottom
+- bottom-start
+- bottom-end
+
 ## Configuration
 
 Passing additional configuration.
-
 
 
 ## Contributors
@@ -97,7 +140,7 @@ Passing additional configuration.
 </a>
 
 
-## :recycle: Changelog
+## Changelog
 
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
