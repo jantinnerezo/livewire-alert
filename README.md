@@ -128,9 +128,132 @@ List of the following alert positions:
 - bottom-start
 - bottom-end
 
+## Buttons
+
+SweetAlert2 has 3 buttons that is not shown by default.
+
+
+To show confirm button, simply pass the `showConfirmButton` to alert configuration and set it to `true`.
+
+``` php
+$this->alert('question', 'How are you today?', [
+	'showConfirmButton' => true
+]);
+```
+
+Change confirm button text:
+
+``` php
+$this->alert('question', 'How are you today?', [
+	'showConfirmButton' => true,
+    'confirmButtonText' => 'Good'
+]);
+```
+
+Adding event when confirm button is clicked. First create a function that will be fired when confirm button is clicked:
+
+``` php
+public function confirmed()
+{
+	// Do something
+}
+```
+
+Add to it event listeners array to register it.
+
+``` php
+protected $listeners = [
+	'confirmed'
+];
+```
+
+Or
+
+``` php
+public function getListeners()
+{
+	return [
+    	'confirmed'
+    ];
+}
+```
+
+And then pass it to `onConfirmed` key of the alert configuration.
+
+``` php
+$this->alert('question', 'How are you today?', [
+	'showConfirmButton' => true,
+    'confirmButtonText' => 'Good',
+    'onConfirmed' => 'confirmed' 
+]);
+```
+
+You can also pass a parameter to the event to get the alert response. 
+> Useful when you need to get the value of the input inside the alert.
+
+``` php
+$this->alert('warning', 'Please enter password', [
+	'showConfirmButton' => true,
+    'confirmButtonText' => 'Submit',
+    'onConfirmed' => 'confirmed',
+    'input' => 'password',
+    'allowOutsideClick' => false,
+    'timer' => null
+]);
+```
+
+``` php
+public function confirmed($data)
+{
+	// Get input value and do anything you want to it
+    $password = $data['value'];
+}
+```
+
+Just do the same thing to show `deny` and `cancel` button. Just create a function for each button and register it to event listeners.
+
+``` php
+public function denied() 
+{
+	// Do something when denied button is clicked
+}
+```
+
+``` php
+public function cancelled() 
+{
+	// Do something when cancel button is clicked
+}
+```
+
+``` php
+public function getListeners()
+{
+	return [
+    	'denied',
+        'dismissed'
+    ];
+}
+```
+
+Make sure to set `showDenyButton` to
+
+``` php
+$this->alert('warning', 'Alert with deny and cancel button', [
+	'showDenyButton' => true,
+    'denyButtonText' => 'Deny',
+    'showCancelButton' => true,
+    'cancelButtonText' => 'Cancel',
+    'onDenied' => 'denied',
+    'onDismissed' => 'cancelled'
+]);
+```
+
+
+
 ## Configuration
 
-Passing additional configuration.
+Passing additional configuration. sd
 
 
 ## Contributors
