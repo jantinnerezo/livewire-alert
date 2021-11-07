@@ -4,6 +4,8 @@
 [![Total Downloads](https://poser.pugx.org/jantinnerezo/livewire-alert/downloads)](//packagist.org/packages/jantinnerezo/livewire-alert)
 [![License](https://poser.pugx.org/jantinnerezo/livewire-alert/license)](//packagist.org/packages/jantinnerezo/livewire-alert)
 
+![Tux, the Linux mascot](https://banners.beyondco.de/Livewire%20Alert.jpeg?theme=light&packageManager=composer+require&packageName=jantinnerezo%2Flivewire-alert&pattern=polkaDots&style=style_1&description=A+simple+alert+utility+for+your+livewire+components&md=1&showWatermark=0&fontSize=100px&images=bell)
+
 ### Live Demo: https://livewire-alert.jantinnerezo.com
 
 This package provides a simple alert utility for your livewire components. Currently using [SweetAlert2](https://www.example.com) under-the-hood.
