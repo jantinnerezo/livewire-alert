@@ -2,194 +2,171 @@
 
 namespace Jantinnerezo\LivewireAlert;
 
-use Livewire\Component;
-class LivewireAlert extends Component
-{   
-    use WithAlert;
+use Illuminate\Support\Arr;
+use Jantinnerezo\LivewireAlert\Exceptions\AlertException;
 
-    public $status = 'success';
-
-    public $flash = false;
-
-    public $title = 'Hello!';
-
-    public $responses = [
-        'confirmed' => null,
-        'denied' => null,
-        'dismissed' => null,
-        'progressFinished' => null
-    ];
-
-    public $configuration = [
-        'position'  =>  'top-end',
-        'timer'  =>  3000,
-        'toast'  =>  true,
-        'text' => '',
-        'timerProgressBar' => false,
-        'showConfirmButton' => false,
-        'showDenyButton' => false,
-        'showCancelButton' => false,
-        'confirmButtonText' => 'Yes',
-        'denyButtonText' => 'No',
-        'cancelButtonText' => 'Cancel',
-        'onConfirmed' => 'confirmed',
-        'onDenied' => 'denied',
-        'onProgressFinished' => 'progressFinished',
-        'onDismissed' => 'dismissed'
-    ];
-
-    public function getStatusesProperty()
+trait LivewireAlert
+{
+    public function confirm(string $title, $options = [])
     {
-        return [
-            'success' => [
-                'text-color' => 'text-green-600',
-                'bg-color' => 'bg-green-50',
-                'border-color' => 'border-green-600'
-            ],
-            'info' => [
-                'text-color' => 'text-light-blue-600',
-                'bg-color' => 'bg-light-blue-50',
-                'border-color' => 'border-light-blue-600'
-            ],
-            'warning' => [
-                'text-color' => 'text-yellow-600',
-                'bg-color' => 'bg-yellow-50',
-                'border-color' => 'border-yellow-600'
-            ],
-            'error' => [
-                'text-color' => 'text-red-600',
-                'bg-color' => 'bg-red-50',
-                'border-color' => 'border-red-600'
-            ]
-        ];
+        $options = array_merge(
+            config('livewire-alert.confirm'),
+            $options,
+        );
+
+        $type = Arr::get($options, 'icon');
+        
+        $this->alert($type,$title, $options);
     }
 
-    public function getPositionsProperty()
+    public function alert(string $type = 'success', string $message = '', array $options = [])
     {
-        return [
-            'top',
-            'top-start',
-            'top-end',
-            'center',
-            'center-start',
-            'center-end',
-            'bottom',
-            'bottom-start',
-            'bottom-end'
-        ];
+        $this->dispatchOrFlashAlert([
+            'type' => $type,
+            'message' => $message,
+            'options' => $options
+        ]);
     }
 
-    public function getSelectedButtonsProperty()
+    public function flash(string $type = 'success', string $message = '', array $options = [], $redirect = '/')
     {
-        $buttons = [];
+        $this->dispatchOrFlashAlert([
+            'type' => $type,
+            'message' => $message,
+            'options' => $options,
+            'flash' => true
+        ]);
 
-        if ($this->configuration['showConfirmButton']) {
-            $buttons[] = 'Confirm';
-        }
-
-        if ($this->configuration['showDenyButton']) {
-            $buttons[] = 'Deny';
-        }
-
-        if ($this->configuration['showCancelButton']) {
-            $buttons[] = 'Cancel';
-        }
-
-        return count($buttons) > 0 ? implode(',', $buttons) : 'No buttons';
+        return redirect()->to($redirect);
     }
 
-    public function getListeners()
+    protected function dispatchOrFlashAlert(array $configuration)
     {
-        return [
-            'confirmed',
-            'denied',
-            'dismissed',
-            'progressFinished',
-            'testConfirmed'
-        ];  
-    }
+        $type = Arr::get($configuration, 'type');
+        $message = Arr::get($configuration, 'message');
+        $options = Arr::only(
+            Arr::get($configuration, 'options'),
+            $this->configurationKeys()
+        );
+        $isFlash = Arr::has($configuration, 'flash') && Arr::get($configuration, 'flash') === true;
 
-    public function setConfiguration($key, $value)
-    {
-        $this->configuration[$key] = $value;
-    }
+        $options = array_merge(
+            config('livewire-alert.alert') ?? [],
+            config('livewire-alert.' . $type) ?? [],
+            $options
+        );
 
-    public function showAlert()
-    {
-        if (! $this->flash) {
-            $this->alert(
-                $this->status,
-                $this->title,
-                $this->configuration
+        if (! in_array($type,$this->livewireAlertIcons())) {
+            throw new AlertException(
+                "Invalid '{$type}' alert icon."
             );
+        }
+
+        $payload = [
+            'type' => $type,
+            'message' => $message,
+            'events' => Arr::only($options, $this->livewireAlertEvents()),
+            'options' => Arr::except($options, $this->livewireAlertEvents())
+        ];
+
+        if (! $isFlash) {
+            $this->dispatchBrowserEvent('alert', $payload);
 
             return;
         }
-
-        $this->flash(
-            $this->status,
-            $this->title,
-            $this->configuration
-        );
+        
+        session()->flash('livewire-alert', $payload);
     }
 
-    public function showConfirmAlert()
+    protected function livewireAlertIcons(): array
     {
-        $this->confirm('Confirm Alert', [
-            'onConfirmed' => 'confirmed'
-        ]);
+        return [
+            'success',
+            'info',
+            'warning',
+            'error',
+            'question'
+        ];
     }
 
-    public function confirmed()
+    protected function livewireAlertEvents(): array
     {
-        $this->alert('info', 'On Confirmed Event', [
-            'timer' => null,
-            'text' => "Fired from livewire onConfirmed event, do what you want here when the user clicks confirm.",
-            'position' => 'center',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'Got it!',
-            'toast' => false
-        ]);
+        return [
+            'onConfirmed', 
+            'onDismissed', 
+            'onDenied',
+            'onProgressFinished'
+        ];
     }
 
-    public function denied()
+    protected function configurationKeys(): array
     {
-        $this->alert('info', 'On Denied Event', [
-            'timer' => null,
-            'text' => "Fired from livewire onDenied event, do what you want here when the user clicks deny.",
-            'position' => 'center',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'Got it!',
-            'toast' => false
-        ]);
-    }
-
-    public function dismissed()
-    {
-        $this->alert('info', 'On Dismissed Event', [
-            'timer' => null,
-            'text' => "Fired from livewire onDismissed event, do what you want here when the user dismissed the alert.",
-            'position' => 'center',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'Got it!',
-            'toast' => false
-        ]);
-    }
-
-    public function progressFinished()
-    {
-        $this->alert('info', 'On Progress Finished Event', [
-            'timer' => null,
-            'text' => "Fired from livewire onProgressFinished event. Do what you want here when alert finished loading.",
-            'position' => 'center',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'Got it!',
-            'toast' => false
-        ]);
-    }
-
-    public function render()
-    {
-        return view('livewire-alert::livewire.demo');
+        return [
+            'title',
+            'titleText',
+            'html',
+            'text',
+            'icon',
+            'iconColor',
+            'iconHtml',
+            'showClass',
+            'hideClass',
+            'footer',
+            'backdrop',
+            'toast',
+            'target',
+            'input',
+            'width',
+            'padding',
+            'background',
+            'position',
+            'grow',
+            'customClass',
+            'timer',
+            'timerProgressBar',
+            'heightAuto',
+            'allowOutsideClick',
+            'allowEscapeKey',
+            'allowEnterKey',
+            'stopKeydownPropagation',
+            'keydownListenerCapture',
+            'showConfirmButton',
+            'showDenyButton',
+            'showCancelButton',
+            'confirmButtonText',
+            'denyButtonText',
+            'cancelButtonText',
+            'confirmButtonText',
+            'confirmButtonColor',
+            'denyButtonColor',
+            'cancelButtonColor',
+            'confirmButtonAriaLabel',
+            'denyButtonAriaLabel',
+            'cancelButtonAriaLabel',
+            'buttonsStyling',
+            'reverseButtons',
+            'focusConfirm',
+            'returnFocus',
+            'focusDeny',
+            'focusCancel',
+            'showCloseButton',
+            'closeButtonHtml',
+            'closeButtonAriaLabel',
+            'loaderHtml',
+            'showLoaderOnConfirm',
+            'showLoaderOnDeny',
+            'scrollbarPadding',
+            'imageUrl',
+            'imageWidth',
+            'imageHeight',
+            'imageAlt',
+            'inputLabel',
+            'inputPlaceholder',
+            'inputValue',
+            'inputOptions',
+            'inputAutoTrim',
+            'inputAttributes',
+            'events'
+        ];
     }
 }

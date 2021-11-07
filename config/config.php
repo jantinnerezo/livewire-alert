@@ -5,7 +5,6 @@
  * https://sweetalert2.github.io/#configuration
  */
 return [
-    'manually_import_trait' => false,
     'alert' => [
         'position' => 'top-end',
         'timer' => 3000,

@@ -1,3 +1,8 @@
 const mix = require('laravel-mix');
 
-mix.js('resources/js/livewire-alert.js', 'public');
+mix.js(
+    'resources/js/livewire-alert.js', 
+    'public'
+)
+.setPublicPath('public')
+.version();
