@@ -4,9 +4,10 @@
 [![Total Downloads](https://poser.pugx.org/jantinnerezo/livewire-alert/downloads)](//packagist.org/packages/jantinnerezo/livewire-alert)
 [![License](https://poser.pugx.org/jantinnerezo/livewire-alert/license)](//packagist.org/packages/jantinnerezo/livewire-alert)
 
+### Live Demo: https://livewire-alert.jantinnerezo.com
+
 This package provides a simple alert utility for your livewire components. Currently using [SweetAlert2](https://www.example.com) under-the-hood.
 You can now use SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
-
 
 ## Installation
 
@@ -41,8 +42,10 @@ php artisan vendor:publish --tag=livewire-alert:assets
 ```
 
 And then in your view you can include the published script instead of including inline script with `<x-livewire-alert::scripts />` component.
+> If you go this path, make sure to include the `<x-livewire-alert::flash />` right after the livewire-alert script if you still want the flash feature.
 ``` html
 <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script> 
+<x-livewire-alert::flash />
 ```
 
 ## Requirements
@@ -56,21 +59,16 @@ This package is meant to use with Livewire components. Make sure you are using i
 
 - SweetAlert2
 
-
-## Demo
-
-Checkout the playable demo https://livewire-alert.jantinnerezo.com
-
 ## Usage
 
-You can use livewire alert by using the `WithAlert` trait.
+You can use livewire alert by using the `LivewireAlert` trait.
 
 ``` php
 use Jantinnerezo\LivewireAlert\WithAlert;
  
 class Index extends Component
 {
-    use WithAlert;
+    use LivewireAlert;
     
     public function submit()
     {
@@ -254,6 +252,14 @@ Don't want to define extra button configuration every time you show alert confir
 $this->confirm('Are you sure do want to leave?', [
     'onConfirmed' => 'confirmed',
 ]);
+```
+
+## Flash Notification
+
+You can also use alert as a flash notification. You can pass the redirect route on the fourth parameter, redirects to `/` by default.
+
+``` php
+$this->flash('success', 'Successfully submitted form', [], '/');
 ```
 
 ## Configuration
