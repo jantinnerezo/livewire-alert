@@ -4,7 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/jantinnerezo/livewire-alert/downloads)](//packagist.org/packages/jantinnerezo/livewire-alert)
 [![License](https://poser.pugx.org/jantinnerezo/livewire-alert/license)](//packagist.org/packages/jantinnerezo/livewire-alert)
 
-This package provides a simple alert utilities for your livewire components. Currently using [SweetAlert2](https://www.example.com) under-the-hood.
+This package provides a simple alert utility for your livewire components. Currently using [SweetAlert2](https://www.example.com) under-the-hood.
 You can now use your favorite SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
 
 
@@ -137,7 +137,7 @@ To show confirm button, simply pass the `showConfirmButton` to alert configurati
 
 ``` php
 $this->alert('question', 'How are you today?', [
-	'showConfirmButton' => true
+    'showConfirmButton' => true
 ]);
 ```
 
@@ -145,7 +145,7 @@ Change confirm button text:
 
 ``` php
 $this->alert('question', 'How are you today?', [
-	'showConfirmButton' => true,
+    'showConfirmButton' => true,
     'confirmButtonText' => 'Good'
 ]);
 ```
@@ -155,7 +155,7 @@ Adding event when confirm button is clicked. First create a function that will b
 ``` php
 public function confirmed()
 {
-	// Do something
+    // Do something
 }
 ```
 
@@ -163,7 +163,7 @@ Add to it event listeners array to register it.
 
 ``` php
 protected $listeners = [
-	'confirmed'
+    'confirmed'
 ];
 ```
 
@@ -172,7 +172,7 @@ Or
 ``` php
 public function getListeners()
 {
-	return [
+    return [
     	'confirmed'
     ];
 }
@@ -182,7 +182,7 @@ And then pass it to `onConfirmed` key of the alert configuration.
 
 ``` php
 $this->alert('question', 'How are you today?', [
-	'showConfirmButton' => true,
+    'showConfirmButton' => true,
     'confirmButtonText' => 'Good',
     'onConfirmed' => 'confirmed' 
 ]);
@@ -193,7 +193,7 @@ You can also pass a parameter to the event to get the alert response.
 
 ``` php
 $this->alert('warning', 'Please enter password', [
-	'showConfirmButton' => true,
+    'showConfirmButton' => true,
     'confirmButtonText' => 'Submit',
     'onConfirmed' => 'confirmed',
     'input' => 'password',
@@ -205,7 +205,7 @@ $this->alert('warning', 'Please enter password', [
 ``` php
 public function confirmed($data)
 {
-	// Get input value and do anything you want to it
+    // Get input value and do anything you want to it
     $password = $data['value'];
 }
 ```
@@ -215,32 +215,32 @@ Just do the same thing to show `deny` and `cancel` button. Just create a functio
 ``` php
 public function denied() 
 {
-	// Do something when denied button is clicked
+    // Do something when denied button is clicked
 }
 ```
 
 ``` php
 public function cancelled() 
 {
-	// Do something when cancel button is clicked
+    // Do something when cancel button is clicked
 }
 ```
 
 ``` php
 public function getListeners()
 {
-	return [
+    return [
     	'denied',
         'dismissed'
     ];
 }
 ```
 
-Make sure to set `showDenyButton` to
+Make sure to set `showDenyButton` and `showCancelButton` to `true`.
 
 ``` php
 $this->alert('warning', 'Alert with deny and cancel button', [
-	'showDenyButton' => true,
+    'showDenyButton' => true,
     'denyButtonText' => 'Deny',
     'showCancelButton' => true,
     'cancelButtonText' => 'Cancel',
@@ -249,12 +249,46 @@ $this->alert('warning', 'Alert with deny and cancel button', [
 ]);
 ```
 
+Don't want to define extra button configuration every time you show alert confirmation? Use the confirm method instead. 
+> You can always override default confirm settings just tweak the configuration.
 
+``` php
+$this->confirm('Are you sure do want to leave?', [
+    'onConfirmed' => 'confirmed',
+]);
+```
 
 ## Configuration
 
-Passing additional configuration. sd
+Override default alert config by publishing the `livewire-alert.php` config file.
 
+``` bash
+php artisan vendor:publish --tag=livewire-alert:config
+```
+
+``` php
+[
+    'alert' => [
+        'position' => 'top-end',
+        'timer' => 3000,
+        'toast' => true,
+        'text' => null,
+        'showCancelButton' => false,
+        'showConfirmButton' => false
+    ],
+    'confirm' => [
+        'icon' => 'warning',
+        'position' => 'center',
+        'toast' => false,
+        'timer' => null,
+        'showConfirmButton' => true,
+        'showCancelButton' => true,
+        'cancelButtonText' => 'No',
+        'confirmButtonColor' => '#3085d6',
+        'cancelButtonColor' => '#d33'
+    ]
+]
+```
 
 ## Contributors
 
