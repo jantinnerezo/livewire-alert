@@ -5,7 +5,7 @@
 [![License](https://poser.pugx.org/jantinnerezo/livewire-alert/license)](//packagist.org/packages/jantinnerezo/livewire-alert)
 
 This package provides a simple alert utility for your livewire components. Currently using [SweetAlert2](https://www.example.com) under-the-hood.
-You can now use your favorite SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
+You can now use SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
 
 
 ## Installation
@@ -64,8 +64,6 @@ Checkout the playable demo https://livewire-alert.jantinnerezo.com
 ## Usage
 
 You can use livewire alert by using the `WithAlert` trait.
-
-The first parameter is the icon of the alert: `success`, `info`, `warning`, `question` and `error`. The second parameter is the alert title and the third one is for extra configuration.
 
 ``` php
 use Jantinnerezo\LivewireAlert\WithAlert;
