@@ -6,7 +6,7 @@
 
 ![Tux, the Linux mascot](https://banners.beyondco.de/Livewire%20Alert.jpeg?theme=light&packageManager=composer+require&packageName=jantinnerezo%2Flivewire-alert&pattern=polkaDots&style=style_1&description=A+simple+alert+utility+for+your+livewire+components&md=1&showWatermark=0&fontSize=100px&images=bell)
 
-### Live Demo: https://livewire-alert.jantinnerezo.com
+### Check live demo: https://livewire-alert.jantinnerezo.com
 
 This package provides a simple alert utility for your livewire components. Currently using [SweetAlert2](https://www.example.com) under-the-hood.
 You can now use SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
