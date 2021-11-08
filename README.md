@@ -1,5 +1,6 @@
 
 # Livewire Alert
+<a href="https://github.com/jantinnerezo/livewire-alert/actions"><img src="https://github.com/jantinnerezo/livewire-alert/workflows/PHPUnit/badge.svg" alt="Build Status"></a>
 [![Latest Stable Version](https://poser.pugx.org/jantinnerezo/livewire-alert/v)](//packagist.org/packages/jantinnerezo/livewire-alert)
 [![Total Downloads](https://poser.pugx.org/jantinnerezo/livewire-alert/downloads)](//packagist.org/packages/jantinnerezo/livewire-alert)
 [![License](https://poser.pugx.org/jantinnerezo/livewire-alert/license)](//packagist.org/packages/jantinnerezo/livewire-alert)
