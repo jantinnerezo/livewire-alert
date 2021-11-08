@@ -10,7 +10,7 @@
 
 ### Check live demo: https://livewire-alert.jantinnerezo.com
 
-This package provides a simple alert utility for your livewire components. Currently using [SweetAlert2](https://www.example.com) under-the-hood.
+This package provides a simple alert utility for your livewire components. Currently using [SweetAlert2](https://sweetalert2.github.io/) under-the-hood.
 You can now use SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
 
 ## Installation
@@ -231,7 +231,7 @@ public function getListeners()
 {
     return [
     	'denied',
-        'dismissed'
+      'dismissed'
     ];
 }
 ```
@@ -297,6 +297,37 @@ php artisan vendor:publish --tag=livewire-alert:config
     ]
 ]
 ```
+
+## Customizations
+
+You can customize alert style by passing your custom classes, works perfectly with [TailwindCSS](https://tailwindcss.com/)
+
+``` php
+[
+  'customClass' => [
+    'container' => '',
+    'popup' => '',
+    'header' => '',
+    'title' => '',
+    'closeButton' => '',
+    'icon' => '',
+    'image' => '',
+    'content' => '',
+    'htmlContainer' => '',
+    'input' => '',
+    'inputLabel' => '',
+    'validationMessage' => '',
+    'actions' => '',
+    'confirmButton' => '',
+    'denyButton' => '',
+    'cancelButton' => '',
+    'loader' => '',
+    'footer' => ''
+   ]
+];
+```
+
+For more details about customization and configuration please check [SweetAlert2](https://sweetalert2.github.io/#configuration/)
 
 ## Contributors
 
