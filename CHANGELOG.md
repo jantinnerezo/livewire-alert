@@ -49,4 +49,19 @@ All notable changes to `livewire-alert` will be documented in this file
 ## 2.1.5
 - Fixed flash null config issue #28
 
+## 2.1.6
+### Bug fix
+- Unable to resolve dependency [Parameter #0 [ <required> $id ]]
+
+### New feature
+- Support sending additional params on confirm #29 fix for issue #38
+
+## 2.1.7
+### Bug fix
+- Fix js errors in old browsers (#40) 
+- Unexpected token '?' on Safari #27
+
+## 2.1.8
+- Allow users to override alert config
+
 
