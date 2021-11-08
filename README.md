@@ -1,9 +1,10 @@
 
 # Livewire Alert
+
 <a href="https://github.com/jantinnerezo/livewire-alert/actions"><img src="https://github.com/jantinnerezo/livewire-alert/workflows/PHPUnit/badge.svg" alt="Build Status"></a>
-[![Latest Stable Version](https://poser.pugx.org/jantinnerezo/livewire-alert/v)](//packagist.org/packages/jantinnerezo/livewire-alert)
-[![Total Downloads](https://poser.pugx.org/jantinnerezo/livewire-alert/downloads)](//packagist.org/packages/jantinnerezo/livewire-alert)
-[![License](https://poser.pugx.org/jantinnerezo/livewire-alert/license)](//packagist.org/packages/jantinnerezo/livewire-alert)
+<a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/v/jantinnerezo/livewire-alert" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/dt/jantinnerezo/livewire-alert" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
 
 ![Tux, the Linux mascot](https://banners.beyondco.de/Livewire%20Alert.jpeg?theme=light&packageManager=composer+require&packageName=jantinnerezo%2Flivewire-alert&pattern=polkaDots&style=style_1&description=A+simple+alert+utility+for+your+livewire+components&md=1&showWatermark=0&fontSize=100px&images=bell)
 
