@@ -332,7 +332,7 @@ For more details about customization and configuration please check [SweetAlert2
 ## Contributors
 
 <a href="https://github.com/jantinnerezo/livewire-alert/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" />
+  <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" width="300" />
 </a>
 
 
