@@ -2,6 +2,7 @@
 window.addEventListener('alert', async (event) => {
     var message = event.detail.message;
     var icon = event.detail.type ?? null;
+    var data = event.detail.data;
     var events = event.detail.events;
     var options = event.detail.options;
     
@@ -15,9 +16,15 @@ window.addEventListener('alert', async (event) => {
         confirmed: alert.isConfirmed,
         denied: alert.isDenied,
         dismiss: alert.dismiss,
-        result: alert,
-        ...alert,
+        result: {
+            ...alert,
+            data: {
+                ...data,
+                inputAttributes: options.inputAttributes ?? null
+            }
+        },
         ...events,
+        ...alert,
         ...options
     })
 });
@@ -34,7 +41,13 @@ window.flashAlert = async (flash) => {
         confirmed: flashAlert.isConfirmed,
         denied: flashAlert.isDenied,
         dismiss: flashAlert.dismiss,
-        result: flashAlert,
+        result: {
+            ...flashAlert,
+            data: {
+                ...data,
+                inputAttributes: options.inputAttributes ?? null
+            }
+        },
         ...events,
         ...flash.options
     })

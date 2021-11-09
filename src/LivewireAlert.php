@@ -43,11 +43,21 @@ trait LivewireAlert
     protected function dispatchOrFlashAlert(array $configuration)
     {
         $type = Arr::get($configuration, 'type');
+
         $message = Arr::get($configuration, 'message');
+
+        $events = Arr::only(
+            Arr::get($configuration, 'options'),
+            $this->livewireAlertEvents()
+        );
+
+        $data = Arr::get($configuration, 'options.data');
+
         $options = Arr::only(
             Arr::get($configuration, 'options'),
             $this->configurationKeys()
         );
+
         $isFlash = Arr::has($configuration, 'flash') && Arr::get($configuration, 'flash') === true;
 
         $options = array_merge(
@@ -65,8 +75,9 @@ trait LivewireAlert
         $payload = [
             'type' => $type,
             'message' => $message,
-            'events' => Arr::only($options, $this->livewireAlertEvents()),
-            'options' => Arr::except($options, $this->livewireAlertEvents())
+            'events' => $events,
+            'options' => $options,
+            'data' => $data,
         ];
 
         if (! $isFlash) {
@@ -165,12 +176,7 @@ trait LivewireAlert
             'inputValue',
             'inputOptions',
             'inputAutoTrim',
-            'inputAttributes',
-            'events',
-            'onConfirmed', 
-            'onDismissed', 
-            'onDenied',
-            'onProgressFinished'
+            'inputAttributes'
         ];
     }
 }
