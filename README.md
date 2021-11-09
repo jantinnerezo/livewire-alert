@@ -68,7 +68,7 @@ This package is meant to use with Livewire components. Make sure you are using i
 You can use livewire alert by using the `LivewireAlert` trait.
 
 ``` php
-use Jantinnerezo\LivewireAlert\WithAlert;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
  
 class Index extends Component
 {
