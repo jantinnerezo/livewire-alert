@@ -342,14 +342,14 @@ For more details about customization and configuration please check [SweetAlert2
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 
-## :hammer: Contributing
+## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## :lock: Security
+## Security
 
 If you discover any security related issues, please email erezojantinn@gmail.com instead of using the issue tracker.
 
-## :label: License
+## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
