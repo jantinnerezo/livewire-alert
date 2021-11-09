@@ -166,7 +166,11 @@ trait LivewireAlert
             'inputOptions',
             'inputAutoTrim',
             'inputAttributes',
-            'events'
+            'events',
+            'onConfirmed', 
+            'onDismissed', 
+            'onDenied',
+            'onProgressFinished'
         ];
     }
 }
