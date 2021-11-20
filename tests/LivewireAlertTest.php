@@ -75,4 +75,101 @@ class LivewireAlertTest extends TestCase
             ->set('status', $invalidIcon)
             ->call('showAlert');
     }
+
+    public function testIfExceptionIsThrownWhenComponentKeyIsMissingOnConfirmedEvent()
+    {
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Missing component key on event properties");
+
+        Livewire::test(TestComponent::class)
+            ->set('configuration.showConfirmButton', true)
+            ->set('configuration.onConfirmed',[
+                'listener' => 'confirmed'
+            ])
+            ->call('showAlert');
+    }
+
+    public function testIfExceptionIsThrownWhenComponentListenerIsMissingOnConfirmedEvent()
+    {
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Missing listener key on event properties");
+
+        Livewire::test(TestComponent::class)
+            ->set('configuration.onConfirmed',[
+                'component' => 'demo'
+            ])
+            ->call('showAlert');
+    }
+
+    public function testIfExceptionIsThrownWhenComponentKeyIsMissingOnDeniedEvent()
+    {
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Missing component key on event properties");
+
+        Livewire::test(TestComponent::class)
+            ->set('configuration.onDenied',[
+                'listener' => 'denied'
+            ])
+            ->call('showAlert');
+    }
+
+    public function testIfExceptionIsThrownWhenComponentListenerIsMissingOnDeniedEvent()
+    {
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Missing listener key on event properties");
+
+        Livewire::test(TestComponent::class)
+            ->set('configuration.onDenied',[
+                'component' => 'demo'
+            ])
+            ->call('showAlert');
+    }
+
+    public function testIfExceptionIsThrownWhenComponentKeyIsMissingOnDismissedEvent()
+    {
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Missing component key on event properties");
+
+        Livewire::test(TestComponent::class)
+            ->set('configuration.onDismissed',[
+                'listener' => 'denied'
+            ])
+            ->call('showAlert');
+    }
+
+    public function testIfExceptionIsThrownWhenComponentListenerIsMissingOnDismissedEvent()
+    {
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Missing listener key on event properties");
+
+        Livewire::test(TestComponent::class)
+            ->set('configuration.onDismissed',[
+                'component' => 'demo'
+            ])
+            ->call('showAlert');
+    }
+
+    public function testIfExceptionIsThrownWhenComponentKeyIsMissingOnProgressEvent()
+    {
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Missing component key on event properties");
+
+        Livewire::test(TestComponent::class)
+            ->set('configuration.onProgressFinished',[
+                'listener' => 'denied'
+            ])
+            ->call('showAlert');
+    }
+
+    public function testIfExceptionIsThrownWhenComponentListenerIsMissingOnProgressEvent()
+    {
+        $this->expectException(AlertException::class);
+        $this->expectExceptionMessage("Missing listener key on event properties");
+
+        Livewire::test(TestComponent::class)
+            ->set('configuration.onProgressFinished',[
+                'component' => 'demo'
+            ])
+            ->call('showAlert');
+    }
 }
