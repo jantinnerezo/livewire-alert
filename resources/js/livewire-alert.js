@@ -95,6 +95,8 @@ function afterAlertInteraction(interaction) {
         if (interaction.onProgressFinished.component === 'self') {
             Livewire.find(interaction.onProgressFinished.id)
                 .emitSelf(interaction.onProgressFinished.listener, interaction.result);
+
+            return;
         }
 
         Livewire.emitTo(
@@ -110,6 +112,8 @@ function afterAlertInteraction(interaction) {
         if (interaction.onDismissed.component === 'self') {
             Livewire.find(interaction.onDismissed.id)
                 .emit(interaction.onDismissed.listener, interaction.result);
+            
+            return;
         } 
 
         Livewire.emitTo(
