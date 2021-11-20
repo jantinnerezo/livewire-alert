@@ -46,10 +46,14 @@ trait LivewireAlert
 
         $message = Arr::get($configuration, 'message');
 
-        $events = Arr::only(
+        $events = collect(Arr::only(
             Arr::get($configuration, 'options'),
             $this->livewireAlertEvents()
-        );
+        ))
+        ->map(function ($event) {
+            return $this->getEventProperties($event);
+        })
+        ->toArray();
 
         $data = Arr::get($configuration, 'options.data');
 
@@ -87,6 +91,33 @@ trait LivewireAlert
         }
         
         session()->flash('livewire-alert', $payload);
+    }
+
+    protected function getEventProperties($event)
+    {
+        $expectedKeys = ['id', 'component', 'listener'];
+
+        if (is_array( $event)) {
+            $event = Arr::only($event, $expectedKeys);
+
+            if (! Arr::exists($event, 'component')) {
+                throw new AlertException('Missing component key on event properties');
+            }
+
+            if (! Arr::exists($event, 'listener')) {
+                throw new AlertException('Missing listener key on event properties');
+            }   
+
+            Arr::set($event, 'id', null);
+
+            return $event;
+        }
+
+        return [
+            'id' => $this->id,
+            'component' =>  'self',
+            'listener' => $event
+        ];
     }
 
     protected function livewireAlertIcons(): array
