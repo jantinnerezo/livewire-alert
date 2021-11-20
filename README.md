@@ -250,6 +250,15 @@ $this->alert('warning', 'Alert with deny and cancel button', [
 ]);
 ```
 
+Emit events to only specific component. Instead of passing the listener directly to the event, pass an array with `component` and `listeners` keys. 
+
+``` PHP
+'onConfirmed' => [
+   'component' => 'livewire-component',
+   'listener' => 'confirmed'
+];
+```
+
 Don't want to define extra button configuration every time you show alert confirmation? Use the confirm method instead. 
 > You can always override default confirm settings just tweak the configuration.
 
