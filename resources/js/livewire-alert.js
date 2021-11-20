@@ -58,14 +58,16 @@ function afterAlertInteraction(interaction) {
         if (interaction.onConfirmed.component === 'self') {
             Livewire.find(interaction.onConfirmed.id)
                 .emitSelf(interaction.onConfirmed.listener, interaction.result);
-        } else {
-            Livewire.emitTo(
-                interaction.onConfirmed.component,
-                interaction.onConfirmed.listener,
-                interaction.result
-            );
-        }
-        
+
+            return;
+        } 
+
+        Livewire.emitTo(
+            interaction.onConfirmed.component,
+            interaction.onConfirmed.listener,
+            interaction.result
+        );
+
         return;
     }
 
@@ -73,13 +75,15 @@ function afterAlertInteraction(interaction) {
         if (interaction.onDenied.component === 'self') {
             Livewire.find(interaction.onDenied.id)
                 .emitSelf(interaction.onDenied.listener, interaction.result);
-        } else {
-            Livewire.emitTo(
-                interaction.onDenied.component,
-                interaction.onDenied.listener,
-                interaction.result
-            );
+
+            return;
         }
+
+        Livewire.emitTo(
+            interaction.onDenied.component,
+            interaction.onDenied.listener,
+            interaction.result
+        );
 
         return;
     }
@@ -91,13 +95,13 @@ function afterAlertInteraction(interaction) {
         if (interaction.onProgressFinished.component === 'self') {
             Livewire.find(interaction.onProgressFinished.id)
                 .emitSelf(interaction.onProgressFinished.listener, interaction.result);
-        } else {
-            Livewire.emitTo(
-                interaction.onProgressFinished.component,
-                interaction.onProgressFinished.listener,
-                interaction.result
-            );
         }
+
+        Livewire.emitTo(
+            interaction.onProgressFinished.component,
+            interaction.onProgressFinished.listener,
+            interaction.result
+        );
 
         return;
     }
@@ -106,12 +110,12 @@ function afterAlertInteraction(interaction) {
         if (interaction.onDismissed.component === 'self') {
             Livewire.find(interaction.onDismissed.id)
                 .emit(interaction.onDismissed.listener, interaction.result);
-        } else {
-            Livewire.emitTo(
-                interaction.onDismissed.component,
-                interaction.onDismissed.listener,
-                interaction.result
-            );
-        }
+        } 
+
+        Livewire.emitTo(
+            interaction.onDismissed.component,
+            interaction.onDismissed.listener,
+            interaction.result
+        );
     }
 }
