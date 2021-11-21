@@ -31,6 +31,7 @@ window.addEventListener('alert', async (event) => {
 
 window.flashAlert = async (flash) => {
     var events = flash.events;
+    var data = flash.events.data;
     var flashAlert = await Swal.fire({
         title: flash.message ?? '',
         icon: flash.type ?? null,
