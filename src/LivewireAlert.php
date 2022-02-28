@@ -123,6 +123,7 @@ trait LivewireAlert
     protected function livewireAlertIcons(): array
     {
         return [
+            '',
             'success',
             'info',
             'warning',
