@@ -198,6 +198,12 @@ $this->alert('warning', 'Please enter password', [
     'confirmButtonText' => 'Submit',
     'onConfirmed' => 'confirmed',
     'input' => 'password',
+    'inputValidator' => '(value) => new Promise((resolve) => '.
+        '  resolve('.
+        '    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$/.test(value) ?'.
+        '    undefined : "Error in password"'.
+        '  )'.
+        ')',    
     'allowOutsideClick' => false,
     'timer' => null
 ]);
