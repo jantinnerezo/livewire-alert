@@ -5,7 +5,7 @@ window.addEventListener('alert', async (event) => {
     var data = event.detail.data;
     var events = event.detail.events;
     var options = event.detail.options;
-    
+    evalCallbacksOptions(options);
     var alert = await Swal.fire({
         title: message,
         icon: icon,
@@ -32,10 +32,12 @@ window.addEventListener('alert', async (event) => {
 window.flashAlert = async (flash) => {
     var events = flash.events;
     var data = flash.events.data;
+    var options = flash.options;
+    evalCallbacksOptions(options);
     var flashAlert = await Swal.fire({
         title: flash.message ?? '',
         icon: flash.type ?? null,
-        ...flash.options
+        ...options
     }) 
 
     afterAlertInteraction({
@@ -52,6 +54,32 @@ window.flashAlert = async (flash) => {
         ...events,
         ...flash.options
     })
+}
+
+function evalCallbacksOptions(options) {
+    callbacksKeysAllowed = [
+        'allowOutsideClick',
+        'allowEscapeKey',
+        'allowEnterKey',
+        'loaderHtml',
+        'inputOptions',
+        'inputValidator',
+        'preConfirm',
+        'preDeny',
+        'didClose',
+        'didDestroy',
+        'didOpen',
+        'didRender',
+        'willClose',
+        'willOpen',
+    ];
+    for (var callbackKey of callbacksKeysAllowed) {
+        if (options.hasOwnProperty(callbackKey) && (typeof options[callbackKey] === 'string' || options[callbackKey] instanceof String)) {
+            if (options[callbackKey] && options[callbackKey].trim()!='') {
+                 options[callbackKey] = eval(options[callbackKey]);
+            }
+        }
+    }
 }
 
 function afterAlertInteraction(interaction) {

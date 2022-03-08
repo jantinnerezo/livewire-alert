@@ -161,6 +161,7 @@ trait LivewireAlert
             'input',
             'width',
             'padding',
+            'color',
             'background',
             'position',
             'grow',
@@ -199,6 +200,9 @@ trait LivewireAlert
             'showLoaderOnConfirm',
             'showLoaderOnDeny',
             'scrollbarPadding',
+            'preConfirm',
+            'preDeny',
+            'returnInputValueOnDeny',
             'imageUrl',
             'imageWidth',
             'imageHeight',
@@ -208,7 +212,18 @@ trait LivewireAlert
             'inputValue',
             'inputOptions',
             'inputAutoTrim',
-            'inputAttributes'
+            'inputAttributes',
+            'inputValidator',
+            'validationMessage',
+            'progressSteps',
+            'currentProgressStep',
+            'progressStepsDistance',
+            'willOpen',
+            'didOpen',
+            'didRender',
+            'willClose',
+            'didClose',
+            'didDestroy'
         ];
     }
 }
