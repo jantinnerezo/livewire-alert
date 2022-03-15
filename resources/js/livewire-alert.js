@@ -57,7 +57,7 @@ window.flashAlert = async (flash) => {
 }
 
 function evalCallbacksOptions(options) {
-    callbacksKeysAllowed = [
+    const callbacksKeysAllowed = [
         'allowOutsideClick',
         'allowEscapeKey',
         'allowEnterKey',
