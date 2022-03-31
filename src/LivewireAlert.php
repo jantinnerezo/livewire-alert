@@ -15,7 +15,7 @@ trait LivewireAlert
         );
 
         $type = Arr::get($options, 'icon');
-        
+
         $this->alert($type,$title, $options);
     }
 
@@ -61,7 +61,7 @@ trait LivewireAlert
             Arr::get($configuration, 'options'),
             $this->configurationKeys()
         );
-
+        
         $isFlash = Arr::has($configuration, 'flash') && Arr::get($configuration, 'flash') === true;
 
         $options = array_merge(
@@ -89,7 +89,7 @@ trait LivewireAlert
 
             return;
         }
-        
+
         session()->flash('livewire-alert', $payload);
     }
 
@@ -106,7 +106,7 @@ trait LivewireAlert
 
             if (! Arr::exists($event, 'listener')) {
                 throw new AlertException('Missing listener key on event properties');
-            }   
+            }
 
             Arr::set($event, 'id', null);
 
@@ -135,8 +135,8 @@ trait LivewireAlert
     protected function livewireAlertEvents(): array
     {
         return [
-            'onConfirmed', 
-            'onDismissed', 
+            'onConfirmed',
+            'onDismissed',
             'onDenied',
             'onProgressFinished'
         ];
@@ -223,7 +223,8 @@ trait LivewireAlert
             'didRender',
             'willClose',
             'didClose',
-            'didDestroy'
+            'didDestroy',
+            'timeout',
         ];
     }
 }

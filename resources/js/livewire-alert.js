@@ -5,28 +5,32 @@ window.addEventListener('alert', async (event) => {
     var data = event.detail.data;
     var events = event.detail.events;
     var options = event.detail.options;
-    evalCallbacksOptions(options);
-    var alert = await Swal.fire({
-        title: message,
-        icon: icon,
-        ...options
-    }); 
+    var timeout = options.timeout ?? 0;
 
-    afterAlertInteraction({
-        confirmed: alert.isConfirmed,
-        denied: alert.isDenied,
-        dismiss: alert.dismiss,
-        result: {
+    setTimeout(async () => {
+        evalCallbacksOptions(options);
+        var alert = await Swal.fire({
+            title: message,
+            icon: icon,
+            ...options
+        });
+
+        afterAlertInteraction({
+            confirmed: alert.isConfirmed,
+            denied: alert.isDenied,
+            dismiss: alert.dismiss,
+            result: {
+                ...alert,
+                data: {
+                    ...data,
+                    inputAttributes: options.inputAttributes ?? null
+                }
+            },
+            ...events,
             ...alert,
-            data: {
-                ...data,
-                inputAttributes: options.inputAttributes ?? null
-            }
-        },
-        ...events,
-        ...alert,
-        ...options
-    })
+            ...options
+        })
+    }, timeout);
 });
 
 window.flashAlert = async (flash) => {
@@ -38,7 +42,7 @@ window.flashAlert = async (flash) => {
         title: flash.message ?? '',
         icon: flash.type ?? null,
         ...options
-    }) 
+    })
 
     afterAlertInteraction({
         confirmed: flashAlert.isConfirmed,
@@ -89,7 +93,7 @@ function afterAlertInteraction(interaction) {
                 .emitSelf(interaction.onConfirmed.listener, interaction.result);
 
             return;
-        } 
+        }
 
         Livewire.emitTo(
             interaction.onConfirmed.component,
@@ -141,9 +145,9 @@ function afterAlertInteraction(interaction) {
         if (interaction.onDismissed.component === 'self') {
             Livewire.find(interaction.onDismissed.id)
                 .emit(interaction.onDismissed.listener, interaction.result);
-            
+
             return;
-        } 
+        }
 
         Livewire.emitTo(
             interaction.onDismissed.component,

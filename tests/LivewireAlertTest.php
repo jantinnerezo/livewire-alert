@@ -67,10 +67,10 @@ class LivewireAlertTest extends TestCase
     public function testIfExceptionIsThrownWhenIconIsInvalid()
     {
         $invalidIcon = 'failed';
-        
+
         $this->expectException(AlertException::class);
         $this->expectExceptionMessage("Invalid '{$invalidIcon}' alert icon.");
-        
+
         Livewire::test(TestComponent::class)
             ->set('status', $invalidIcon)
             ->call('showAlert');
@@ -170,6 +170,13 @@ class LivewireAlertTest extends TestCase
             ->set('configuration.onProgressFinished',[
                 'component' => 'demo'
             ])
+            ->call('showAlert');
+    }
+    // test timeout option
+    public function testBasicAlertWithtimeout(): void
+    {
+        Livewire::test(TestComponent::class)
+            ->set('configuration.timeout',4000) // should get the alert after 4 seconds
             ->call('showAlert');
     }
 }
