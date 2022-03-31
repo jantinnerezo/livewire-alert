@@ -343,6 +343,17 @@ You can customize alert style by passing your custom classes, works perfectly wi
 ];
 ```
 
+## setTimeout 
+to make alert appear after some time you can add "timeout" option
+```php
+$this->alert('success', 'Your answer has been submitted');
+
+$this->alert('info', 'You can update your answer',[
+    'timeout' => 4000,
+]);
+```
+
+
 For more details about customization and configuration please check [SweetAlert2](https://sweetalert2.github.io/#configuration/)
 
 ## Contributors
