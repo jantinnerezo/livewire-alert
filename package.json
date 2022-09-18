@@ -16,6 +16,6 @@
     "production": "mix --production"
   },
   "dependencies": {
-    "laravel-mix": "^6.0.37"
+    "laravel-mix": "^6.0.49"
   }
 }
