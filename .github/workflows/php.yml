@@ -12,8 +12,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: [ '7.4', '8.0' ]
-        phpunit-versions: [ 'latest' ]
+        php-versions: [ '7.4', '8.0' , 8.1]
+        phpunit-versions: [ 'latest' , 8.1]
 
     name: PHP ${{ matrix.php-versions }}
 
