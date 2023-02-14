@@ -21,7 +21,7 @@
         "livewire/livewire": "^2.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.15|^7.0",
+        "orchestra/testbench": "^6.15|^7.0|^8.0",
         "phpunit/phpunit": "^9.5|^10.0"
     },
     "autoload": {
