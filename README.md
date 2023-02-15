@@ -61,7 +61,7 @@ This package is meant to use with Livewire components. Make sure you are using i
 
 - PHP 7.2 or higher
 
-- Laravel 7 or 8
+- Laravel 7, 8, 9 and 10
 
 - Livewire
 
