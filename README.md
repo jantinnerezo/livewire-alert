@@ -6,10 +6,7 @@
 <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/dt/jantinnerezo/livewire-alert" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
 
-![Tux, the Linux mascot](https://banners.beyondco.de/Livewire%20Alert.jpeg?theme=light&packageManager=composer+require&packageName=jantinnerezo%2Flivewire-alert&pattern=polkaDots&style=style_1&description=A+simple+alert+utility+for+your+livewire+components&md=1&showWatermark=0&fontSize=100px&images=bell)
-
-This package provides a simple alert utility for your livewire components. Currently using [SweetAlert2](https://sweetalert2.github.io/) under-the-hood.
-You can now use SweetAlert2 without writing any custom Javascript. Looking forward to integrate other Javascript alert libraries, feel free to contribute or suggest any libraries.
+Livewire Alert is a simple alert utility package designed to seamlessly integrate with your Livewire components. Under the hood, it utilizes SweetAlert2, offering you the functionality of SweetAlert2 without the need for any custom Javascript. 
 
 ## Interactive Demo
 Check the interactive demo here:  https://livewire-alert.jantinnerezo.com
@@ -24,6 +21,14 @@ You can install the package via composer:
 ```bash
 
 composer require jantinnerezo/livewire-alert
+
+```
+
+or using Livewire 3 Beta? 
+
+```bash
+
+composer require jantinnerezo/livewire-alert:^3.0@beta
 
 ```
 
