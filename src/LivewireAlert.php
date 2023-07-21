@@ -85,7 +85,7 @@ trait LivewireAlert
         ];
 
         if (! $isFlash) {
-            $this->dispatch('alert', $payload);
+            $this->dispatch('alert', ...$payload);
 
             return;
         }
@@ -135,7 +135,7 @@ trait LivewireAlert
     protected function livewireAlertEvents(): array
     {
         return [
-            'onConfirmed', 
+            'onConfirmed',
             'onDismissed', 
             'onDenied',
             'onProgressFinished'
