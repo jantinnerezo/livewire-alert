@@ -24,14 +24,6 @@ composer require jantinnerezo/livewire-alert
 
 ```
 
-or using Livewire 3 Beta? 
-
-```bash
-
-composer require jantinnerezo/livewire-alert:^3.0@beta
-
-```
-
 Next, add the scripts component to your template after the `@livewireScripts`.
 
 > SweetAlert2 script is not included by default so make sure you include it before livewire alert script.
