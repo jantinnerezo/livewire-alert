@@ -86,12 +86,12 @@ function afterAlertInteraction(interaction) {
     if (interaction.confirmed) {
         if (interaction.onConfirmed.component === 'self') {
             Livewire.find(interaction.onConfirmed.id)
-                .emitSelf(interaction.onConfirmed.listener, interaction.result);
+                .dispatchSelf(interaction.onConfirmed.listener, interaction.result);
 
             return;
         } 
 
-        Livewire.emitTo(
+        Livewire.dispatchTo(
             interaction.onConfirmed.component,
             interaction.onConfirmed.listener,
             interaction.result
@@ -103,12 +103,12 @@ function afterAlertInteraction(interaction) {
     if (interaction.isDenied) {
         if (interaction.onDenied.component === 'self') {
             Livewire.find(interaction.onDenied.id)
-                .emitSelf(interaction.onDenied.listener, interaction.result);
+                .dispatchSelf(interaction.onDenied.listener, interaction.result);
 
             return;
         }
 
-        Livewire.emitTo(
+        Livewire.dispatchTo(
             interaction.onDenied.component,
             interaction.onDenied.listener,
             interaction.result
@@ -123,12 +123,12 @@ function afterAlertInteraction(interaction) {
     ) {
         if (interaction.onProgressFinished.component === 'self') {
             Livewire.find(interaction.onProgressFinished.id)
-                .emitSelf(interaction.onProgressFinished.listener, interaction.result);
+                .dispatchSelf(interaction.onProgressFinished.listener, interaction.result);
 
             return;
         }
 
-        Livewire.emitTo(
+        Livewire.dispatchTo(
             interaction.onProgressFinished.component,
             interaction.onProgressFinished.listener,
             interaction.result
@@ -140,12 +140,12 @@ function afterAlertInteraction(interaction) {
     if (interaction.onDismissed) {
         if (interaction.onDismissed.component === 'self') {
             Livewire.find(interaction.onDismissed.id)
-                .emit(interaction.onDismissed.listener, interaction.result);
+                .dispatch(interaction.onDismissed.listener, interaction.result);
             
             return;
         } 
 
-        Livewire.emitTo(
+        Livewire.dispatchTo(
             interaction.onDismissed.component,
             interaction.onDismissed.listener,
             interaction.result
