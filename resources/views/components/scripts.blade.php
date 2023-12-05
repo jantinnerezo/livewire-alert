@@ -1,4 +1,4 @@
-<script type="module">
+<script>
     /**** Livewire Alert Scripts ****/
     {!! file_get_contents($jsPath) !!}
 </script>
