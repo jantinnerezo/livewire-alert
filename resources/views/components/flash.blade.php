@@ -1,5 +1,5 @@
 @if (session()->has('livewire-alert'))
-    <script>
+    <script type="module">
         flashAlert(@json(session('livewire-alert')))
     </script>
 @endif
