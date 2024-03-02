@@ -2,18 +2,21 @@ name: PHPUnit
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: false
       matrix:
-        php-versions: [ '8.1', '8.2' ]
-        phpunit-versions: [ 'latest' ]
+        php-versions: ['8.1', '8.2']
+        phpunit-versions: ['8.2', latest]
 
     name: PHP ${{ matrix.php-versions }}
 
@@ -30,8 +33,8 @@ jobs:
           coverage: none
 
       - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: |
-          composer install --prefer-dist --no-interaction --no-suggest
+        if: "steps.composer-cache.outputs.cache-hit != 'true'"
+        run: composer install --prefer-dist --no-interaction --no-suggest
+
       - name: Run test suite
         run: composer run-script test
