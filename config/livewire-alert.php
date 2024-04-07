@@ -14,7 +14,7 @@ return [
         'showConfirmButton' => false
     ],
     'confirm' => [
-        'icon' => 'warning',
+        'icon' => 'question',
         'position' => 'center',
         'toast' => false,
         'timer' => null,

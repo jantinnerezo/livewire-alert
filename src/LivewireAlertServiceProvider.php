@@ -31,7 +31,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('livewire-alert.php'),
+                __DIR__ . '/../config/livewire-alert.php' => config_path('livewire-alert.php'),
             ], 'livewire-alert:config');
 
             $this->publishes([
@@ -46,6 +46,6 @@ class LivewireAlertServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'livewire-alert');
+        $this->mergeConfigFrom(__DIR__ . '/../config/livewire-alert.php', 'livewire-alert');
     }
 }
