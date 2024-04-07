@@ -56,7 +56,7 @@ And then in your view you can include the published script instead of including 
 ## Requirements
 This package is meant to use with Livewire components. Make sure you are using it with Livewire projects only.
 
-- PHP 7.2 or higher
+- PHP 8.1 or higher
 
 - Laravel 7, 8, 9 and 10
 
