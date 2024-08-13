@@ -90,6 +90,10 @@ $this->alert('success', 'Success is approaching!');
 ```
 
 ``` php
+$this->alert('error', 'Wrong email or password!');
+```
+
+``` php
 $this->alert('warning', 'The world has warned you.');
 ```
 
