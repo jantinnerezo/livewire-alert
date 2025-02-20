@@ -21,6 +21,9 @@ trait LivewireAlert
 
     public function alert(string $type = 'success', string $message = '', array $options = [])
     {
+        if (!isset($options['confirmButtonText'])) {
+            $options['confirmButtonText'] = 'Yes';
+        }
         $this->dispatchOrFlashAlert([
             'type' => $type,
             'message' => $message,
