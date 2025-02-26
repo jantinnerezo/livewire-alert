@@ -85,6 +85,11 @@ enum Option: string
     case DidClose = 'didClose';
     case DidDestroy = 'didDestroy';
 
+    public function is(self $option): bool
+    {
+        return $this === $option;
+    }
+
     public static function values(): array
     {
         return array_map(

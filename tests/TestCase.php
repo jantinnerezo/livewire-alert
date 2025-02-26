@@ -15,9 +15,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
-        $app['config']->set('app.key', 'base64:9BLvxrqZjcRwnrHzaI4gOvRaSs2GBQodhp6snnDFEqc=');
+        $app['config']->set(
+            'app.key', 
+            'base64:9BLvxrqZjcRwnrHzaI4gOvRaSs2GBQodhp6snnDFEqc='
+        );
     }
 
 }

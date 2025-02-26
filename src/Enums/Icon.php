@@ -11,4 +11,9 @@ enum Icon: string
     case Warning = 'warning';
     case Info = 'info';
     case Question = 'question';
+
+    public function is(self $icon): bool
+    {
+        return $this === $icon;
+    }
 }

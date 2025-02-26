@@ -1,63 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jantinnerezo\LivewireAlert\Tests;
 
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Livewire\Component;
 
 class TestComponent extends Component
 {   
-    use LivewireAlert;
-
-    public $status = 'success';
-
-    public $title = 'Hello';
-
-    public $flash = false;
-
-    public $configuration = [];
-
-    public function getListeners()
+    public function testAlert(): void
     {
-        return [
-            'confirmed',
-            'denied',
-            'dismissed',
-            'progressFinished'
-        ];  
+        LivewireAlert::title('Test Title')
+            ->text('Test Text')
+            ->success()
+            ->show();
     }
-
-    public function showAlert()
-    {
-        if (! $this->flash) {
-            $this->alert(
-                $this->status,
-                $this->title,
-                $this->configuration
-            );
-
-            return;
-        }
-
-        $this->flash(
-            $this->status,
-            $this->title,
-            $this->configuration
-        );
-    }
-
-    public function showConfirmAlert()
-    {
-        $this->confirm('How was your day?', $this->configuration);
-    }
-
-    public function confirmed() {}
-
-    public function denied() {}
-
-    public function dismissed() {}
-
-    public function progressFinished() {}
 
     public function render()
     {

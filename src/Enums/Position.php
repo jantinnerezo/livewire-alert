@@ -15,4 +15,9 @@ enum Position: string
     case Bottom = 'bottom';
     case BottomStart = 'bottom-start';
     case BottomEnd = 'bottom-end';
+
+    public function is(self $position): bool
+    {
+        return $this === $position;
+    }
 }

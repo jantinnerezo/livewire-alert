@@ -15,10 +15,8 @@ class LivewireAlert
 
     public function __construct(protected ?Component $component)
     {
-        $this->component = $component ?? \Livewire\Livewire::getInstance();
-
         throw_if(
-            !$this->component,
+            !$this->component instanceof Component,
             new \Exception(
                 'LivewireAlert requires a Livewire component context.'
             )
@@ -203,16 +201,26 @@ class LivewireAlert
         return $this;
     }
 
+    public function getOptions(): array
+    {
+        return  array_merge(
+            config('livewire-alert'),
+            array_intersect_key(
+                $this->options, array_flip(Enums\Option::values())
+            ),
+        );
+    }
+
+    public function getEvents(): array
+    {
+        return $this->events;
+    }
+
     public function show(): void
     {
         $this->alert(
-            array_merge(
-                config('livewire-alert'),
-                array_intersect_key(
-                    $this->options, array_flip(Enums\Option::values())
-                ),
-            ),
-            $this->events
+            $this->getOptions(),
+            $this->getEvents()
         );
     }
 
