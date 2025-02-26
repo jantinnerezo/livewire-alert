@@ -1,229 +1,223 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jantinnerezo\LivewireAlert;
 
-use Illuminate\Support\Arr;
-use Jantinnerezo\LivewireAlert\Exceptions\AlertException;
+use Livewire\Component;
 
-trait LivewireAlert
+class LivewireAlert
 {
-    public function confirm(string $title, $options = [])
-    {
-        $options = array_merge(
-            config('livewire-alert.confirm'),
-            $options,
-        );
+    use Concerns\SweetAlert2;
 
-        $type = Arr::get($options, 'icon');
+    protected array $options = [];
+    protected array $events = [];
+
+    public function __construct(protected ?Component $component)
+    {
+        $this->component = $component ?? \Livewire\Livewire::getInstance();
+
+        throw_if(
+            !$this->component,
+            new \Exception(
+                'LivewireAlert requires a Livewire component context.'
+            )
+        );
+    }
+
+    public function title(string $title): self
+    {
+        $this->options[Enums\Option::Title->value] = $title;
+
+        return $this;
+    }
+
+    public function text(string $text): self
+    {
+        $this->options[Enums\Option::Text->value] = $text;
         
-        $this->alert($type,$title, $options);
+        return $this;
     }
 
-    public function alert(string $type = 'success', string $message = '', array $options = [])
+    public function success(): self
     {
-        $this->dispatchOrFlashAlert([
-            'type' => $type,
-            'message' => $message,
-            'options' => $options
+        $this->options[Enums\Option::Icon->value] = Enums\Icon::Success->value;
+
+        return $this;
+    }
+
+    public function error(): self
+    {
+        $this->options[Enums\Option::Icon->value] = Enums\Icon::Error->value;
+
+        return $this;
+    }
+
+    public function warning(): self
+    {
+        $this->options[Enums\Option::Icon->value] =  Enums\Icon::Warning->value;
+
+        return $this;
+    }
+
+    public function info(): self
+    {
+        $this->options[Enums\Option::Icon->value] = Enums\Icon::Info->value;
+
+        return $this;
+    }
+
+    public function question(): self
+    {
+        $this->options[Enums\Option::Icon->value] = Enums\Icon::Question->value;
+
+        return $this;
+    }
+
+    public function position(Enums\Position|string $position): self
+    {
+        $this->options[
+            Enums\Option::Position->value
+        ] = $position instanceof Enums\Position ? $position->value : $position;
+
+        return $this;
+    }
+
+    public function toast(): self
+    {
+        $this->options[Enums\Option::Toast->value] = true;
+
+        return $this;
+    }
+
+    public function timer(int $timer): self
+    {
+        $this->options[Enums\Option::Timer->value] = $timer;
+
+        return $this;
+    }
+
+    public function showConfirmButton(): self
+    {
+        $this->options[Enums\Option::ShowConfirmButton->value] = true;
+
+        return $this;
+    }
+
+    public function showCancelButton(): self
+    {
+        $this->options[Enums\Option::ShowCancelButton->value] = true;
+
+        return $this;
+    }
+
+    public function showDenyButton(): self
+    {
+        $this->options[Enums\Option::ShowDenyButton->value] = true;
+
+        return $this;
+    }
+
+    public function confirmButtonText(string $text): self
+    {
+        $this->options[Enums\Option::ConfirmButtonText->value] = $text;
+
+        return $this;
+    }
+
+    public function cancelButtonText(string $text): self
+    {
+        $this->options[Enums\Option::CancelButtonText->value] = $text;
+
+        return $this;
+    }
+
+    public function denyButtonText(string $text): self
+    {
+        $this->options[Enums\Option::DenyButtonText->value] = $text;
+
+        return $this;
+    }
+
+    public function confirmButtonColor(string $color): self
+    {
+        $this->options[Enums\Option::ConfirmButtonColor->value] = $color;
+
+        return $this;
+    }
+
+    public function cancelButtonColor(string $color): self
+    {
+        $this->options[Enums\Option::CancelButtonColor->value] = $color;
+
+        return $this;
+    }
+
+    public function asConfirmation(): self
+    {
+        $this->question();
+        $this->showConfirmButton();
+        $this->showDenyButton();
+        $this->options[Enums\Option::Timer->value] = null;
+
+        return $this;
+    }
+
+    public function onConfirm(string $action, mixed $data = null): self
+    {
+        $this->event(Enums\Event::IsConfirmed, [
+            'action' => $action,
+            'data' => $data,
         ]);
+
+        return $this;
     }
 
-    public function flash(string $type = 'success', string $message = '', array $options = [], $redirect = '/')
+    public function onDeny(string $action, mixed $data = null): self
     {
-        $this->dispatchOrFlashAlert([
-            'type' => $type,
-            'message' => $message,
-            'options' => $options,
-            'flash' => true
+        $this->event(Enums\Event::IsDenied, [
+            'action' => $action,
+            'data' => $data,
         ]);
 
-        return redirect()->to($redirect);
+        return $this;
     }
 
-    protected function dispatchOrFlashAlert(array $configuration)
+    public function onDismiss(string $action, mixed $data = null): self
     {
-        $type = Arr::get($configuration, 'type');
+        $this->event(Enums\Event::IsDismissed, [
+            'action' => $action,
+            'data' => $data,
+        ]);
 
-        $message = Arr::get($configuration, 'message');
+        return $this;
+    }
 
-        $events = collect(Arr::only(
-            Arr::get($configuration, 'options'),
-            $this->livewireAlertEvents()
-        ))
-        ->map(function ($event) {
-            return $this->getEventProperties($event);
-        })
-        ->toArray();
-
-        $data = Arr::get($configuration, 'options.data');
-
-        $options = Arr::only(
-            Arr::get($configuration, 'options'),
-            $this->configurationKeys()
-        );
-
-        $isFlash = Arr::has($configuration, 'flash') && Arr::get($configuration, 'flash') === true;
-
-        $options = array_merge(
-            config('livewire-alert.alert') ?? [],
-            config('livewire-alert.' . $type) ?? [],
+    public function options(array $options = []): self
+    {
+        $this->options = array_merge(
+            $this->options, 
             $options
         );
 
-        if (! in_array($type,$this->livewireAlertIcons())) {
-            throw new AlertException(
-                "Invalid '{$type}' alert icon."
-            );
-        }
-
-        $payload = [
-            'type' => $type,
-            'message' => $message,
-            'events' => $events,
-            'options' => $options,
-            'data' => $data,
-        ];
-
-        if (! $isFlash) {
-            $this->dispatch('alert', ...$payload);
-
-            return;
-        }
-        
-        session()->flash('livewire-alert', $payload);
+        return $this;
     }
 
-    protected function getEventProperties($event)
+    public function show(): void
     {
-        $expectedKeys = ['id', 'component', 'listener'];
-
-        if (is_array( $event)) {
-            $event = Arr::only($event, $expectedKeys);
-
-            if (! Arr::exists($event, 'component')) {
-                throw new AlertException('Missing component key on event properties');
-            }
-
-            if (! Arr::exists($event, 'listener')) {
-                throw new AlertException('Missing listener key on event properties');
-            }   
-
-            Arr::set($event, 'id', null);
-
-            return $event;
-        }
-
-        return [
-            'id' => $this->getId(),
-            'component' =>  'self',
-            'listener' => $event
-        ];
+        $this->alert(
+            array_merge(
+                config('livewire-alert'),
+                array_intersect_key(
+                    $this->options, array_flip(Enums\Option::values())
+                ),
+            ),
+            $this->events
+        );
     }
 
-    protected function livewireAlertIcons(): array
+    protected function event(Enums\Event $event, array $action): void
     {
-        return [
-            '',
-            'success',
-            'info',
-            'warning',
-            'error',
-            'question'
-        ];
-    }
-
-    protected function livewireAlertEvents(): array
-    {
-        return [
-            'onConfirmed',
-            'onDismissed', 
-            'onDenied',
-            'onProgressFinished'
-        ];
-    }
-
-    protected function configurationKeys(): array
-    {
-        return [
-            'title',
-            'titleText',
-            'html',
-            'text',
-            'icon',
-            'iconColor',
-            'iconHtml',
-            'showClass',
-            'hideClass',
-            'footer',
-            'backdrop',
-            'toast',
-            'target',
-            'input',
-            'width',
-            'padding',
-            'color',
-            'background',
-            'position',
-            'grow',
-            'customClass',
-            'timer',
-            'timerProgressBar',
-            'heightAuto',
-            'allowOutsideClick',
-            'allowEscapeKey',
-            'allowEnterKey',
-            'stopKeydownPropagation',
-            'keydownListenerCapture',
-            'showConfirmButton',
-            'showDenyButton',
-            'showCancelButton',
-            'confirmButtonText',
-            'denyButtonText',
-            'cancelButtonText',
-            'confirmButtonText',
-            'confirmButtonColor',
-            'denyButtonColor',
-            'cancelButtonColor',
-            'confirmButtonAriaLabel',
-            'denyButtonAriaLabel',
-            'cancelButtonAriaLabel',
-            'buttonsStyling',
-            'reverseButtons',
-            'focusConfirm',
-            'returnFocus',
-            'focusDeny',
-            'focusCancel',
-            'showCloseButton',
-            'closeButtonHtml',
-            'closeButtonAriaLabel',
-            'loaderHtml',
-            'showLoaderOnConfirm',
-            'showLoaderOnDeny',
-            'scrollbarPadding',
-            'preConfirm',
-            'preDeny',
-            'returnInputValueOnDeny',
-            'imageUrl',
-            'imageWidth',
-            'imageHeight',
-            'imageAlt',
-            'inputLabel',
-            'inputPlaceholder',
-            'inputValue',
-            'inputOptions',
-            'inputAutoTrim',
-            'inputAttributes',
-            'inputValidator',
-            'validationMessage',
-            'progressSteps',
-            'currentProgressStep',
-            'progressStepsDistance',
-            'willOpen',
-            'didOpen',
-            'didRender',
-            'willClose',
-            'didClose',
-            'didDestroy'
-        ];
+        $this->events[$event->value] = $action;
     }
 }

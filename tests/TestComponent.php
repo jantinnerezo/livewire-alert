@@ -63,7 +63,7 @@ class TestComponent extends Component
     {
         return <<<'blade'
             <div>
-                Hello Word!
+                Test component!
             </div>
         blade;
     }
