@@ -19,10 +19,6 @@ class TestComponent extends Component
 
     public function render()
     {
-        return <<<'blade'
-            <div>
-                Test component!
-            </div>
-        blade;
+        return '<div></div>';
     }
 }

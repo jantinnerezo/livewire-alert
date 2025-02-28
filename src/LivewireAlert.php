@@ -6,7 +6,7 @@ namespace Jantinnerezo\LivewireAlert;
 
 use Livewire\Component;
 
-class LivewireAlert
+class LivewireAlert implements Contracts\Alertable
 {
     use Concerns\SweetAlert2;
 
@@ -81,9 +81,10 @@ class LivewireAlert
         return $this;
     }
 
-    public function toast(): self
+    public function toast(bool $toast = true): self
     {
-        $this->options[Enums\Option::Toast->value] = true;
+        $this->options[Enums\Option::Toast->value] = $toast;
+        $this->options[Enums\Option::Backdrop->value] = !$toast;
 
         return $this;
     }
@@ -95,23 +96,35 @@ class LivewireAlert
         return $this;
     }
 
-    public function showConfirmButton(): self
+    public function withConfirmButton(?string $confirmButtonText = null): self
     {
         $this->options[Enums\Option::ShowConfirmButton->value] = true;
 
+        $this->confirmButtonText(
+            $confirmButtonText ?? config('livewire-alert.confirmButtonText')
+        );
+
         return $this;
     }
 
-    public function showCancelButton(): self
+    public function withCancelButton(?string $cancelButtonText = null): self
     {
         $this->options[Enums\Option::ShowCancelButton->value] = true;
 
+        $this->cancelButtonText(
+            $cancelButtonText ?? config('livewire-alert.cancelButtonText')
+        );
+
         return $this;
     }
 
-    public function showDenyButton(): self
+    public function withDenyButton(?string $denyButtonText = null): self
     {
         $this->options[Enums\Option::ShowDenyButton->value] = true;
+
+        $this->denyButtonText(
+            $denyButtonText ?? config('livewire-alert.denyButtonText')
+        );
 
         return $this;
     }
@@ -151,11 +164,18 @@ class LivewireAlert
         return $this;
     }
 
-    public function asConfirmation(): self
+    public function denyButtonColor(string $color): self
+    {
+        $this->options[Enums\Option::DenyButtonColor->value] = $color;
+
+        return $this;
+    }
+
+    public function asConfirm(): self
     {
         $this->question();
-        $this->showConfirmButton();
-        $this->showDenyButton();
+        $this->withConfirmButton(config('livewire-alert.confirmButtonText'));
+        $this->withDenyButton(config('livewire-alert.denyButtonText'));
         $this->options[Enums\Option::Timer->value] = null;
 
         return $this;

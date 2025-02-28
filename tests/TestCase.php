@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jantinnerezo\LivewireAlert\Tests;
 
 use Livewire\LivewireServiceProvider;
@@ -22,5 +24,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
             'base64:9BLvxrqZjcRwnrHzaI4gOvRaSs2GBQodhp6snnDFEqc='
         );
     }
-
 }

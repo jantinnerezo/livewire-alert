@@ -47,7 +47,7 @@
                 "Jantinnerezo\\LivewireAlert\\LivewireAlertServiceProvider"
             ],
             "aliases": {
-                "LivewireAlert": "Jantinnerezo\\LivewireAlert\\LivewireAlertFacade"
+                "LivewireAlert": "Jantinnerezo\\LivewireAlert\\LivewireAlert"
             }
         }
     }

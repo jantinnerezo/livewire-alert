@@ -9,7 +9,7 @@ return [
     'timer' => 3000,
     'toast' => true,
     'text' => null,
-    'confirmButtonText' => 'OK',
+    'confirmButtonText' => 'Yes',
     'cancelButtonText' => 'Cancel',
     'denyButtonText' => 'No',
     'showCancelButton' => false,
