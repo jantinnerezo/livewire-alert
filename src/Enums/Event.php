@@ -16,7 +16,7 @@ enum Event: string
     public static function values(): array
     {
         return array_map(
-            fn (self $event) => $event->value, 
+            fn (self $event) => $event->value,
             self::cases()
         );
     }

@@ -49,7 +49,7 @@ class LivewireAlertTest extends TestCase
 
         $this->assertTrue(
             Icon::from(
-                $alert->getOptions()[Option::Icon->value]->value
+                $alert->getOptions()[Option::Icon->value]
             )->is(Icon::Success)
         );
     }
@@ -62,7 +62,7 @@ class LivewireAlertTest extends TestCase
 
         $this->assertTrue(
             Icon::from(
-                $alert->getOptions()[Option::Icon->value]->value
+                $alert->getOptions()[Option::Icon->value]
             )->is(Icon::Error)
         );
     }
@@ -75,7 +75,7 @@ class LivewireAlertTest extends TestCase
 
         $this->assertTrue(
             Icon::from(
-                $alert->getOptions()[Option::Icon->value]->value
+                $alert->getOptions()[Option::Icon->value]
             )->is(Icon::Warning)
         );
     }
@@ -88,7 +88,7 @@ class LivewireAlertTest extends TestCase
 
         $this->assertTrue(
             Icon::from(
-                $alert->getOptions()[Option::Icon->value]->value)
+                $alert->getOptions()[Option::Icon->value])
             ->is(Icon::Info)
         );
     }
@@ -101,7 +101,7 @@ class LivewireAlertTest extends TestCase
 
         $this->assertTrue(
             Icon::from(
-                $alert->getOptions()[Option::Icon->value]->value
+                $alert->getOptions()[Option::Icon->value]
             )->is(Icon::Question)
         );
     }
@@ -114,7 +114,7 @@ class LivewireAlertTest extends TestCase
         
         $this->assertTrue(
             Position::from(
-                $alert->getOptions()[Option::Position->value]->value
+                $alert->getOptions()[Option::Position->value]
             )->is(Position::Top)
         );
     }
@@ -347,9 +347,9 @@ class LivewireAlertTest extends TestCase
         $alert->asConfirm();
 
         $this->assertTrue(Icon::from(
-            $alert->getOptions()[Option::Icon->value]->value
+            $alert->getOptions()[Option::Icon->value]
         )->is(Icon::Question));
-        
+
         $this->assertTrue(
             $alert->getOptions()[Option::ShowConfirmButton->value]
         );

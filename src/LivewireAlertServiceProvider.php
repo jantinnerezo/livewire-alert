@@ -33,7 +33,8 @@ class LivewireAlertServiceProvider extends ServiceProvider
         });
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/livewire-alert.php', 'livewire-alert'
+            __DIR__ . '/../config/livewire-alert.php',
+            'livewire-alert'
         );
     }
 }

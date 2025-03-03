@@ -9,7 +9,7 @@ use Livewire\Component;
 class LivewireAlert implements Contracts\Alertable
 {
     use Concerns\SweetAlert2;
-    
+
     protected array $options = []; /** @phpstan-ignore missingType.iterableValue */
     protected array $events = []; /** @phpstan-ignore missingType.iterableValue */
 
@@ -33,7 +33,7 @@ class LivewireAlert implements Contracts\Alertable
     public function text(string $text): self
     {
         $this->options[Enums\Option::Text->value] = $text;
-        
+
         return $this;
     }
 
@@ -214,7 +214,7 @@ class LivewireAlert implements Contracts\Alertable
     public function withOptions(array $options = []): self
     {
         $this->options = array_merge(
-            $this->options, 
+            $this->options,
             $options
         );
 
@@ -226,7 +226,8 @@ class LivewireAlert implements Contracts\Alertable
         return array_merge(
             config('livewire-alert'),
             array_intersect_key(
-                $this->options, array_flip(Enums\Option::values())
+                $this->options,
+                array_flip(Enums\Option::values())
             ),
         );
     }
@@ -234,7 +235,7 @@ class LivewireAlert implements Contracts\Alertable
     public function getEvents(): array
     {
         return array_intersect_key(
-            $this->events, 
+            $this->events,
             array_flip(Enums\Event::values())
         );
     }

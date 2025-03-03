@@ -9,7 +9,7 @@ use Jantinnerezo\LivewireAlert\Enums\Position;
 interface Alertable
 {
     public function title(string $title): self;
-    
+
     public function text(string $text): self;
 
     public function success(): self;
@@ -54,21 +54,21 @@ interface Alertable
      */
     public function onConfirm(string $action, array $data = []): self;
 
-     /**
-     * @param string $action
-     * @param array<mixed> $data
-     */
+    /**
+    * @param string $action
+    * @param array<mixed> $data
+    */
     public function onDeny(string $action, array $data = []): self;
-    
+
     /**
      * @param string $action
      * @param array<mixed> $data
      */
     public function onDismiss(string $action, array $data = []): self;
-    
-     /**
-     * @param array<\Jantinnerezo\LivewireAlert\Enums\Option, mixed> $options
-     */
+
+    /**
+    * @param array<\Jantinnerezo\LivewireAlert\Enums\Option, mixed> $options
+    */
     public function withOptions(array $options = []): self;
 
     /**
