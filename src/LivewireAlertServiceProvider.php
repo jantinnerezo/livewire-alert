@@ -17,7 +17,7 @@ class LivewireAlertServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('livewire-alert.php'),
+                __DIR__ . '/../config/livewire-alert.php' => config_path('livewire-alert.php'),
             ], 'livewire-alert:config');
         }
     }
