@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Jantinnerezo\LivewireAlert\Tests;
 
+use Jantinnerezo\LivewireAlert\Enums\Event;
 use Jantinnerezo\LivewireAlert\Enums\Icon;
 use Jantinnerezo\LivewireAlert\Enums\Option;
 use Jantinnerezo\LivewireAlert\Enums\Position;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 
 class LivewireAlertTest extends TestCase
 {
-    public function test_it_throws_exception_if_no_component_provided(): void
+    #[Test]
+    public function it_throws_exception_if_no_component_provided(): void
     {
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('LivewireAlert requires a Livewire component context.');
@@ -20,7 +23,8 @@ class LivewireAlertTest extends TestCase
         new LivewireAlert(null);
     }
 
-    public function test_it_sets_title_correctly(): void
+    #[Test]
+    public function it_sets_title_correctly(): void
     {
         $alert = $this->livewireAlert();
         $alert->title('Test Title');
@@ -28,7 +32,8 @@ class LivewireAlertTest extends TestCase
         $this->assertEquals('Test Title', $alert->getOptions()['title']);
     }
 
-    public function test_it_sets_text_correctly(): void
+    #[Test]
+    public function it_sets_text_correctly(): void
     {
         $alert = $this->livewireAlert();
         $alert->text('Test Text');
@@ -36,72 +41,315 @@ class LivewireAlertTest extends TestCase
         $this->assertEquals('Test Text', $alert->getOptions()['text']);
     }
 
-    public function test_it_sets_success_icon(): void
+    #[Test]
+    public function it_sets_success_icon(): void
     {
         $alert = $this->livewireAlert();
         $alert->success();
 
         $this->assertTrue(
-            Icon::from($alert->getOptions()['icon'])->is(Icon::Success)
+            Icon::from(
+                $alert->getOptions()[Option::Icon->value]->value
+            )->is(Icon::Success)
         );
     }
 
-    public function test_it_sets_error_icon(): void
+    #[Test]
+    public function it_sets_error_icon(): void
     {
         $alert = $this->livewireAlert();
         $alert->error();
 
         $this->assertTrue(
-            Icon::from($alert->getOptions()['icon'])->is(Icon::Error)
+            Icon::from(
+                $alert->getOptions()[Option::Icon->value]->value
+            )->is(Icon::Error)
         );
     }
     
-    public function test_it_sets_warning_icon(): void
+    #[Test]
+    public function it_sets_warning_icon(): void
     {
         $alert = $this->livewireAlert();
         $alert->warning();
 
         $this->assertTrue(
-            Icon::from($alert->getOptions()['icon'])->is(Icon::Warning)
+            Icon::from(
+                $alert->getOptions()[Option::Icon->value]->value
+            )->is(Icon::Warning)
         );
     }
 
-    public function test_it_sets_info_icon(): void
+    #[Test]
+    public function it_sets_info_icon(): void
     {
         $alert = $this->livewireAlert();
         $alert->info();
 
         $this->assertTrue(
-            Icon::from($alert->getOptions()['icon'])->is(Icon::Info)
+            Icon::from(
+                $alert->getOptions()[Option::Icon->value]->value)
+            ->is(Icon::Info)
         );
     }
 
-    public function test_it_sets_question_icon(): void
+    #[Test]
+    public function it_sets_question_icon(): void
     {
         $alert = $this->livewireAlert();
         $alert->question();
 
         $this->assertTrue(
-            Icon::from($alert->getOptions()['icon'])->is(Icon::Question)
+            Icon::from(
+                $alert->getOptions()[Option::Icon->value]->value
+            )->is(Icon::Question)
         );
     }
 
-    public function test_it_sets_position(): void
+    #[Test]
+    public function it_sets_position(): void
     {
         $alert = $this->livewireAlert();
-        $alert->position(Position::TopEnd);
+        $alert->position(Position::Top);
         
         $this->assertTrue(
-            Position::from($alert->getOptions()['position'])->is(Position::TopEnd)
+            Position::from(
+                $alert->getOptions()[Option::Position->value]->value
+            )->is(Position::Top)
         );
     }
 
-    public function test_it_configures_as_confirmation(): void
+    #[Test]
+    public function it_configures_as_toast(): void
     {
         $alert = $this->livewireAlert();
-        $alert->asConfirmation();
+        $alert->toast();
 
-        $this->assertTrue(Icon::from($alert->getOptions()['icon'])->is(Icon::Question));
+        $this->assertTrue(
+            $alert->getOptions()[Option::Toast->value]
+        );
+        $this->assertFalse(
+            $alert->getOptions()[Option::Backdrop->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_timer(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->timer(5000);
+
+        $this->assertEquals(
+            5000,
+            $alert->getOptions()[Option::Timer->value]
+        );
+    }
+
+    #[Test]
+    public function it_has_confirm_button_with_text_from_config(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withConfirmButton();
+
+        $this->assertTrue(
+            $alert->getOptions()[Option::ShowConfirmButton->value]
+        );
+        $this->assertEquals(
+            config('livewire-alert.confirmButtonText'),
+            $alert->getOptions()[Option::ConfirmButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_has_confirm_button_with_text_defined(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withConfirmButton('Alright');
+
+        $this->assertEquals(
+            'Alright',
+            $alert->getOptions()[Option::ConfirmButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_has_cancel_button_with_text_from_config(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withCancelButton();
+
+        $this->assertTrue(
+            $alert->getOptions()[Option::ShowCancelButton->value]
+        );
+        $this->assertEquals(
+            config('livewire-alert.cancelButtonText'),
+            $alert->getOptions()[Option::CancelButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_has_cancel_button_with_text_defined(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withCancelButton('Cancel Please');
+
+        $this->assertEquals(
+            'Cancel Please',
+            $alert->getOptions()[Option::CancelButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_has_deny_button_with_text_from_config(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withDenyButton();
+
+        $this->assertTrue(
+            $alert->getOptions()[Option::ShowDenyButton->value]
+        );
+        $this->assertEquals(
+            config('livewire-alert.denyButtonText'),
+            $alert->getOptions()[Option::DenyButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_has_deny_button_with_text_defined(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withDenyButton('Deny');
+
+        $this->assertEquals(
+            'Deny',
+            $alert->getOptions()[Option::DenyButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_changes_confirm_button_text(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->confirmButtonText('OK');
+
+        $this->assertEquals(
+            'OK',
+            $alert->getOptions()[Option::ConfirmButtonText->value]
+        );
+
+        $alert->confirmButtonText('Yes');
+
+        $this->assertEquals(
+            'Yes',
+            $alert->getOptions()[Option::ConfirmButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_changes_cancel_button_text(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->cancelButtonText('Cancel');
+
+        $this->assertEquals(
+            'Cancel',
+            $alert->getOptions()[Option::CancelButtonText->value]
+        );
+
+        $alert->cancelButtonText('Cancel Please');
+
+        $this->assertEquals(
+            'Cancel Please',
+            $alert->getOptions()[Option::CancelButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_changes_deny_button_text(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->denyButtonText('No');
+
+        $this->assertEquals(
+            'No',
+            $alert->getOptions()[Option::DenyButtonText->value]
+        );
+
+        $alert->denyButtonText('Nope');
+
+        $this->assertEquals(
+            'Nope',
+            $alert->getOptions()[Option::DenyButtonText->value]
+        );
+    }
+
+    #[Test]
+    public function it_changes_confirm_button_color(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->confirmButtonColor('green');
+
+        $this->assertEquals(
+            'green',
+            $alert->getOptions()[Option::ConfirmButtonColor->value]
+        );
+
+        $alert->confirmButtonColor('red');
+
+        $this->assertEquals(
+            'red',
+            $alert->getOptions()[Option::ConfirmButtonColor->value]
+        );
+    }
+
+    #[Test]
+    public function it_changes_cancel_button_color(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->cancelButtonColor('gray');
+
+        $this->assertEquals(
+            'gray',
+            $alert->getOptions()[Option::CancelButtonColor->value]
+        );
+
+        $alert->cancelButtonColor('orange');
+
+        $this->assertEquals(
+            'orange',
+            $alert->getOptions()[Option::CancelButtonColor->value]
+        );
+    }
+
+    #[Test]
+    public function it_changes_deny_button_color(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->denyButtonColor('red');
+
+        $this->assertEquals(
+            'red',
+            $alert->getOptions()[Option::DenyButtonColor->value]
+        );
+
+        $alert->denyButtonColor('blue');
+
+        $this->assertEquals(
+            'blue',
+            $alert->getOptions()[Option::DenyButtonColor->value]
+        );
+    }
+
+    #[Test]
+    public function it_configures_as_confirm(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->asConfirm();
+
+        $this->assertTrue(Icon::from(
+            $alert->getOptions()[Option::Icon->value]->value
+        )->is(Icon::Question));
+        
         $this->assertTrue(
             $alert->getOptions()[Option::ShowConfirmButton->value]
         );
@@ -113,28 +361,92 @@ class LivewireAlertTest extends TestCase
         );
     }
 
-    public function test_it_sets_on_confirm_event(): void
+    #[Test]
+    public function it_sets_on_confirm_event(): void
     {
         $alert = $this->livewireAlert();
         $alert->onConfirm('confirmAction', ['id' => 123]);
 
         $this->assertEquals(
             ['action' => 'confirmAction', 'data' => ['id' => '123']],
-            $alert->getEvents()['isConfirmed']
+            $alert->getEvents()[Event::IsConfirmed->value]
         );
     }
 
-    public function test_it_merges_config_with_options(): void
+    #[Test]
+    public function it_sets_on_deny_event(): void
     {
-        config(['livewire-alert' => ['position' => 'bottom-end']]);
+        $alert = $this->livewireAlert();
+        $alert->onDeny('denyAction', ['id' => 123]);
+
+        $this->assertEquals(
+            ['action' => 'denyAction', 'data' => ['id' => '123']],
+            $alert->getEvents()[Event::IsDenied->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_on_dismiss_event(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->onDismiss('dismissAction', ['id' => 123]);
+
+        $this->assertEquals(
+            ['action' => 'dismissAction', 'data' => ['id' => '123']],
+            $alert->getEvents()[Event::IsDismissed->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_additional_options(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withOptions([
+            Option::Input->value => 'text',
+            Option::InputLabel->value => 'Enter something',
+        ]);
+
+        $this->assertEquals(
+            'text',
+            $alert->getOptions()[Option::Input->value]
+        );
+        $this->assertEquals(
+            'Enter something',
+            $alert->getOptions()[Option::InputLabel->value]
+        );
+    }
+
+    #[Test]
+    public function it_merges_config_with_options(): void
+    {
+        config([
+            'livewire-alert' => ['position' => Position::BottomEnd->value]
+        ]);
 
         $alert = $this->livewireAlert();
 
         $alert->title('Test')->success()->show();
 
-        $this->assertArrayHasKey('position', $alert->getOptions());
-        $this->assertEquals('bottom-end', $alert->getOptions()['position']);
-        $this->assertEquals('Test', $alert->getOptions()['title']);
+        $this->assertArrayHasKey(Option::Position->value, $alert->getOptions());
+        $this->assertEquals(
+            Position::BottomEnd->value, 
+            $alert->getOptions()['position']
+        );
+        $this->assertEquals(
+            'Test', 
+            $alert->getOptions()[Option::Title->value]
+        );
+    }
+
+    #[Test]
+    public function it_get_events(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->onConfirm('confirmAction', ['id' => 123]);
+        $alert->onDeny('denyAction', ['id' => 123]);
+        $alert->onDismiss('dismissAction', ['id' => 123]);
+
+        $this->assertCount(3, $alert->getEvents());
     }
 
     protected function livewireAlert(): LivewireAlert

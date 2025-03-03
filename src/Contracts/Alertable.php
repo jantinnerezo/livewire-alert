@@ -48,16 +48,37 @@ interface Alertable
 
     public function asConfirm(): self;
 
+    /**
+     * @param string $action
+     * @param array<mixed> $data
+     */
     public function onConfirm(string $action, array $data = []): self;
 
+     /**
+     * @param string $action
+     * @param array<mixed> $data
+     */
     public function onDeny(string $action, array $data = []): self;
-
+    
+    /**
+     * @param string $action
+     * @param array<mixed> $data
+     */
     public function onDismiss(string $action, array $data = []): self;
     
-    public function options(array $options = []): self;
+     /**
+     * @param array<\Jantinnerezo\LivewireAlert\Enums\Option, mixed> $options
+     */
+    public function withOptions(array $options = []): self;
 
+    /**
+     * @return array<\Jantinnerezo\LivewireAlert\Enums\Option, mixed>
+     */
     public function getOptions(): array;
 
+    /**
+     * @return array<\Jantinnerezo\LivewireAlert\Enums\Event, mixed>
+     */
     public function getEvents(): array;
 
     public function show(): void;

@@ -4,10 +4,13 @@
  * For more details about the configuration, see:
  * https://sweetalert2.github.io/#configuration
  */
+
+use Jantinnerezo\LivewireAlert\Enums\Position;
+
 return [
-    'position' => 'top-end',
+    'position' => Position::Center,
     'timer' => 3000,
-    'toast' => true,
+    'toast' => false,
     'text' => null,
     'confirmButtonText' => 'Yes',
     'cancelButtonText' => 'Cancel',

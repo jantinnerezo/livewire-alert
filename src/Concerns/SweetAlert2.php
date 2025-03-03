@@ -4,27 +4,31 @@ declare(strict_types=1);
 
 namespace Jantinnerezo\LivewireAlert\Concerns;
 
-use Jantinnerezo\LivewireAlert\Enums\Event;
-use Jantinnerezo\LivewireAlert\Exceptions\AlertException;
-
 trait SweetAlert2
 {
+    /**
+     * @param array<\Jantinnerezo\LivewireAlert\Enums\Option, array<string, mixed>> $options
+     * @param array<\Jantinnerezo\LivewireAlert\Enums\Event, array<string, mixed>> $events
+     */
     protected function alert(array $options, array $events = []): void
     {
-        $js = 'const alert = await Swal.fire(' . json_encode($options) . ');';
+        $options = json_encode($options);
+        $events = json_encode($events);
 
-        foreach ($events as $event => $callback) {
-            throw_if(
-                !Event::tryFrom($event) instanceof Event,
-                new AlertException("Invalid callback for SweetAlert2 Event: {$event}")
-            );
+        $js = <<<JS
+            const alert = await Swal.fire({$options})
 
-            $js .= ' if (alert.' . $event . ') { ';
+            for (const event in {$events}) {
+                if (!alert.hasOwnProperty(event)) {
+                    continue
+                }
 
-            $js .= "\$wire.call('{$callback['action']}', { ..." . json_encode($callback['data']) . ", value: alert.value });";
-
-            $js .= ' }';
-        }
+                \$wire.call({$events}[event].action, {
+                    ...{$events}[event].data || {},
+                    value: alert.value
+                })
+            }
+        JS;
 
         $this->component->js($js);
     }

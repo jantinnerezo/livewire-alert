@@ -90,6 +90,9 @@ enum Option: string
         return $this === $option;
     }
 
+    /**
+     * @return array<string>
+     */
     public static function values(): array
     {
         return array_map(
