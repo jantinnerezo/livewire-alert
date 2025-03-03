@@ -22,9 +22,35 @@ Livewire Alert is a Laravel package designed to integrate sweetalert-style notif
 - Composer
 
 ## Installation
+
+First, require the package with Composer:
+
 ``` bash
 composer require jantinnerezo/livewire-alert
 ```
+
+Next, install SweetAlert2 via npm:
+
+``` bash
+npm install sweetalert2
+```
+
+After installing SweetAlert2, import it into your `resources/js/app.js` file
+
+```
+import Swal from 'sweetalert2'
+
+window.Swal = Swal
+```
+
+If you prefer not to use npm, you can include SweetAlert2 directly via CDN. Add the following script to your Blade layout file (e.g., resources/views/layouts/app.blade.php) before the closing </body> tag:
+
+``` html
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+```
+
 
 ## Usage
 The LivewireAlert package provides a convenient Facade that allows you to trigger customizable SweetAlert2-based alerts in your Laravel Livewire application. The Facade uses a fluent interface, enabling you to chain methods to configure your alert before displaying it.
