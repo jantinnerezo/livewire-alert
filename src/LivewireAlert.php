@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jantinnerezo\LivewireAlert;
 
+use Jantinnerezo\LivewireAlert\Exceptions\InvalidPositionException;
 use Livewire\Component;
 
 class LivewireAlert implements Contracts\Alertable
@@ -74,9 +75,16 @@ class LivewireAlert implements Contracts\Alertable
 
     public function position(Enums\Position|string $position): self
     {
-        $this->options[
-            Enums\Option::Position->value
-        ] = $position instanceof Enums\Position ? $position->value : $position;
+        if (is_string($position)) {
+            $position = Enums\Position::tryFrom($position);
+
+            throw_if(
+                !$position instanceof Enums\Position,
+                new InvalidPositionException()
+            );
+        }
+
+        $this->options[ Enums\Option::Position->value] = $position;
 
         return $this;
     }

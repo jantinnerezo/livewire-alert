@@ -8,6 +8,7 @@ use Jantinnerezo\LivewireAlert\Enums\Event;
 use Jantinnerezo\LivewireAlert\Enums\Icon;
 use Jantinnerezo\LivewireAlert\Enums\Option;
 use Jantinnerezo\LivewireAlert\Enums\Position;
+use Jantinnerezo\LivewireAlert\Exceptions\InvalidPositionException;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
@@ -107,16 +108,37 @@ class LivewireAlertTest extends TestCase
     }
 
     #[Test]
-    public function it_sets_position(): void
+    public function it_sets_position_with_enum_parameter(): void
     {
         $alert = $this->livewireAlert();
         $alert->position(Position::Top);
         
         $this->assertTrue(
             Position::from(
-                $alert->getOptions()[Option::Position->value]
+                $alert->getOptions()[Option::Position->value]->value
             )->is(Position::Top)
         );
+    }
+
+    #[Test]
+    public function it_sets_position_with_string_parameter(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->position('top');
+        
+        $this->assertTrue(
+            Position::from('top')->is(Position::Top)
+        );
+    }
+
+    #[Test]
+    public function it_throws_invalid_position_value(): void
+    {
+        $this->expectException(InvalidPositionException::class);
+        $this->expectExceptionMessage('Invalid position value. see:  Jantinnerezo\LivewireAlert\Enums\Position for available values.');
+
+        $alert = $this->livewireAlert();
+        $alert->position('start');
     }
 
     #[Test]
