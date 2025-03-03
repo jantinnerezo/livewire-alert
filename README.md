@@ -143,6 +143,32 @@ LivewireAlert::title('Are you do you want to do it?')
     ->show();
 ```
 
+### Button text
+
+Alternatively, you can use `confirmButtonText()`, `cancelButtonText()`, and `denyButtonText()` to set the text after enabling the buttons with `withConfirmButton()`, `withCancelButton()`, or `withDenyButton()` without text:
+
+``` php
+LivewireAlert::title('Save?')
+    ->withConfirmButton() // Enables button with default text
+    ->confirmButtonText('Yes')
+    ->withDenyButton()    // Enables button with default text
+    ->denyButtonText('No')
+    ->withCancelButton()  // Enables button with default text
+    ->cancelButtonText('Cancel')
+    ->show();
+```
+
+### Button Color
+You can customize the appearance of buttons by setting their colors using the `confirmButtonColor()`, `cancelButtonColor()`, and `denyButtonColor()` methods. These methods accept a color value (e.g., color names, hex codes, or CSS-compatible strings) to style the respective buttons.
+
+``` php
+LivewireAlert::title('Save?')
+    ->confirmButtonColor('green')
+    ->withDenyButton('red')
+    ->withCancelButton('blue')
+    ->show();
+```
+
 ### Button Events
 
 Each button can trigger a corresponding event when clicked, allowing you to handle user interactions in your Livewire component.
@@ -178,7 +204,7 @@ public function cancelDelete($data)
 }
 ```
 
-#### `onDismiss()`
+#### `onDeny()`
 
 ``` php
 LivewireAlert::title('Update?')
@@ -208,3 +234,97 @@ LivewireAlert::title('Process File')
     ->onDismiss('cancelAction', ['id' => $this->fileId])
     ->show();
 ```
+
+### Confirm Dialog
+
+The `asConfirm()` method configures the alert as a confirmation dialog with a predefined options. It automatically applies a question icon, adds confirm and deny buttons with default text from the configuration, and disables the auto-dismiss timer, making it ideal for scenarios requiring explicit user input.
+
+``` php
+LivewireAlert::title('Are you sure?')
+    ->text('Do you want to proceed with this action?')
+    ->asConfirm()
+    ->show();
+```
+
+#### Handling Events
+
+Combine with `onConfirm()` and `onDeny()` to handle user responses:
+
+``` php
+LivewireAlert::title('Delete Item')
+    ->text('Are you sure you want to delete this item?')
+    ->asConfirm()
+    ->onConfirm('deleteItem', ['id' => $this->itemId])
+    ->onDeny('keepItem', ['id' => $this->itemId])
+    ->show();
+
+public function deleteItem($data)
+{
+    $itemId = $data['id'];
+    // Delete logic
+}
+
+public function keepItem($data)
+{
+    $itemId = $data['id'];
+    // Keep logic
+}
+```
+
+### Inputs
+
+The LivewireAlert package allows you to add input fields to alerts using the `withOptions()` method, leveraging SweetAlert2’s input capabilities. This is useful for collecting user input (e.g., text, selections) directly within the alert, with the input value returned via event handlers like `onConfirm()`.
+
+#### Usage
+Use `withOptions()` to pass an array containing SweetAlert2 input options. Common input types include `text`, `email`, `password`, `number`, `textarea`, `select`, `radio`, `checkbox`, and `file`.
+
+Add a simple text input:
+
+``` php
+LivewireAlert::title('Enter Your Name')
+    ->withOptions([
+        'input' => 'text',
+        'inputPlaceholder' => 'Your name here',
+    ])
+    ->withConfirmButton('Submit')
+    ->onConfirm('saveName')
+    ->show();
+
+public function saveName($data)
+{
+    $name = $data['value']; // User’s input from the text field
+    // Save the name
+}
+```
+
+Select Input Example
+
+``` php
+LivewireAlert::title('Choose an Option')
+    ->withOptions([
+        'input' => 'select',
+        'inputOptions' => [
+            'small' => 'Small',
+            'medium' => 'Medium',
+            'large' => 'Large',
+        ],
+        'inputPlaceholder' => 'Select a size',
+    ])
+    ->withConfirmButton('Confirm')
+    ->onConfirm('processSelection')
+    ->show();
+
+public function processSelection($data)
+{
+    $size = $data['value']; // Selected value (e.g., 'small')
+    // Process the selection
+}
+```
+
+#### Handling Input Values
+When an input is present, the $data parameter in event methods (e.g., `onConfirm()`, `onDeny()`) includes a value property containing the user’s input. This value depends on the input type:
+
+- Text, email, password, number, textarea: The entered string or number.
+- Select, radio: The selected option’s key.
+- Checkbox: true or false.
+- File: The file data (if applicable).
