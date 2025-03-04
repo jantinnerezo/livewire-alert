@@ -100,4 +100,27 @@ enum Option: string
             self::cases()
         );
     }
+    
+    /**
+     * @return array<self>
+     */
+    public static function callbacks(): array
+    {
+        return [
+            Option::AllowOutsideClick,
+            Option::AllowEscapeKey,
+            Option::AllowEnterKey,
+            Option::LoaderHtml,
+            Option::InputOptions,
+            Option::InputValidator,
+            Option::PreConfirm,
+            Option::PreDeny,
+            Option::DidClose,
+            Option::DidDestroy,
+            Option::DidOpen,
+            Option::DidRender,
+            Option::WillClose,
+            Option::WillOpen,
+        ];
+    }
 }

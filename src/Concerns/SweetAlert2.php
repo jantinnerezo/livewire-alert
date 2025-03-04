@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jantinnerezo\LivewireAlert\Concerns;
 
+use Jantinnerezo\LivewireAlert\Enums\Option;
+
 trait SweetAlert2
 {
     /**
@@ -14,9 +16,21 @@ trait SweetAlert2
     {
         $options = json_encode($options);
         $events = json_encode($events);
+        $callbacks = json_encode(Option::callbacks());
 
         $js = <<<JS
-            const alert = await Swal.fire({$options})
+            const options = {$options}
+
+            // Evaluate callback functions
+            for (const option in options) {
+                if (!{$callbacks}.includes(option)) {
+                    continue
+                }
+
+                options[option] = eval(options.didOpen)
+            }
+
+            const alert = await Swal.fire(options)
 
             for (const event in {$events}) {
                 if (!alert.hasOwnProperty(event)) {
