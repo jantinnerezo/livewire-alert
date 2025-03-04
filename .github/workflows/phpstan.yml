@@ -1,4 +1,4 @@
-name: PHPUnit
+name: PHPStan
 
 on:
   push:
@@ -15,14 +15,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.1']
-        phpunit-versions: ['8.1', latest]
+        php-versions: ['8.2', '8.3', '8.4']
 
     name: PHP ${{ matrix.php-versions }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -32,9 +37,8 @@ jobs:
           tools: phpunit:${{ matrix.phpunit-versions }}
           coverage: none
 
-      - name: Install dependencies
-        if: "steps.composer-cache.outputs.cache-hit != 'true'"
-        run: composer install --prefer-dist --no-interaction --no-suggest
+      - name: Install Composer dependencies
+        run: composer install --ignore-platform-reqs --no-scripts
 
-      - name: Run test suite
-        run: composer run-script test
+      - name: Run phpstan
+        run: ./vendor/bin/phpstan analyse src tests --level=7 --error-format=github
