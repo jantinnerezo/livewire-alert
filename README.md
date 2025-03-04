@@ -429,7 +429,7 @@ All methods remain available, and you can chain them fluently just like with the
 
 If you’re seeking documentation for livewire-alert v3, note that the last release of the version 3 series was v3.0.3, available on GitHub at [v3.0.3](https://github.com/jantinnerezo/livewire-alert/releases/tag/v3.0.3) Released on March 11, 2024, this version supports Livewire 3 and latest Laravel 12 and includes features like basic alert functionality with the `LivewireAlert` trait.
 
-This release, however, is a complete rewrite of the package, introducing a new architecture and enhanced features (like the fluent Facade interface and dependency injection). As a result, the documentation below focuses on v4. 
+This release, however, is a major refactor of the package, introducing a new architecture and enhanced features (like the fluent Facade interface and dependency injection). As a result, the documentation below focuses on v4. 
 
 For v3-specific usage:
 
