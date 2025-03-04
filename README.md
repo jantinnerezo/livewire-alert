@@ -7,8 +7,6 @@
 
 <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
 
-<a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/dt/jantinnerezo/livewire-alert" alt="Total Downloads"></a>
-
 <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
 
 
@@ -28,6 +26,12 @@ First, require the package with Composer:
 composer require jantinnerezo/livewire-alert
 ```
 
+Optionally, if you want to customize the global configuration, you can publish the config file:
+
+``` bash
+php artisan vendor:publish --tag=livewire-alert:config
+```
+
 Next, install SweetAlert2 via npm or yan:
 
 NPM 
@@ -42,7 +46,7 @@ yarn add sweetalert2
 
 After installing SweetAlert2, import it into your `resources/js/app.js` file
 
-```
+``` js
 import Swal from 'sweetalert2'
 
 window.Swal = Swal
