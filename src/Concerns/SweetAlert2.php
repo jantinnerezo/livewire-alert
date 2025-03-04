@@ -27,7 +27,7 @@ trait SweetAlert2
                     continue
                 }
 
-                options[option] = eval(options.didOpen)
+                options[option] = eval(options[option])
             }
 
             const alert = await Swal.fire(options)
