@@ -3,8 +3,9 @@
 
 <a href="https://github.com/jantinnerezo/livewire-alert/actions"><img src="https://github.com/jantinnerezo/livewire-alert/workflows/PHPUnit/badge.svg" alt="Build Status"></a> [![PHPStan Analysis](https://github.com/jantinnerezo/livewire-alert/workflows/PHPStan/badge.svg)](https://github.com/jantinnerezo/livewire-alert/actions) <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/dt/jantinnerezo/livewire-alert" alt="Total Downloads"></a> <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
 
-
 Livewire Alert is a Laravel Livewire package designed to integrate SweetAlert2 notifications seamlessly into Livewire projects. This package simplifies the process of displaying simple, customizable alerts to users, enhancing the interactivity and user experience of your Livewire projects.
+
+You can check the interactive demo here: [livewire-alert.laravel.cloud](https://livewire-alert.laravel.cloud)
 
 ## Requirements
 - PHP 8.1 or higher
