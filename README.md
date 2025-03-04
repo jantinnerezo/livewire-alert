@@ -2,18 +2,17 @@
 # Livewire Alert
 
 <a href="https://github.com/jantinnerezo/livewire-alert/actions"><img src="https://github.com/jantinnerezo/livewire-alert/workflows/PHPUnit/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/v/jantinnerezo/livewire-alert" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/dt/jantinnerezo/livewire-alert" alt="Total Downloads"></a>
+
+[![PHPStan Analysis](https://github.com/jantinnerezo/livewire-alert/workflows/PHPStan/badge.svg)](https://github.com/jantinnerezo/livewire-alert/actions)
+
 <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
 
-Livewire Alert is a Laravel package designed to integrate sweetalert-style notifications seamlessly into Laravel Livewire applications. This package simplifies the process of displaying beautiful, customizable alerts to users, enhancing the interactivity and user experience of your Livewire projects.
+<a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/dt/jantinnerezo/livewire-alert" alt="Total Downloads"></a>
 
-## Features
-- Easy integration with Laravel Livewire
-- Customizable SweetAlert2-based alerts
-- Support for various alert types (success, error, warning, info, etc.)
-- Configurable options for alert styling and behavior
-- Lightweight and dependency-efficient
+<a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
+
+
+Livewire Alert is a Laravel Livewire package designed to integrate SweetAlert2 notifications seamlessly into Livewire projects. This package simplifies the process of displaying simple, customizable alerts to users, enhancing the interactivity and user experience of your Livewire projects.
 
 ## Requirements
 - PHP 8.1 or higher
@@ -29,10 +28,16 @@ First, require the package with Composer:
 composer require jantinnerezo/livewire-alert
 ```
 
-Next, install SweetAlert2 via npm:
+Next, install SweetAlert2 via npm or yan:
 
+NPM 
 ``` bash
 npm install sweetalert2
+```
+
+Yarn 
+``` bash
+yarn add sweetalert2
 ```
 
 After installing SweetAlert2, import it into your `resources/js/app.js` file
@@ -43,7 +48,7 @@ import Swal from 'sweetalert2'
 window.Swal = Swal
 ```
 
-If you prefer not to use npm, you can include SweetAlert2 directly via CDN. Add the following script to your Blade layout file (e.g., resources/views/layouts/app.blade.php) before the closing </body> tag:
+If you prefer not to use package manager installation, you can include SweetAlert2 directly via CDN. Add the following script to your Blade layout file `(e.g., resources/views/layouts/app.blade.php)` before the closing `</body>` tag:
 
 ``` html
 <body>
@@ -53,7 +58,7 @@ If you prefer not to use npm, you can include SweetAlert2 directly via CDN. Add 
 
 
 ## Usage
-The LivewireAlert package provides a convenient Facade that allows you to trigger customizable SweetAlert2-based alerts in your Laravel Livewire application. The Facade uses a fluent interface, enabling you to chain methods to configure your alert before displaying it.
+This package provides a convenient Facade that allows you to trigger customizable SweetAlert2-based alerts in your Laravel Livewire application. The Facade uses a fluent interface, enabling you to chain methods to configure your alert before displaying it.
 
 ### Basic Usage
 
@@ -108,7 +113,7 @@ LivewireAlert::title('Question')
 ```
 
 #### Using a String Value
-Alternatively, pass a string directly, but it must exactly match one of the `Position` enum values:
+Alternatively, you can pass a string directly, but it must exactly match one of the `Position` enum values, See: [Position](https://github.com/jantinnerezo/livewire-alert/blob/v4/src/Enums/Position.php) enum.
 
 ``` php
 LivewireAlert::title('Question')
@@ -116,10 +121,9 @@ LivewireAlert::title('Question')
     ->question()
     ->show();
 ```
-See: [Position enum](https://github.com/jantinnerezo/livewire-alert/blob/v4/src/Enums/Position.php).
 
 ### Toast Notification
-Create a toast-style alert with the toast() method:
+Create a toast-style alert with the `toast()` method:
 
 ``` php
 LivewireAlert::title('Welcome!')
@@ -348,9 +352,114 @@ public function processSelection($data)
 ```
 
 #### Handling Input Values
-When an input is present, the $data parameter in event methods (e.g., `onConfirm()`, `onDeny()`) includes a value property containing the user’s input. This value depends on the input type:
+When an input is present, the `$data` parameter in event methods (e.g., `onConfirm()`, `onDeny()`) includes a value property containing the user’s input. This value depends on the input type:
 
 - Text, email, password, number, textarea: The entered string or number.
 - Select, radio: The selected option’s key.
 - Checkbox: true or false.
 - File: The file data (if applicable).
+
+### Flash Alert
+
+Need to flash alerts across requests? In this package you can leverage Laravel’s session flashing alerts and display them in your Livewire components. This feature, inspired by version 3’s simplicity, gives you full freedom to define your own session keys and structure, allowing tailored flash alerts that appear automatically `(e.g., on mount())` after actions like redirects.
+
+``` php
+public function mount()
+{
+    if (session()->has('saved')) {
+        LivewireAlert::title(session('saved.title'))
+            ->text(session('saved.text'))
+            ->success()
+            ->show();
+    }
+}
+
+public function changesSaved()
+{
+    session()->flash('saved', [
+        'title' => 'Changes Saved!',
+        'text' => 'You can safely close the tab!',
+    ]);
+
+    $this->redirect('/dashboard');
+}
+```
+
+### Options 
+
+The `withOptions()` method allows you to extend the alert’s configuration with any SweetAlert2-compatible options, giving you full control to customize its appearance, behavior, or functionality beyond the built-in methods. This is ideal for advanced use cases like adding inputs, modifying styles, or setting custom SweetAlert2 features.
+
+``` php
+LivewireAlert::title('Custom Alert')
+    ->text('This alert has a unique style.')
+    ->success()
+    ->withOptions([
+        'width' => '400px',
+        'background' => '#f0f0f0',
+        'customClass' => ['popup' => 'animate__animated animate__bounceIn'],
+        'allowOutsideClick' => false,
+    ])
+    ->show();
+```
+
+For a comprehensive guide to customization and available configuration options, please refer to the [SweetAlert2](https://sweetalert2.github.io/#configuration) documentation.
+
+### Dependency Injection
+Who said you can only use the Facade? With this package, you can also inject the `Jantinnerezo\LivewireAlert\LivewireAlert` class directly into your Livewire component methods via dependency injection. This approach lets you access the alert functionality within the context of your component, offering a clean alternative to the Facade syntax.
+
+``` php
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+public function save(LivewireAlert $alert)
+{
+    $alert->title('Success!')
+        ->text('What would you like to do?')
+        ->question()
+        ->withConfirmButton('Save')
+        ->withCancelButton('Cancel')
+        ->withDenyButton('Delete')
+        ->onConfirm('saveFile', ['id' => $this->fileId])
+        ->onDeny('deleteFile', ['id' => $this->fileId])
+        ->onDismiss('cancelAction', ['id' => $this->fileId])
+        ->show();
+}
+```
+
+All methods remain available, and you can chain them fluently just like with the Facade!
+
+### Looking for v3?
+
+If you’re seeking documentation for livewire-alert v3, note that the last release of the version 3 series was v3.0.3, available on GitHub at [v3.0.3](https://github.com/jantinnerezo/livewire-alert/releases/tag/v3.0.3) Released on March 11, 2024, this version supports Livewire 3 and latest Laravel 12 and includes features like basic alert functionality with the `LivewireAlert` trait.
+
+This release, however, is a complete rewrite of the package, introducing a new architecture and enhanced features (like the fluent Facade interface and dependency injection). As a result, the documentation below focuses on v4. 
+
+For v3-specific usage:
+
+``` bash 
+composer require jantinnerezo/livewire-alert:^3.0
+```
+
+For ongoing projects, I recommend upgrading to v4.0 to take advantage of the improved API and feature set detailed in this documentation.
+
+## Testing
+``` bash
+composer test
+```
+
+## Contributors
+
+<a href="https://github.com/jantinnerezo/livewire-alert/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jantinnerezo/livewire-alert" width="300" />
+</a>
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Security
+
+If you discover any security related issues, please email erezojantinn@gmail.com instead of using the issue tracker.
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
