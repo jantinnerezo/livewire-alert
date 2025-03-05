@@ -55,6 +55,27 @@ If you prefer not to use package manager installation, you can include SweetAler
 </body>
 ```
 
+## Filament
+
+Integrate Livewire Alert in your Filament project, simply register the JavaScript asset in the boot method of your `AppServiceProvider` in `boot` method to import SweetAlert2.
+
+``` php
+use Filament\Support\Facades\FilamentAsset;
+use Illuminate\Support\Facades\Vite;
+use Filament\Support\Assets\Js;
+
+public function boot()
+{
+    FilamentAsset::register([
+        // Local asset build using Vite
+        Js::make('sweetalert2', Vite::asset('resources/js/sweetalert2.js')),
+
+        // Or via CDN
+        Js::make('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11'),
+    ]);
+}
+```
+
 
 ## Usage
 This package provides a convenient Facade that allows you to trigger customizable SweetAlert2-based alerts in your Laravel Livewire application. The Facade uses a fluent interface, enabling you to chain methods to configure your alert before displaying it.
