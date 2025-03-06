@@ -57,7 +57,7 @@ If you prefer not to use package manager installation, you can include SweetAler
 
 ## Filament
 
-Integrate Livewire Alert in your Filament project, simply register the JavaScript asset in the boot method of your `AppServiceProvider` in `boot` method to import SweetAlert2.
+Integrate Livewire Alert in your Filament project, simply register the JavaScript asset in the boot method of your `AppServiceProvider` import SweetAlert2.
 
 ``` php
 use Filament\Support\Facades\FilamentAsset;
