@@ -32,13 +32,23 @@ trait SweetAlert2
 
             const alert = await Swal.fire(options)
 
-            for (const event in {$events}) {
-                if (!alert.hasOwnProperty(event)) {
-                    continue
-                }
+            if (alert.isConfirmed && {$events}.hasOwnProperty('isConfirmed')) {
+                \$wire.call({$events}.isConfirmed.action, {
+                    ...{$events}.isConfirmed.data || {},
+                    value: alert.value
+                })
+            }
+            
+            if (alert.isDenied && {$events}.hasOwnProperty('isDenied')) {
+                \$wire.call({$events}.isDenied.action, {
+                    ...{$events}.isDenied.data || {},
+                    value: alert.value
+                })
+            }
 
-                \$wire.call({$events}[event].action, {
-                    ...{$events}[event].data || {},
+            if (alert.isDismissed && {$events}.hasOwnProperty('isDismissed')) {
+                \$wire.call({$events}.isDismissed.action, {
+                    ...{$events}.isDismissed.data || {},
                     value: alert.value
                 })
             }
