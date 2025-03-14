@@ -87,7 +87,9 @@ use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
 public function save()
 {
-    LivewireAlert::title('Changes saved!')->success()->show();
+    LivewireAlert::title('Changes saved!')
+        ->success()
+        ->show();
 }
 ```
 
