@@ -28,6 +28,8 @@ interface Alertable
 
     public function timer(int $timer): self;
 
+    public function html(string | \Closure $value): self;
+
     public function withConfirmButton(?string $text): self;
 
     public function withCancelButton(?string $text): self;

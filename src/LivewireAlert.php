@@ -104,6 +104,22 @@ class LivewireAlert implements Contracts\Alertable
         return $this;
     }
 
+    public function html(string | \Closure $value): self
+    {
+        if ($value instanceof \Closure) {
+            $value = $value();
+
+            throw_if(
+                !is_string($value),
+                new \Exception('The closure must return a string')
+            );
+        }
+
+        $this->options[Enums\Option::Html->value] = $value;
+
+        return $this;
+    }
+
     public function withConfirmButton(?string $confirmButtonText = null): self
     {
         $this->options[Enums\Option::ShowConfirmButton->value] = true;

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Jantinnerezo\LivewireAlert\LivewireAlert position(string $position)
  * @method static \Jantinnerezo\LivewireAlert\LivewireAlert toast(bool $toast = true)
  * @method static \Jantinnerezo\LivewireAlert\LivewireAlert timer(int $timer)
+ * @method static \Jantinnerezo\LivewireAlert\LivewireAlert html(string | \Closure $value)
  * @method static \Jantinnerezo\LivewireAlert\LivewireAlert withConfirmButton(?string $confirmButtonText = null)
  * @method static \Jantinnerezo\LivewireAlert\LivewireAlert withCancelButton(?string $cancelButtonText = null)
  * @method static \Jantinnerezo\LivewireAlert\LivewireAlert withDenyButton(?string $denyButtonText = null)

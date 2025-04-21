@@ -168,6 +168,40 @@ class LivewireAlertTest extends TestCase
     }
 
     #[Test]
+    public function it_sets_html(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->html('<strong>Test HTML</strong>');
+
+        $this->assertEquals(
+            '<strong>Test HTML</strong>',
+            $alert->getOptions()[Option::Html->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_html_with_closure(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->html(fn () => '<strong>Test HTML</strong>');
+
+        $this->assertEquals(
+            '<strong>Test HTML</strong>',
+            $alert->getOptions()[Option::Html->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_html_with_closure_returning_non_string(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The closure must return a string');
+
+        $alert = $this->livewireAlert();
+        $alert->html(fn () => 10);
+    }
+
+    #[Test]
     public function it_has_confirm_button_with_text_from_config(): void
     {
         $alert = $this->livewireAlert();
