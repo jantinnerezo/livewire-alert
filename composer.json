@@ -37,9 +37,14 @@
         }
     },
     "scripts": {
+        "ci": [
+            "@composer csfixer",
+            "@composer phpstan",
+            "@composer test"
+        ],
         "csfixer": "PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix src",
-        "test": "vendor/bin/phpunit",
         "phpstan": "./vendor/bin/phpstan analyse src tests --level=7",
+        "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {

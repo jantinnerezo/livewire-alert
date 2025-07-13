@@ -123,7 +123,7 @@ class LivewireAlert implements Contracts\Alertable
 
     public function allowOutsideClick(bool | \Closure $allowed = true): self
     {
-         if ($allowed instanceof \Closure) {
+        if ($allowed instanceof \Closure) {
             $allowed = $allowed();
 
             throw_if(
@@ -139,7 +139,7 @@ class LivewireAlert implements Contracts\Alertable
 
     public function allowEscapeKey(bool | \Closure $allowed = true): self
     {
-         if ($allowed instanceof \Closure) {
+        if ($allowed instanceof \Closure) {
             $allowed = $allowed();
 
             throw_if(
