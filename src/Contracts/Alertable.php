@@ -26,9 +26,13 @@ interface Alertable
 
     public function toast(bool $toast = true): self;
 
-    public function timer(int $timer): self;
+    public function timer(int|null $timer): self;
 
     public function html(string | \Closure $value): self;
+
+    public function allowOutsideClick(bool | \Closure $allowed = true): self;
+
+    public function allowEscapeKey(bool | \Closure $allowed = true): self;
 
     public function withConfirmButton(?string $text): self;
 
