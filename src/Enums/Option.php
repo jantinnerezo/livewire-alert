@@ -100,7 +100,7 @@ enum Option: string
             self::cases()
         );
     }
-    
+
     /**
      * @return array<self>
      */

@@ -202,6 +202,74 @@ class LivewireAlertTest extends TestCase
     }
 
     #[Test]
+    public function it_sets_allowOutsideClick(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->allowOutsideClick(false);
+
+        $this->assertEquals(
+            false,
+            $alert->getOptions()[Option::AllowOutsideClick->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_allowOutsideClick_with_closure(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->allowOutsideClick(fn () => false);
+
+        $this->assertEquals(
+            false,
+            $alert->getOptions()[Option::AllowOutsideClick->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_allowOutsideClick_with_closure_returning_non_boolean(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The closure must return a boolean');
+
+        $alert = $this->livewireAlert();
+        $alert->allowOutsideClick(fn () => 10);
+    }
+
+    #[Test]
+    public function it_sets_allowEscapeKey(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->allowEscapeKey(false);
+
+        $this->assertEquals(
+            false,
+            $alert->getOptions()[Option::AllowEscapeKey->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_allowEscapeKey_with_closure(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->allowEscapeKey(fn () => false);
+
+        $this->assertEquals(
+            false,
+            $alert->getOptions()[Option::AllowEscapeKey->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_allowEscapeKey_with_closure_returning_non_boolean(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The closure must return a boolean');
+
+        $alert = $this->livewireAlert();
+        $alert->allowEscapeKey(fn () => 10);
+    }
+
+    #[Test]
     public function it_has_confirm_button_with_text_from_config(): void
     {
         $alert = $this->livewireAlert();
