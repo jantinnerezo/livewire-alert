@@ -5,7 +5,7 @@
 
 Livewire Alert is a Laravel Livewire package designed to integrate SweetAlert2 notifications seamlessly into Livewire projects. This package simplifies the process of displaying simple, customizable alerts to users, enhancing the interactivity and user experience of your Livewire projects.
 
-You can check the interactive demo here: [livewire-alert.laravel.cloud](https://livewire-alert.laravel.me)
+You can check the interactive demo here: [https://livewire-alert.jantinnerezo.me](https://livewire-alert.jantinnerezo.me)
 
 ## Requirements
 - PHP 8.1 or higher
