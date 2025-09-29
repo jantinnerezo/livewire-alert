@@ -228,6 +228,35 @@ class LivewireAlert implements Contracts\Alertable
         return $this;
     }
 
+    public function imageUrl(string $url): Alertable
+    {
+        $this->options[Enums\Option::ImageUrl->value] = $url;
+
+        return $this;
+    }
+
+    public function imageWidth(int $width): Alertable
+    {
+        $this->options[Enums\Option::ImageWidth->value] = $width;
+
+        return $this;
+    }
+
+    public function imageHeight(int $height): Alertable
+    {
+        $this->options[Enums\Option::ImageHeight->value] = $height;
+
+        return $this;
+    }
+
+    public function imageAlt(string $alt): Alertable
+    {
+        $this->options[Enums\Option::ImageAlt->value] = $alt;
+
+        return $this;
+    }
+
+
     public function asConfirm(): self
     {
         $this->question();

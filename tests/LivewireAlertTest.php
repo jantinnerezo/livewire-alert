@@ -579,4 +579,41 @@ class LivewireAlertTest extends TestCase
             Livewire::test(TestComponent::class)->instance()
         );
     }
+
+    #[Test]
+    public function it_sets_image_url_correctly():void
+    {
+        $imageUrl = 'https://picsum.photos/200/300';
+        $alert = $this->livewireAlert();
+        $alert->imageUrl($imageUrl);
+
+        $this->assertEquals($imageUrl, $alert->getOptions()['imageUrl']);
+    }
+
+    #[Test]
+    public function it_sets_image_width_correctly():void
+    {
+        $alert = $this->livewireAlert();
+        $alert->imageWidth(200);
+
+        $this->assertEquals(200, $alert->getOptions()['imageWidth']);
+    }
+
+    #[Test]
+    public function it_sets_image_height_correctly():void
+    {
+        $alert = $this->livewireAlert();
+        $alert->imageHeight(200);
+
+        $this->assertEquals(200, $alert->getOptions()['imageHeight']);
+    }
+
+    #[Test]
+    public function it_sets_image_alt_correctly():void
+    {
+        $alert = $this->livewireAlert();
+        $alert->imageAlt('Test Alt Text');
+
+        $this->assertEquals('Test Alt Text', $alert->getOptions()['imageAlt']);
+    }
 }

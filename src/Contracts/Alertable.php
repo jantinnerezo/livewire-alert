@@ -52,6 +52,14 @@ interface Alertable
 
     public function denyButtonColor(string $color): self;
 
+    public function imageUrl(string $url): self;
+
+    public function imageWidth(int $width): self;
+
+    public function imageHeight(int $height): self;
+
+    public function imageAlt(string $alt): self;
+
     public function asConfirm(): self;
 
     /**
