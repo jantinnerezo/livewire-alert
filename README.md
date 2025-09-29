@@ -407,6 +407,25 @@ public function changesSaved()
 }
 ```
 
+### Image
+
+You can use `imageUrl()`, `imageWidth()`, `imageHeight()`, and `imageAlt()` methods to define custom image into your alert.
+``` php
+LivewireAlert::imageUrl('/images/example.png');
+```
+
+``` php
+LivewireAlert::imageWidth(200);
+```
+
+``` php
+LivewireAlert::imageHeight(200);
+```
+
+``` php
+LivewireAlert::imageAlt('Simple Alt');
+```
+
 ### Options 
 
 The `withOptions()` method allows you to extend the alert’s configuration with any SweetAlert2-compatible options, giving you full control to customize its appearance, behavior, or functionality beyond the built-in methods. This is ideal for advanced use cases like adding inputs, modifying styles, or setting custom SweetAlert2 features.
