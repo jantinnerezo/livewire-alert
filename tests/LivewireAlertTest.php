@@ -202,6 +202,74 @@ class LivewireAlertTest extends TestCase
     }
 
     #[Test]
+    public function it_sets_allowOutsideClick(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->allowOutsideClick(false);
+
+        $this->assertEquals(
+            false,
+            $alert->getOptions()[Option::AllowOutsideClick->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_allowOutsideClick_with_closure(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->allowOutsideClick(fn () => false);
+
+        $this->assertEquals(
+            false,
+            $alert->getOptions()[Option::AllowOutsideClick->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_allowOutsideClick_with_closure_returning_non_boolean(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The closure must return a boolean');
+
+        $alert = $this->livewireAlert();
+        $alert->allowOutsideClick(fn () => 10);
+    }
+
+    #[Test]
+    public function it_sets_allowEscapeKey(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->allowEscapeKey(false);
+
+        $this->assertEquals(
+            false,
+            $alert->getOptions()[Option::AllowEscapeKey->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_allowEscapeKey_with_closure(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->allowEscapeKey(fn () => false);
+
+        $this->assertEquals(
+            false,
+            $alert->getOptions()[Option::AllowEscapeKey->value]
+        );
+    }
+
+    #[Test]
+    public function it_sets_allowEscapeKey_with_closure_returning_non_boolean(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('The closure must return a boolean');
+
+        $alert = $this->livewireAlert();
+        $alert->allowEscapeKey(fn () => 10);
+    }
+
+    #[Test]
     public function it_has_confirm_button_with_text_from_config(): void
     {
         $alert = $this->livewireAlert();
@@ -510,5 +578,42 @@ class LivewireAlertTest extends TestCase
         return new LivewireAlert(
             Livewire::test(TestComponent::class)->instance()
         );
+    }
+
+    #[Test]
+    public function it_sets_image_url_correctly():void
+    {
+        $imageUrl = 'https://picsum.photos/200/300';
+        $alert = $this->livewireAlert();
+        $alert->imageUrl($imageUrl);
+
+        $this->assertEquals($imageUrl, $alert->getOptions()['imageUrl']);
+    }
+
+    #[Test]
+    public function it_sets_image_width_correctly():void
+    {
+        $alert = $this->livewireAlert();
+        $alert->imageWidth(200);
+
+        $this->assertEquals(200, $alert->getOptions()['imageWidth']);
+    }
+
+    #[Test]
+    public function it_sets_image_height_correctly():void
+    {
+        $alert = $this->livewireAlert();
+        $alert->imageHeight(200);
+
+        $this->assertEquals(200, $alert->getOptions()['imageHeight']);
+    }
+
+    #[Test]
+    public function it_sets_image_alt_correctly():void
+    {
+        $alert = $this->livewireAlert();
+        $alert->imageAlt('Test Alt Text');
+
+        $this->assertEquals('Test Alt Text', $alert->getOptions()['imageAlt']);
     }
 }

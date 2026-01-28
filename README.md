@@ -5,7 +5,7 @@
 
 Livewire Alert is a Laravel Livewire package designed to integrate SweetAlert2 notifications seamlessly into Livewire projects. This package simplifies the process of displaying simple, customizable alerts to users, enhancing the interactivity and user experience of your Livewire projects.
 
-You can check the interactive demo here: [livewire-alert.laravel.cloud](https://livewire-alert.laravel.cloud)
+You can check the interactive demo here: [https://livewire-alert.jantinnerezo.me](https://livewire-alert.jantinnerezo.me)
 
 ## Requirements
 - PHP 8.1 or higher
@@ -405,6 +405,25 @@ public function changesSaved()
 
     $this->redirect('/dashboard');
 }
+```
+
+### Image
+
+You can use `imageUrl()`, `imageWidth()`, `imageHeight()`, and `imageAlt()` methods to define custom image into your alert.
+``` php
+LivewireAlert::imageUrl('/images/example.png');
+```
+
+``` php
+LivewireAlert::imageWidth(200);
+```
+
+``` php
+LivewireAlert::imageHeight(200);
+```
+
+``` php
+LivewireAlert::imageAlt('Simple Alt');
 ```
 
 ### Options 

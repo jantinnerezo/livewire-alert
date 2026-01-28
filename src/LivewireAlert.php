@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jantinnerezo\LivewireAlert;
 
+use Jantinnerezo\LivewireAlert\Contracts\Alertable;
 use Jantinnerezo\LivewireAlert\Exceptions\InvalidPositionException;
 use Livewire\Component;
 
@@ -97,7 +98,7 @@ class LivewireAlert implements Contracts\Alertable
         return $this;
     }
 
-    public function timer(int $timer): self
+    public function timer(int|null $timer): self
     {
         $this->options[Enums\Option::Timer->value] = $timer;
 
@@ -116,6 +117,38 @@ class LivewireAlert implements Contracts\Alertable
         }
 
         $this->options[Enums\Option::Html->value] = $value;
+
+        return $this;
+    }
+
+    public function allowOutsideClick(bool | \Closure $allowed = true): self
+    {
+        if ($allowed instanceof \Closure) {
+            $allowed = $allowed();
+
+            throw_if(
+                !is_bool($allowed),
+                new \Exception('The closure must return a boolean')
+            );
+        }
+
+        $this->options[Enums\Option::AllowOutsideClick->value] = $allowed;
+
+        return $this;
+    }
+
+    public function allowEscapeKey(bool | \Closure $allowed = true): self
+    {
+        if ($allowed instanceof \Closure) {
+            $allowed = $allowed();
+
+            throw_if(
+                !is_bool($allowed),
+                new \Exception('The closure must return a boolean')
+            );
+        }
+
+        $this->options[Enums\Option::AllowEscapeKey->value] = $allowed;
 
         return $this;
     }
@@ -194,6 +227,35 @@ class LivewireAlert implements Contracts\Alertable
 
         return $this;
     }
+
+    public function imageUrl(string $url): Alertable
+    {
+        $this->options[Enums\Option::ImageUrl->value] = $url;
+
+        return $this;
+    }
+
+    public function imageWidth(int $width): Alertable
+    {
+        $this->options[Enums\Option::ImageWidth->value] = $width;
+
+        return $this;
+    }
+
+    public function imageHeight(int $height): Alertable
+    {
+        $this->options[Enums\Option::ImageHeight->value] = $height;
+
+        return $this;
+    }
+
+    public function imageAlt(string $alt): Alertable
+    {
+        $this->options[Enums\Option::ImageAlt->value] = $alt;
+
+        return $this;
+    }
+
 
     public function asConfirm(): self
     {

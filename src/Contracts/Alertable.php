@@ -26,9 +26,13 @@ interface Alertable
 
     public function toast(bool $toast = true): self;
 
-    public function timer(int $timer): self;
+    public function timer(int|null $timer): self;
 
     public function html(string | \Closure $value): self;
+
+    public function allowOutsideClick(bool | \Closure $allowed = true): self;
+
+    public function allowEscapeKey(bool | \Closure $allowed = true): self;
 
     public function withConfirmButton(?string $text): self;
 
@@ -47,6 +51,14 @@ interface Alertable
     public function cancelButtonColor(string $color): self;
 
     public function denyButtonColor(string $color): self;
+
+    public function imageUrl(string $url): self;
+
+    public function imageWidth(int $width): self;
+
+    public function imageHeight(int $height): self;
+
+    public function imageAlt(string $alt): self;
 
     public function asConfirm(): self;
 
