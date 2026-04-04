@@ -30,24 +30,29 @@ trait SweetAlert2
                 options[option] = eval(options[option])
             }
 
+            if (typeof Swal === 'undefined') {
+                console.error('[livewire-alert] SweetAlert2 is not loaded. Make sure to include it before using livewire-alert.')
+                return
+            }
+
             const alert = await Swal.fire(options)
 
             if (alert.isConfirmed && {$events}.hasOwnProperty('isConfirmed')) {
-                \$wire.call({$events}.isConfirmed.action, {
+                \$wire[{$events}.isConfirmed.action]({
                     ...{$events}.isConfirmed.data || {},
                     value: alert.value
                 })
             }
-            
+
             if (alert.isDenied && {$events}.hasOwnProperty('isDenied')) {
-                \$wire.call({$events}.isDenied.action, {
+                \$wire[{$events}.isDenied.action]({
                     ...{$events}.isDenied.data || {},
                     value: alert.value
                 })
             }
 
             if (alert.isDismissed && {$events}.hasOwnProperty('isDismissed')) {
-                \$wire.call({$events}.isDismissed.action, {
+                \$wire[{$events}.isDismissed.action]({
                     ...{$events}.isDismissed.data || {},
                     value: alert.value
                 })

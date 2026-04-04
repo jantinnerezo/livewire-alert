@@ -297,6 +297,127 @@ class LivewireAlert implements Contracts\Alertable
         return $this;
     }
 
+    public function timerProgressBar(bool $show = true): self
+    {
+        $this->options[Enums\Option::TimerProgressBar->value] = $show;
+
+        return $this;
+    }
+
+    public function asToast(): self
+    {
+        $this->toast(true);
+        $this->position(Enums\Position::TopEnd);
+        $this->timer(config('livewire-alert.timer'));
+        $this->timerProgressBar(true);
+
+        return $this;
+    }
+
+    /** @param array<string, string> $classes */
+    public function customClass(array $classes): self
+    {
+        $existing = $this->options[Enums\Option::CustomClass->value] ?? [];
+        $this->options[Enums\Option::CustomClass->value] = array_merge($existing, $classes);
+
+        return $this;
+    }
+
+    public function reverseButtons(bool $reverse = true): self
+    {
+        $this->options[Enums\Option::ReverseButtons->value] = $reverse;
+
+        return $this;
+    }
+
+    public function withTextInput(?string $label = null, ?string $placeholder = null, ?string $value = null): self
+    {
+        $this->options[Enums\Option::Input->value] = 'text';
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+        if ($placeholder !== null) $this->options[Enums\Option::InputPlaceholder->value] = $placeholder;
+        if ($value !== null) $this->options[Enums\Option::InputValue->value] = $value;
+
+        return $this;
+    }
+
+    public function withEmailInput(?string $label = null, ?string $placeholder = null, ?string $value = null): self
+    {
+        $this->options[Enums\Option::Input->value] = 'email';
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+        if ($placeholder !== null) $this->options[Enums\Option::InputPlaceholder->value] = $placeholder;
+        if ($value !== null) $this->options[Enums\Option::InputValue->value] = $value;
+
+        return $this;
+    }
+
+    public function withPasswordInput(?string $label = null, ?string $placeholder = null): self
+    {
+        $this->options[Enums\Option::Input->value] = 'password';
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+        if ($placeholder !== null) $this->options[Enums\Option::InputPlaceholder->value] = $placeholder;
+
+        return $this;
+    }
+
+    public function withNumberInput(?string $label = null, ?string $placeholder = null, ?string $value = null): self
+    {
+        $this->options[Enums\Option::Input->value] = 'number';
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+        if ($placeholder !== null) $this->options[Enums\Option::InputPlaceholder->value] = $placeholder;
+        if ($value !== null) $this->options[Enums\Option::InputValue->value] = $value;
+
+        return $this;
+    }
+
+    public function withTextareaInput(?string $label = null, ?string $placeholder = null, ?string $value = null): self
+    {
+        $this->options[Enums\Option::Input->value] = 'textarea';
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+        if ($placeholder !== null) $this->options[Enums\Option::InputPlaceholder->value] = $placeholder;
+        if ($value !== null) $this->options[Enums\Option::InputValue->value] = $value;
+
+        return $this;
+    }
+
+    /** @param array<string, string> $options */
+    public function withSelectInput(array $options = [], ?string $label = null, ?string $value = null): self
+    {
+        $this->options[Enums\Option::Input->value] = 'select';
+        $this->options[Enums\Option::InputOptions->value] = $options;
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+        if ($value !== null) $this->options[Enums\Option::InputValue->value] = $value;
+
+        return $this;
+    }
+
+    /** @param array<string, string> $options */
+    public function withRadioInput(array $options = [], ?string $label = null, ?string $value = null): self
+    {
+        $this->options[Enums\Option::Input->value] = 'radio';
+        $this->options[Enums\Option::InputOptions->value] = $options;
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+        if ($value !== null) $this->options[Enums\Option::InputValue->value] = $value;
+
+        return $this;
+    }
+
+    public function withCheckboxInput(?string $label = null, bool $checked = false): self
+    {
+        $this->options[Enums\Option::Input->value] = 'checkbox';
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+        if ($checked) $this->options[Enums\Option::InputValue->value] = 1;
+
+        return $this;
+    }
+
+    public function withFileInput(?string $label = null): self
+    {
+        $this->options[Enums\Option::Input->value] = 'file';
+        if ($label !== null) $this->options[Enums\Option::InputLabel->value] = $label;
+
+        return $this;
+    }
+
     public function withOptions(array $options = []): self
     {
         $this->options = array_merge(

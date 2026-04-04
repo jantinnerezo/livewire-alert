@@ -616,4 +616,178 @@ class LivewireAlertTest extends TestCase
 
         $this->assertEquals('Test Alt Text', $alert->getOptions()['imageAlt']);
     }
+
+    #[Test]
+    public function it_sets_timer_progress_bar(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->timerProgressBar();
+
+        $this->assertTrue($alert->getOptions()[Option::TimerProgressBar->value]);
+    }
+
+    #[Test]
+    public function it_disables_timer_progress_bar(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->timerProgressBar(false);
+
+        $this->assertFalse($alert->getOptions()[Option::TimerProgressBar->value]);
+    }
+
+    #[Test]
+    public function it_configures_as_toast_preset(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->asToast();
+
+        $options = $alert->getOptions();
+
+        $this->assertTrue($options[Option::Toast->value]);
+        $this->assertFalse($options[Option::Backdrop->value]);
+        $this->assertTrue($options[Option::TimerProgressBar->value]);
+        $this->assertEquals(Position::TopEnd->value, $options[Option::Position->value]->value);
+    }
+
+    #[Test]
+    public function it_sets_custom_class(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->customClass(['popup' => 'my-popup', 'confirmButton' => 'btn-primary']);
+
+        $classes = $alert->getOptions()[Option::CustomClass->value];
+
+        $this->assertEquals('my-popup', $classes['popup']);
+        $this->assertEquals('btn-primary', $classes['confirmButton']);
+    }
+
+    #[Test]
+    public function it_merges_custom_class_on_multiple_calls(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->customClass(['popup' => 'my-popup']);
+        $alert->customClass(['title' => 'my-title']);
+
+        $classes = $alert->getOptions()[Option::CustomClass->value];
+
+        $this->assertEquals('my-popup', $classes['popup']);
+        $this->assertEquals('my-title', $classes['title']);
+    }
+
+    #[Test]
+    public function it_sets_reverse_buttons(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->reverseButtons();
+
+        $this->assertTrue($alert->getOptions()[Option::ReverseButtons->value]);
+    }
+
+    #[Test]
+    public function it_sets_text_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withTextInput('Your name', 'Enter name', 'John');
+
+        $options = $alert->getOptions();
+        $this->assertEquals('text', $options[Option::Input->value]);
+        $this->assertEquals('Your name', $options[Option::InputLabel->value]);
+        $this->assertEquals('Enter name', $options[Option::InputPlaceholder->value]);
+        $this->assertEquals('John', $options[Option::InputValue->value]);
+    }
+
+    #[Test]
+    public function it_sets_email_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withEmailInput();
+
+        $this->assertEquals('email', $alert->getOptions()[Option::Input->value]);
+    }
+
+    #[Test]
+    public function it_sets_password_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withPasswordInput();
+
+        $this->assertEquals('password', $alert->getOptions()[Option::Input->value]);
+    }
+
+    #[Test]
+    public function it_sets_number_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withNumberInput();
+
+        $this->assertEquals('number', $alert->getOptions()[Option::Input->value]);
+    }
+
+    #[Test]
+    public function it_sets_textarea_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withTextareaInput();
+
+        $this->assertEquals('textarea', $alert->getOptions()[Option::Input->value]);
+    }
+
+    #[Test]
+    public function it_sets_select_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withSelectInput(['a' => 'Option A', 'b' => 'Option B'], 'Pick one', 'a');
+
+        $options = $alert->getOptions();
+        $this->assertEquals('select', $options[Option::Input->value]);
+        $this->assertEquals(['a' => 'Option A', 'b' => 'Option B'], $options[Option::InputOptions->value]);
+        $this->assertEquals('Pick one', $options[Option::InputLabel->value]);
+        $this->assertEquals('a', $options[Option::InputValue->value]);
+    }
+
+    #[Test]
+    public function it_sets_radio_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withRadioInput(['yes' => 'Yes', 'no' => 'No']);
+
+        $options = $alert->getOptions();
+        $this->assertEquals('radio', $options[Option::Input->value]);
+        $this->assertEquals(['yes' => 'Yes', 'no' => 'No'], $options[Option::InputOptions->value]);
+    }
+
+    #[Test]
+    public function it_sets_checkbox_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withCheckboxInput('I agree', true);
+
+        $options = $alert->getOptions();
+        $this->assertEquals('checkbox', $options[Option::Input->value]);
+        $this->assertEquals('I agree', $options[Option::InputLabel->value]);
+        $this->assertEquals(1, $options[Option::InputValue->value]);
+    }
+
+    #[Test]
+    public function it_sets_file_input(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->withFileInput('Upload file');
+
+        $options = $alert->getOptions();
+        $this->assertEquals('file', $options[Option::Input->value]);
+        $this->assertEquals('Upload file', $options[Option::InputLabel->value]);
+    }
+
+    #[Test]
+    public function it_uses_wire_bracket_notation_for_events(): void
+    {
+        /** @var SpyComponent $spy */
+        $spy = Livewire::test(SpyComponent::class)->instance();
+        $alert = new LivewireAlert($spy);
+        $alert->onConfirm('confirmAction')->show();
+
+        $this->assertStringContainsString('$wire[', $spy->lastJs);
+        $this->assertStringNotContainsString('$wire.call(', $spy->lastJs);
+    }
 }

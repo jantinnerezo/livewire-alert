@@ -3,14 +3,14 @@
 
 <a href="https://github.com/jantinnerezo/livewire-alert/actions"><img src="https://github.com/jantinnerezo/livewire-alert/workflows/PHPUnit/badge.svg" alt="Build Status"></a> [![PHPStan Analysis](https://github.com/jantinnerezo/livewire-alert/workflows/PHPStan/badge.svg)](https://github.com/jantinnerezo/livewire-alert/actions) <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/dt/jantinnerezo/livewire-alert" alt="Total Downloads"></a> <a href="https://packagist.org/packages/jantinnerezo/livewire-alert"><img src="https://img.shields.io/packagist/l/jantinnerezo/livewire-alert" alt="License"></a>
 
-Livewire Alert is a Laravel Livewire package designed to integrate SweetAlert2 notifications seamlessly into Livewire projects. This package simplifies the process of displaying simple, customizable alerts to users, enhancing the interactivity and user experience of your Livewire projects.
+Livewire Alert is a Laravel Livewire package that brings SweetAlert2 notifications to your Livewire components through a fluent, chainable API. Configure and trigger beautiful, interactive alerts with a clean PHP interface — no JavaScript required.
 
 You can check the interactive demo here: [https://livewire-alert.jantinnerezo.me](https://livewire-alert.jantinnerezo.me)
 
 ## Requirements
 - PHP 8.1 or higher
 - Laravel 10.x or higher
-- Livewire 3.x
+- Livewire 3.x or 4.x
 - Composer
 
 ## Installation
@@ -145,7 +145,17 @@ LivewireAlert::title('Question')
 ```
 
 ### Toast Notification
-Create a toast-style alert with the `toast()` method:
+
+Use `asToast()` for a ready-to-use toast preset (top-end position, timer from config, progress bar enabled):
+
+``` php
+LivewireAlert::title('Saved!')
+    ->success()
+    ->asToast()
+    ->show();
+```
+
+Or configure manually with `toast()`:
 
 ``` php
 LivewireAlert::title('Welcome!')
@@ -167,6 +177,18 @@ LivewireAlert::title('Success')
     ->text('Operation completed successfully.')
     ->success()
     ->timer(3000) // Dismisses after 3 seconds
+    ->show();
+```
+
+### Timer Progress Bar
+
+Show a visual progress bar while the timer counts down:
+
+``` php
+LivewireAlert::title('Success')
+    ->success()
+    ->timer(3000)
+    ->timerProgressBar()
     ->show();
 ```
 
@@ -325,60 +347,80 @@ public function keepItem($data)
 
 ### Inputs
 
-The LivewireAlert package allows you to add input fields to alerts using the `withOptions()` method, leveraging SweetAlert2’s input capabilities. This is useful for collecting user input (e.g., text, selections) directly within the alert, with the input value returned via event handlers like `onConfirm()`.
+Use the dedicated input methods to collect user input directly within an alert. The input value is returned as `$data[‘value’]` in your event handler.
 
-#### Usage
-Use `withOptions()` to pass an array containing SweetAlert2 input options. Common input types include `text`, `email`, `password`, `number`, `textarea`, `select`, `radio`, `checkbox`, and `file`.
-
-Add a simple text input:
-
+#### Text
 ``` php
-LivewireAlert::title('Enter Your Name')
-    ->withOptions([
-        'input' => 'text',
-        'inputPlaceholder' => 'Your name here',
-    ])
-    ->withConfirmButton('Submit')
-    ->onConfirm('saveName')
+LivewireAlert::title(‘Enter Your Name’)
+    ->withTextInput(label: ‘Full name’, placeholder: ‘John Doe’)
+    ->withConfirmButton(‘Submit’)
+    ->onConfirm(‘saveName’)
     ->show();
 
 public function saveName($data)
 {
-    $name = $data['value']; // User’s input from the text field
-    // Save the name
+    $name = $data[‘value’];
 }
 ```
 
-Select Input Example
-
+#### Email, Password, Number, Textarea
 ``` php
-LivewireAlert::title('Choose an Option')
-    ->withOptions([
-        'input' => 'select',
-        'inputOptions' => [
-            'small' => 'Small',
-            'medium' => 'Medium',
-            'large' => 'Large',
-        ],
-        'inputPlaceholder' => 'Select a size',
-    ])
-    ->withConfirmButton('Confirm')
-    ->onConfirm('processSelection')
+LivewireAlert::title(‘Your Email’)->withEmailInput(placeholder: ‘you@example.com’)->withConfirmButton(‘Submit’)->onConfirm(‘saveEmail’)->show();
+LivewireAlert::title(‘New Password’)->withPasswordInput(label: ‘Password’)->withConfirmButton(‘Save’)->onConfirm(‘savePassword’)->show();
+LivewireAlert::title(‘Quantity’)->withNumberInput(placeholder: ‘1’)->withConfirmButton(‘OK’)->onConfirm(‘saveQty’)->show();
+LivewireAlert::title(‘Leave a note’)->withTextareaInput(placeholder: ‘Write here...’)->withConfirmButton(‘Submit’)->onConfirm(‘saveNote’)->show();
+```
+
+#### Select
+``` php
+LivewireAlert::title(‘Choose a size’)
+    ->withSelectInput(
+        options: [‘s’ => ‘Small’, ‘m’ => ‘Medium’, ‘l’ => ‘Large’],
+        label: ‘Size’,
+    )
+    ->withConfirmButton(‘Confirm’)
+    ->onConfirm(‘processSelection’)
     ->show();
 
 public function processSelection($data)
 {
-    $size = $data['value']; // Selected value (e.g., 'small')
-    // Process the selection
+    $size = $data[‘value’]; // e.g. ‘m’
 }
 ```
 
+#### Radio
+``` php
+LivewireAlert::title(‘Pick one’)
+    ->withRadioInput(options: [‘yes’ => ‘Yes’, ‘no’ => ‘No’])
+    ->withConfirmButton(‘Submit’)
+    ->onConfirm(‘saveChoice’)
+    ->show();
+```
+
+#### Checkbox
+``` php
+LivewireAlert::title(‘Terms’)
+    ->withCheckboxInput(label: ‘I agree to the terms’)
+    ->withConfirmButton(‘Continue’)
+    ->onConfirm(‘acceptTerms’)
+    ->show();
+```
+
+#### File
+``` php
+LivewireAlert::title(‘Upload’)
+    ->withFileInput(label: ‘Choose a file’)
+    ->withConfirmButton(‘Upload’)
+    ->onConfirm(‘handleUpload’)
+    ->show();
+```
+
 #### Handling Input Values
-When an input is present, the `$data` parameter in event methods (e.g., `onConfirm()`, `onDeny()`) includes a value property containing the user’s input. This value depends on the input type:
+The `$data[‘value’]` in your event handler contains the user’s input:
 
 - Text, email, password, number, textarea: The entered string or number.
 - Select, radio: The selected option’s key.
-- Checkbox: true or false.
+- Checkbox: `1` if checked, `null` otherwise.
 - File: The file data (if applicable).
 
 ### Flash Alert
@@ -426,7 +468,34 @@ LivewireAlert::imageHeight(200);
 LivewireAlert::imageAlt('Simple Alt');
 ```
 
-### Options 
+### Custom CSS Classes
+
+Use `customClass()` to apply custom CSS classes to any part of the alert:
+
+``` php
+LivewireAlert::title(‘Styled Alert’)
+    ->success()
+    ->customClass([
+        ‘popup’ => ‘rounded-2xl’,
+        ‘confirmButton’ => ‘btn-primary’,
+        ‘cancelButton’ => ‘btn-secondary’,
+    ])
+    ->show();
+```
+
+### Reverse Buttons
+
+Swap the positions of the confirm and cancel buttons:
+
+``` php
+LivewireAlert::title(‘Are you sure?’)
+    ->asConfirm()
+    ->reverseButtons()
+    ->onConfirm(‘deleteItem’)
+    ->show();
+```
+
+### Options
 
 The `withOptions()` method allows you to extend the alert’s configuration with any SweetAlert2-compatible options, giving you full control to customize its appearance, behavior, or functionality beyond the built-in methods. This is ideal for advanced use cases like adding inputs, modifying styles, or setting custom SweetAlert2 features.
 
