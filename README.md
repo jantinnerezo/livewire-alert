@@ -5,7 +5,13 @@
 
 Livewire Alert is a Laravel Livewire package that brings SweetAlert2 notifications to your Livewire components through a fluent, chainable API. Configure and trigger beautiful, interactive alerts with a clean PHP interface — no JavaScript required.
 
-You can check the interactive demo here: [https://livewire-alert.jantinnerezo.me](https://livewire-alert.jantinnerezo.me)
+## 📖 Documentation
+
+Full documentation, live examples, and an interactive playground are hosted at:
+
+### 👉 [https://livewire-alert.jantinnerezo.me](https://livewire-alert.jantinnerezo.me)
+
+Every feature — icons, positions, toasts, timers, buttons, confirm dialogs, loading alerts, in-place updates, inputs, flash alerts, images, custom classes, dependency injection and more — is documented there with copy-pasteable snippets and runnable demos.
 
 ## Requirements
 - PHP 8.1 or higher
@@ -15,31 +21,29 @@ You can check the interactive demo here: [https://livewire-alert.jantinnerezo.me
 
 ## Installation
 
-First, require the package with Composer:
+Require the package with Composer:
 
 ``` bash
 composer require jantinnerezo/livewire-alert
 ```
 
-Optionally, if you want to customize the global configuration, you can publish the config file:
+Optionally publish the config file:
 
 ``` bash
 php artisan vendor:publish --tag=livewire-alert:config
 ```
 
-Next, install SweetAlert2 via npm or yan:
+Install SweetAlert2 via npm or yarn:
 
-NPM 
 ``` bash
 npm install sweetalert2
 ```
 
-Yarn 
 ``` bash
 yarn add sweetalert2
 ```
 
-After installing SweetAlert2, import it into your `resources/js/app.js` file
+Then import it in `resources/js/app.js`:
 
 ``` js
 import Swal from 'sweetalert2'
@@ -47,17 +51,15 @@ import Swal from 'sweetalert2'
 window.Swal = Swal
 ```
 
-If you prefer not to use package manager installation, you can include SweetAlert2 directly via CDN. Add the following script to your Blade layout file `(e.g., resources/views/layouts/app.blade.php)` before the closing `</body>` tag:
+Or include it via CDN before the closing `</body>` tag:
 
 ``` html
-<body>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 ```
 
-## Filament
+### Filament
 
-Integrate Livewire Alert in your Filament project, simply register the JavaScript asset in the boot method of your `AppServiceProvider` to import SweetAlert2.
+Register SweetAlert2 as a Filament asset in your `AppServiceProvider`:
 
 ``` php
 use Filament\Support\Facades\FilamentAsset;
@@ -67,20 +69,14 @@ use Filament\Support\Assets\Js;
 public function boot()
 {
     FilamentAsset::register([
-        // Local asset build using Vite
         Js::make('sweetalert2', Vite::asset('resources/js/sweetalert2.js')),
-
-        // Or via CDN
-        Js::make('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11'),
+        // Or via CDN:
+        // Js::make('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11'),
     ]);
 }
 ```
 
-
-## Usage
-This package provides a convenient Facade that allows you to trigger customizable SweetAlert2-based alerts in your Laravel Livewire application. The Facade uses a fluent interface, enabling you to chain methods to configure your alert before displaying it.
-
-### Basic Usage
+## Quick taste
 
 ``` php
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
@@ -93,465 +89,20 @@ public function save()
 }
 ```
 
-### Adding text
+For everything else — head to the [documentation site](https://livewire-alert.jantinnerezo.me).
 
-``` php
-LivewireAlert::title('Item Saved')
-    ->text('The item has been successfully saved to the database.')
-    ->success()
-    ->show();
-```
+## Looking for v3?
 
-### Available alert icons
-``` php
-LivewireAlert::title('Success')->success();
-```
-``` php
-LivewireAlert::title('Error')->error();
-```
-``` php
-LivewireAlert::title('Warning')->warning();
-```
-``` php
-LivewireAlert::title('Info')->info();
-```
-``` php
-LivewireAlert::title('Question')->question();
-```
+The last v3 release was [v3.0.3](https://github.com/jantinnerezo/livewire-alert/releases/tag/v3.0.3) (March 11, 2024). v4 is a major refactor introducing the fluent Facade API, dependency injection, and many more features. For v3:
 
-### Position
-The `position()` method allows you to specify where the alert appears on the screen. You can use either the Position enum for type safety or a plain string for flexibility.
-
-#### Using the Position Enum
-Leverage the Position enum for predefined, type-safe options:
-
-``` php
-use Jantinnerezo\LivewireAlert\Enums\Position;
-
-LivewireAlert::title('Question')
-    ->position(Position::Center)
-    ->question()
-    ->show();
-```
-
-#### Using a String Value
-Alternatively, you can pass a string directly, but it must exactly match one of the `Position` enum values, See: [Position](https://github.com/jantinnerezo/livewire-alert/blob/v4/src/Enums/Position.php) enum.
-
-``` php
-LivewireAlert::title('Question')
-    ->position('center')
-    ->question()
-    ->show();
-```
-
-### Toast Notification
-
-Use `asToast()` for a ready-to-use toast preset (top-end position, timer from config, progress bar enabled):
-
-``` php
-LivewireAlert::title('Saved!')
-    ->success()
-    ->asToast()
-    ->show();
-```
-
-Or configure manually with `toast()`:
-
-``` php
-LivewireAlert::title('Welcome!')
-    ->text('You have logged in successfully.')
-    ->info()
-    ->toast()
-    ->position('top-end')
-    ->show();
-```
-
-### Timer
-The `timer()` method sets an auto-dismiss timer for the alert, specifying how long (in milliseconds) the alert remains visible before closing automatically.
-
-#### Usage
-Pass an integer representing the duration in milliseconds:
-
-``` php
-LivewireAlert::title('Success')
-    ->text('Operation completed successfully.')
-    ->success()
-    ->timer(3000) // Dismisses after 3 seconds
-    ->show();
-```
-
-### Timer Progress Bar
-
-Show a visual progress bar while the timer counts down:
-
-``` php
-LivewireAlert::title('Success')
-    ->success()
-    ->timer(3000)
-    ->timerProgressBar()
-    ->show();
-```
-
-### Buttons
-
-The LivewireAlert package provides methods to add and customize buttons in your alerts: `withConfirmButton()`, `withCancelButton()`, and `withDenyButton()`. Each button can trigger specific events, handled via `onConfirm()`, `onDeny()`, or `onDismiss()`, allowing you to execute custom logic in your Livewire component.
-
-#### Confirm
-``` php
-LivewireAlert::title('Save?')
-    ->withConfirmButton('Yes, Save')
-    ->show();
-```
-
-#### Cancel
-``` php
-LivewireAlert::title('Hey cancel')
-    ->withCancelButton('Cancel')
-    ->show();
-```
-
-#### Deny
-``` php
-LivewireAlert::title('Are you do you want to do it?')
-    ->withDenyButton('No')
-    ->show();
-```
-
-### Button text
-
-Alternatively, you can use `confirmButtonText()`, `cancelButtonText()`, and `denyButtonText()` to set the text after enabling the buttons with `withConfirmButton()`, `withCancelButton()`, or `withDenyButton()` without text:
-
-``` php
-LivewireAlert::title('Save?')
-    ->withConfirmButton() // Enables button with default text
-    ->confirmButtonText('Yes')
-    ->withDenyButton()    // Enables button with default text
-    ->denyButtonText('No')
-    ->withCancelButton()  // Enables button with default text
-    ->cancelButtonText('Cancel')
-    ->show();
-```
-
-### Button Color
-You can customize the appearance of buttons by setting their colors using the `confirmButtonColor()`, `cancelButtonColor()`, and `denyButtonColor()` methods. These methods accept a color value (e.g., color names, hex codes, or CSS-compatible strings) to style the respective buttons.
-
-``` php
-LivewireAlert::title('Save?')
-    ->confirmButtonColor('green')
-    ->withDenyButton('red')
-    ->withCancelButton('blue')
-    ->show();
-```
-
-### Button Events
-
-Each button can trigger a corresponding event when clicked, allowing you to handle user interactions in your Livewire component.
-
-#### `onConfirm()`
-
-``` php
-LivewireAlert::title('Save?')
-    ->withConfirmButton('Save')
-    ->onConfirm('saveData', ['id' => $this->itemId])
-    ->show();
-
-public function saveData($data)
-{
-    $itemId = $data['id'];
-    // Save logic
-}
-```
-
-#### `onDismiss()`
-
-``` php
-LivewireAlert::title('Delete?')
-    ->withConfirmButton('Delete')
-    ->withCancelButton('Keep')
-    ->onDismiss('cancelDelete', ['id' => $this->itemId])
-    ->show();
-
-public function cancelDelete($data)
-{
-    $itemId = $data['id'];
-    // Cancel logic
-}
-```
-
-#### `onDeny()`
-
-``` php
-LivewireAlert::title('Update?')
-    ->withConfirmButton('Update')
-    ->withDenyButton('Discard')
-    ->onDeny('discardChanges', ['id' => $this->itemId])
-    ->show();
-
-public function discardChanges($data)
-{
-    $itemId = $data['id'];
-    // Discard logic
-}
-```
-
-#### Using them together example
-
-``` php
-LivewireAlert::title('Process File')
-    ->text('What would you like to do?')
-    ->question()
-    ->withConfirmButton('Save')
-    ->withCancelButton('Cancel')
-    ->withDenyButton('Delete')
-    ->onConfirm('saveFile', ['id' => $this->fileId])
-    ->onDeny('deleteFile', ['id' => $this->fileId])
-    ->onDismiss('cancelAction', ['id' => $this->fileId])
-    ->show();
-```
-
-### Confirm Dialog
-
-The `asConfirm()` method configures the alert as a confirmation dialog with a predefined options. It automatically applies a question icon, adds confirm and deny buttons with default text from the configuration, and disables the auto-dismiss timer, making it ideal for scenarios requiring explicit user input.
-
-``` php
-LivewireAlert::title('Are you sure?')
-    ->text('Do you want to proceed with this action?')
-    ->asConfirm()
-    ->show();
-```
-
-#### Handling Events
-
-Combine with `onConfirm()` and `onDeny()` to handle user responses:
-
-``` php
-LivewireAlert::title('Delete Item')
-    ->text('Are you sure you want to delete this item?')
-    ->asConfirm()
-    ->onConfirm('deleteItem', ['id' => $this->itemId])
-    ->onDeny('keepItem', ['id' => $this->itemId])
-    ->show();
-
-public function deleteItem($data)
-{
-    $itemId = $data['id'];
-    // Delete logic
-}
-
-public function keepItem($data)
-{
-    $itemId = $data['id'];
-    // Keep logic
-}
-```
-
-### Inputs
-
-Use the dedicated input methods to collect user input directly within an alert. The input value is returned as `$data[‘value’]` in your event handler.
-
-#### Text
-``` php
-LivewireAlert::title(‘Enter Your Name’)
-    ->withTextInput(label: ‘Full name’, placeholder: ‘John Doe’)
-    ->withConfirmButton(‘Submit’)
-    ->onConfirm(‘saveName’)
-    ->show();
-
-public function saveName($data)
-{
-    $name = $data[‘value’];
-}
-```
-
-#### Email, Password, Number, Textarea
-``` php
-LivewireAlert::title(‘Your Email’)->withEmailInput(placeholder: ‘you@example.com’)->withConfirmButton(‘Submit’)->onConfirm(‘saveEmail’)->show();
-LivewireAlert::title(‘New Password’)->withPasswordInput(label: ‘Password’)->withConfirmButton(‘Save’)->onConfirm(‘savePassword’)->show();
-LivewireAlert::title(‘Quantity’)->withNumberInput(placeholder: ‘1’)->withConfirmButton(‘OK’)->onConfirm(‘saveQty’)->show();
-LivewireAlert::title(‘Leave a note’)->withTextareaInput(placeholder: ‘Write here...’)->withConfirmButton(‘Submit’)->onConfirm(‘saveNote’)->show();
-```
-
-#### Select
-``` php
-LivewireAlert::title(‘Choose a size’)
-    ->withSelectInput(
-        options: [‘s’ => ‘Small’, ‘m’ => ‘Medium’, ‘l’ => ‘Large’],
-        label: ‘Size’,
-    )
-    ->withConfirmButton(‘Confirm’)
-    ->onConfirm(‘processSelection’)
-    ->show();
-
-public function processSelection($data)
-{
-    $size = $data[‘value’]; // e.g. ‘m’
-}
-```
-
-#### Radio
-``` php
-LivewireAlert::title(‘Pick one’)
-    ->withRadioInput(options: [‘yes’ => ‘Yes’, ‘no’ => ‘No’])
-    ->withConfirmButton(‘Submit’)
-    ->onConfirm(‘saveChoice’)
-    ->show();
-```
-
-#### Checkbox
-``` php
-LivewireAlert::title(‘Terms’)
-    ->withCheckboxInput(label: ‘I agree to the terms’)
-    ->withConfirmButton(‘Continue’)
-    ->onConfirm(‘acceptTerms’)
-    ->show();
-```
-
-#### File
-``` php
-LivewireAlert::title(‘Upload’)
-    ->withFileInput(label: ‘Choose a file’)
-    ->withConfirmButton(‘Upload’)
-    ->onConfirm(‘handleUpload’)
-    ->show();
-```
-
-#### Handling Input Values
-The `$data[‘value’]` in your event handler contains the user’s input:
-
-- Text, email, password, number, textarea: The entered string or number.
-- Select, radio: The selected option’s key.
-- Checkbox: `1` if checked, `null` otherwise.
-- File: The file data (if applicable).
-
-### Flash Alert
-
-Need to flash alerts across requests? In this package you can leverage Laravel’s session flashing alerts and display them in your Livewire components. This feature, inspired by version 3’s simplicity, gives you full freedom to define your own session keys and structure, allowing tailored flash alerts that appear automatically `(e.g., on mount())` after actions like redirects.
-
-``` php
-public function mount()
-{
-    if (session()->has('saved')) {
-        LivewireAlert::title(session('saved.title'))
-            ->text(session('saved.text'))
-            ->success()
-            ->show();
-    }
-}
-
-public function changesSaved()
-{
-    session()->flash('saved', [
-        'title' => 'Changes Saved!',
-        'text' => 'You can safely close the tab!',
-    ]);
-
-    $this->redirect('/dashboard');
-}
-```
-
-### Image
-
-You can use `imageUrl()`, `imageWidth()`, `imageHeight()`, and `imageAlt()` methods to define custom image into your alert.
-``` php
-LivewireAlert::imageUrl('/images/example.png');
-```
-
-``` php
-LivewireAlert::imageWidth(200);
-```
-
-``` php
-LivewireAlert::imageHeight(200);
-```
-
-``` php
-LivewireAlert::imageAlt('Simple Alt');
-```
-
-### Custom CSS Classes
-
-Use `customClass()` to apply custom CSS classes to any part of the alert:
-
-``` php
-LivewireAlert::title(‘Styled Alert’)
-    ->success()
-    ->customClass([
-        ‘popup’ => ‘rounded-2xl’,
-        ‘confirmButton’ => ‘btn-primary’,
-        ‘cancelButton’ => ‘btn-secondary’,
-    ])
-    ->show();
-```
-
-### Reverse Buttons
-
-Swap the positions of the confirm and cancel buttons:
-
-``` php
-LivewireAlert::title(‘Are you sure?’)
-    ->asConfirm()
-    ->reverseButtons()
-    ->onConfirm(‘deleteItem’)
-    ->show();
-```
-
-### Options
-
-The `withOptions()` method allows you to extend the alert’s configuration with any SweetAlert2-compatible options, giving you full control to customize its appearance, behavior, or functionality beyond the built-in methods. This is ideal for advanced use cases like adding inputs, modifying styles, or setting custom SweetAlert2 features.
-
-``` php
-LivewireAlert::title('Custom Alert')
-    ->text('This alert has a unique style.')
-    ->success()
-    ->withOptions([
-        'width' => '400px',
-        'background' => '#f0f0f0',
-        'customClass' => ['popup' => 'animate__animated animate__bounceIn'],
-        'allowOutsideClick' => false,
-    ])
-    ->show();
-```
-
-For a comprehensive guide to customization and available configuration options, please refer to the [SweetAlert2](https://sweetalert2.github.io/#configuration) documentation.
-
-### Dependency Injection
-Who said you can only use the Facade? With this package, you can also inject the `Jantinnerezo\LivewireAlert\LivewireAlert` class directly into your Livewire component methods via dependency injection. This approach lets you access the alert functionality within the context of your component, offering a clean alternative to the Facade syntax.
-
-``` php
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-
-public function save(LivewireAlert $alert)
-{
-    $alert->title('Success!')
-        ->text('What would you like to do?')
-        ->question()
-        ->withConfirmButton('Save')
-        ->withCancelButton('Cancel')
-        ->withDenyButton('Delete')
-        ->onConfirm('saveFile', ['id' => $this->fileId])
-        ->onDeny('deleteFile', ['id' => $this->fileId])
-        ->onDismiss('cancelAction', ['id' => $this->fileId])
-        ->show();
-}
-```
-
-All methods remain available, and you can chain them fluently just like with the Facade!
-
-### Looking for v3?
-
-If you’re seeking documentation for livewire-alert v3, note that the last release of the version 3 series was v3.0.3, available on GitHub at [v3.0.3](https://github.com/jantinnerezo/livewire-alert/releases/tag/v3.0.3) Released on March 11, 2024, this version supports Livewire 3 and latest Laravel 12 and includes features like basic alert functionality with the `LivewireAlert` trait.
-
-This release, however, is a major refactor of the package, introducing a new architecture and enhanced features (like the fluent Facade interface and dependency injection). As a result, the documentation below focuses on v4. 
-
-For v3-specific usage:
-
-``` bash 
+``` bash
 composer require jantinnerezo/livewire-alert:^3.0
 ```
 
-For ongoing projects, I recommend upgrading to v4.0 to take advantage of the improved API and feature set detailed in this documentation.
+Upgrading to v4 is recommended for new and ongoing projects.
 
 ## Testing
+
 ``` bash
 composer test
 ```

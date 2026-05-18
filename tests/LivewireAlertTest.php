@@ -790,4 +790,96 @@ class LivewireAlertTest extends TestCase
         $this->assertStringContainsString('$wire[', $spy->lastJs);
         $this->assertStringNotContainsString('$wire.call(', $spy->lastJs);
     }
+
+    #[Test]
+    public function it_configures_as_loading_preset(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->asLoading();
+
+        $options = $alert->getOptions();
+
+        $this->assertEquals('Loading...', $options[Option::Title->value]);
+        $this->assertFalse($options[Option::AllowOutsideClick->value]);
+        $this->assertFalse($options[Option::AllowEscapeKey->value]);
+        $this->assertFalse($options[Option::ShowConfirmButton->value]);
+        $this->assertFalse($options[Option::ShowCancelButton->value]);
+        $this->assertFalse($options[Option::ShowDenyButton->value]);
+        $this->assertNull($options[Option::Timer->value]);
+        $this->assertEquals('() => Swal.showLoading()', $options[Option::DidOpen->value]);
+    }
+
+    #[Test]
+    public function it_configures_as_loading_with_custom_title(): void
+    {
+        $alert = $this->livewireAlert();
+        $alert->asLoading('Saving...');
+
+        $this->assertEquals('Saving...', $alert->getOptions()[Option::Title->value]);
+    }
+
+    #[Test]
+    public function it_dispatches_swal_close_via_close_method(): void
+    {
+        /** @var SpyComponent $spy */
+        $spy = Livewire::test(SpyComponent::class)->instance();
+        $alert = new LivewireAlert($spy);
+        $alert->close();
+
+        $this->assertStringContainsString('Swal.close()', $spy->lastJs);
+    }
+
+    #[Test]
+    public function it_dispatches_swal_update_with_chained_options(): void
+    {
+        /** @var SpyComponent $spy */
+        $spy = Livewire::test(SpyComponent::class)->instance();
+        $alert = new LivewireAlert($spy);
+        $alert->title('Updated Title')->text('Updated Text')->update();
+
+        $this->assertStringContainsString('Swal.update', $spy->lastJs);
+        $this->assertStringContainsString('"title":"Updated Title"', $spy->lastJs);
+        $this->assertStringContainsString('"text":"Updated Text"', $spy->lastJs);
+    }
+
+    #[Test]
+    public function it_dispatches_swal_update_with_explicit_payload(): void
+    {
+        /** @var SpyComponent $spy */
+        $spy = Livewire::test(SpyComponent::class)->instance();
+        $alert = new LivewireAlert($spy);
+        $alert->update([
+            Option::Title->value => 'Direct Title',
+            Option::Icon->value => 'success',
+        ]);
+
+        $this->assertStringContainsString('Swal.update', $spy->lastJs);
+        $this->assertStringContainsString('"title":"Direct Title"', $spy->lastJs);
+        $this->assertStringContainsString('"icon":"success"', $spy->lastJs);
+    }
+
+    #[Test]
+    public function it_does_not_merge_config_into_update_payload(): void
+    {
+        config(['livewire-alert' => ['position' => Position::BottomEnd->value]]);
+
+        /** @var SpyComponent $spy */
+        $spy = Livewire::test(SpyComponent::class)->instance();
+        $alert = new LivewireAlert($spy);
+        $alert->title('Only Title')->update();
+
+        $this->assertStringContainsString('"title":"Only Title"', $spy->lastJs);
+        $this->assertStringNotContainsString('position', $spy->lastJs);
+    }
+
+    #[Test]
+    public function it_guards_update_when_no_alert_is_visible(): void
+    {
+        /** @var SpyComponent $spy */
+        $spy = Livewire::test(SpyComponent::class)->instance();
+        $alert = new LivewireAlert($spy);
+        $alert->title('x')->update();
+
+        $this->assertStringContainsString('Swal.isVisible()', $spy->lastJs);
+    }
 }

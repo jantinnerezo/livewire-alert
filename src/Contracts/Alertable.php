@@ -66,6 +66,8 @@ interface Alertable
 
     public function asToast(): self;
 
+    public function asLoading(?string $title = null): self;
+
     /** @param array<string, string> $classes */
     public function customClass(array $classes): self;
 
@@ -125,4 +127,11 @@ interface Alertable
     public function getEvents(): array;
 
     public function show(): void;
+
+    public function close(): void;
+
+    /**
+     * @param array<string, mixed>|null $options
+     */
+    public function update(?array $options = null): void;
 }

@@ -314,6 +314,20 @@ class LivewireAlert implements Contracts\Alertable
         return $this;
     }
 
+    public function asLoading(?string $title = null): self
+    {
+        $this->title($title ?? 'Loading...');
+        $this->options[Enums\Option::AllowOutsideClick->value] = false;
+        $this->options[Enums\Option::AllowEscapeKey->value] = false;
+        $this->options[Enums\Option::ShowConfirmButton->value] = false;
+        $this->options[Enums\Option::ShowCancelButton->value] = false;
+        $this->options[Enums\Option::ShowDenyButton->value] = false;
+        $this->options[Enums\Option::DidOpen->value] = '() => Swal.showLoading()';
+        $this->options[Enums\Option::Timer->value] = null;
+
+        return $this;
+    }
+
     /** @param array<string, string> $classes */
     public function customClass(array $classes): self
     {
@@ -453,6 +467,24 @@ class LivewireAlert implements Contracts\Alertable
             $this->getOptions(),
             $this->getEvents()
         );
+    }
+
+    public function close(): void
+    {
+        $this->dismiss();
+    }
+
+    /**
+     * @param array<string, mixed>|null $options
+     */
+    public function update(?array $options = null): void
+    {
+        $payload = $options ?? array_intersect_key(
+            $this->options,
+            array_flip(Enums\Option::values())
+        );
+
+        $this->mutate($payload);
     }
 
     /**
